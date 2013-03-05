@@ -25,7 +25,6 @@ public class DataManagerNBT extends DataManagerArray {
                 setItem(i, null);
             }
             e.printStackTrace();
-            System.exit(-1);
         }
     }
 
