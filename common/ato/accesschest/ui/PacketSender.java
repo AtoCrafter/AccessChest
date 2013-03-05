@@ -1,5 +1,6 @@
 package ato.accesschest.ui;
 
+import ato.accesschest.Properties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
@@ -17,14 +18,11 @@ public class PacketSender {
      */
     private Minecraft mc;
 
-    public PacketSender(Minecraft mc) {
-        this.mc = mc;
-    }
-
     /**
      * 現在のスクロール位置をパケットにして送信する
      */
-    public void sendScrollIndex(final int index) {
+    public void sendScrollIndex(Minecraft mc, final int index) {
+        this.mc = mc;
         sendPacket(new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
@@ -46,7 +44,7 @@ public class PacketSender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload("ato.accesschest|scrollindex", data.toByteArray()));
+        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(Properties.CHANNEL_SCROLL_INDEX, data.toByteArray()));
     }
 
     /**

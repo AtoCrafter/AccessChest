@@ -15,9 +15,10 @@ import ato.accesschest.initializer.ProxyCommon;
         version = Properties.VERSION
 )
 @NetworkMod(
-        channels = {Properties.NET_CHANNEL_NAME},
         clientSideRequired = true,
-        serverSideRequired = true
+        serverSideRequired = true,
+        channels = {Properties.CHANNEL_SCROLL_INDEX},
+        packetHandler = ato.accesschest.ui.PacketReceiver.class
 )
 public class AccessChest {
 

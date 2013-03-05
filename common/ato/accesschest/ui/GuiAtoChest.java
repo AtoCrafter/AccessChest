@@ -42,11 +42,12 @@ public class GuiAtoChest extends GuiContainer {
 //    public final static int GUI_STOREINV_BUTTON_ID = 5;
 //    public final static int GUI_EJECT_BUTTON_ID = 6;
 
-    public GuiAtoChest(Container par1Container) {
-        super(par1Container);
+    public GuiAtoChest(ContainerAtoChest container) {
+        super(container);
+        this.container = container;
         xSize = 256;
         ySize = 256;
-        sender = new PacketSender(mc);
+        sender = new PacketSender();
     }
 //
 //    public GuiAccessChest(ContainerAccessChestSlave container) {
@@ -161,9 +162,9 @@ public class GuiAtoChest extends GuiContainer {
     public void handleMouseInput() {
         super.handleMouseInput();
         int wheelDiff = Mouse.getDWheel();
-        container.setScrollIndex(container.getScrollIndex() + wheelDiff * Properties.ROWS_ON_SCROLL);
         if (wheelDiff != 0) {
-            sender.sendScrollIndex(container.getScrollIndex());
+            container.setScrollIndex(container.getScrollIndex() - wheelDiff * Properties.ROWS_ON_SCROLL);
+            sender.sendScrollIndex(mc, container.getScrollIndex());
         }
     }
 
