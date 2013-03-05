@@ -31,7 +31,7 @@ public abstract class Repository implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int index, int amount) {
-        return data.decreaseItem(index, amount);
+        return data.bringItem(index, amount);
     }
 
     @Override

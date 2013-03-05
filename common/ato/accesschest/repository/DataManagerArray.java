@@ -29,13 +29,17 @@ public class DataManagerArray extends DataManager {
     }
 
     @Override
-    public ItemStack decreaseItem(int index, int amount) {
+    public ItemStack bringItem(int index, int amount) {
         ItemStack is = getItem(index);
-        is.stackSize -= amount;
-        if (is.stackSize <= 0) {
-            is = null;
+        if (contents[index] == null) {
+            return null;
+        } else {
+            if (is.stackSize <= amount) {
+                setItem(index, null);
+                return is;
+            } else {
+                return is.splitStack(amount);
+            }
         }
-        setItem(index, is);
-        return is;
     }
 }

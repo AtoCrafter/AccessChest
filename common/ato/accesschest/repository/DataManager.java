@@ -8,7 +8,15 @@ import net.minecraft.item.ItemStack;
 public abstract class DataManager {
 
     public abstract void setItem(int index, ItemStack is);
+
     public abstract ItemStack getItem(int index);
+
     public abstract int getMaxSize();
-    public abstract ItemStack decreaseItem(int index, int amount);
+
+    /**
+     * リポジトリ内のアイテムを引き出す
+     *
+     * @return 引き出せたアイテムのアイテムスタック
+     */
+    public abstract ItemStack bringItem(int index, int amount);
 }
