@@ -14,6 +14,8 @@ public class ContainerAtoChest extends Container {
 
     private IInventory chestInventory;
     private IInventory playerInventory;
+    /** 現在のスクロール位置 */
+    private int scrollIndex;
 
     /**
      * @param chestInventory  対象とするチェストのインベントリ
@@ -22,6 +24,7 @@ public class ContainerAtoChest extends Container {
     public ContainerAtoChest(IInventory chestInventory, IInventory playerInventory) {
         this.chestInventory = chestInventory;
         this.playerInventory = playerInventory;
+        setScrollIndex(0);
         refreshSlot();
     }
 
@@ -148,5 +151,28 @@ public class ContainerAtoChest extends Container {
         }
 
         return isSuccess;
+    }
+
+    // スクロール関連
+
+    /**
+     * スクロールの現在位置を取得
+     */
+    public int getScrollIndex() {
+        return scrollIndex;
+    }
+
+    /**
+     * スクロールの現在位置を設定
+     */
+    public void setScrollIndex(int index) {
+        scrollIndex = Math.max(0, Math.min(index, getScrollMax()));
+    }
+
+    /**
+     * スクロール可能な最大値を取得
+     */
+    public int getScrollMax() {
+        return Math.max(0, (chestInventory.getSizeInventory() - 1) / 12 - 7);
     }
 }

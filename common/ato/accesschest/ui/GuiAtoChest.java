@@ -1,5 +1,7 @@
 package ato.accesschest.ui;
 
+import ato.accesschest.Properties;
+import com.sun.xml.internal.ws.client.SenderException;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -7,6 +9,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.StringTranslate;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -16,12 +19,8 @@ import java.io.IOException;
  */
 public class GuiAtoChest extends GuiContainer {
 
-    public GuiAtoChest(Container par1Container) {
-        super(par1Container);
-        xSize = 256;
-        ySize = 256;
-    }
-
+    private ContainerAtoChest container;
+    private PacketSender sender;
 //    private ContainerAccessChestSlave container;
 //    private GuiTextField filterTextField;
 //    private boolean isScrolling;
@@ -42,6 +41,13 @@ public class GuiAtoChest extends GuiContainer {
 //    public final static int GUI_STOREEQP_BUTTON_ID = 4;
 //    public final static int GUI_STOREINV_BUTTON_ID = 5;
 //    public final static int GUI_EJECT_BUTTON_ID = 6;
+
+    public GuiAtoChest(Container par1Container) {
+        super(par1Container);
+        xSize = 256;
+        ySize = 256;
+        sender = new PacketSender(mc);
+    }
 //
 //    public GuiAccessChest(ContainerAccessChestSlave container) {
 //        super(container);
@@ -143,7 +149,7 @@ public class GuiAtoChest extends GuiContainer {
         mc.renderEngine.bindTexture(i);
         int j = (width - xSize) / 2;
         int k = (height - ySize) / 2;
-        drawTexturedModalRect(j, k+9, 0, 0, xSize, ySize-18);
+        drawTexturedModalRect(j, k + 9, 0, 0, xSize, ySize - 18);
 //        int sm = container.getScrollMax();
 //        if ( sm != 0 ) {
 //            int scroll = (int)((142-15) * (double)container.getCurrentScroll() / sm);
@@ -151,27 +157,16 @@ public class GuiAtoChest extends GuiContainer {
 //        }
     }
 
-//    @Override
-//    public void handleMouseInput() {
-//        super.handleMouseInput();
-//        int i = Mouse.getDWheel();
-//        if ( i > 0 ) {
-//            container.scrollUp();
-//        } else if ( i < 0 ) {
-//            container.scrollDown();
-//        }
-//        if ( i != 0 ) {
-//            PacketGeneratorGui packet = new PacketGeneratorGui();
-//            packet.instruction = PacketGeneratorGui.SET_SCROLL;
-//            packet.intData = container.getCurrentScroll();
-//            try {
-//                utils.sendPacket(packet.generate());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//
+    @Override
+    public void handleMouseInput() {
+        super.handleMouseInput();
+        int wheelDiff = Mouse.getDWheel();
+        container.setScrollIndex(container.getScrollIndex() + wheelDiff * Properties.ROWS_ON_SCROLL);
+        if (wheelDiff != 0) {
+            sender.sendScrollIndex(container.getScrollIndex());
+        }
+    }
+
 //    @Override
 //    protected void keyTyped(char c, int code) {
 //        if ( filterTextField.isFocused() &&
