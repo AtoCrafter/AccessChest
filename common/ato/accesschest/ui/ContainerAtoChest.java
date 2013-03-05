@@ -14,6 +14,10 @@ public class ContainerAtoChest extends Container {
 
     private IInventory chestInventory;
     private IInventory playerInventory;
+    /**
+     * 現在のスクロール位置
+     */
+    private int scrollIndex;
 
     /**
      * @param chestInventory  対象とするチェストのインベントリ
@@ -22,6 +26,7 @@ public class ContainerAtoChest extends Container {
     public ContainerAtoChest(IInventory chestInventory, IInventory playerInventory) {
         this.chestInventory = chestInventory;
         this.playerInventory = playerInventory;
+        setScrollIndex(0);
         refreshSlot();
     }
 
@@ -34,7 +39,6 @@ public class ContainerAtoChest extends Container {
         int max = chestInventory.getSizeInventory();
         for (int k = 0; k < 8; k++) {
             for (int l = 0; l < 12; l++) {
-//                int stackIndex = getCurrentScroll()*12 + k*12+l;
                 int index = getDisplayBaseIndex() + k * 12 + l;
                 if (index < max) {
                     addSlotToContainer(new Slot(chestInventory, index, l * 18 + 12, k * 18 + 17));
@@ -63,7 +67,7 @@ public class ContainerAtoChest extends Container {
      * インベントリ内容を表示するスロット群の先頭がしめすインベントリの番号
      */
     protected int getDisplayBaseIndex() {
-        return 0;
+        return getScrollIndex() * 12;
     }
 
     @Override
@@ -148,5 +152,31 @@ public class ContainerAtoChest extends Container {
         }
 
         return isSuccess;
+    }
+
+    // スクロール関連
+
+    /**
+     * スクロールの現在位置を取得
+     */
+    public int getScrollIndex() {
+        return scrollIndex;
+    }
+
+    /**
+     * スクロールの現在位置を設定
+     */
+    public void setScrollIndex(int index) {
+        if (index != scrollIndex) {
+            scrollIndex = Math.max(0, Math.min(index, getScrollMax()));
+            refreshSlot();
+        }
+    }
+
+    /**
+     * スクロール可能な最大値を取得
+     */
+    public int getScrollMax() {
+        return Math.max(0, (chestInventory.getSizeInventory() - 1) / 12 - 7);
     }
 }
