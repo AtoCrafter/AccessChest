@@ -4,23 +4,23 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
 /**
- * リポジトリをキャッシュしておく
+ * Access Chest の NBT をキャッシュしておく
  * ファイル I/O は遅い
  */
-public class RepositoriesPool {
+public class NBTPool {
 
     /**
      * このクラスの唯一のインスタンス
      */
-    public static RepositoriesPool instance;
+    protected static NBTPool instance;
 
     /**
      * 中身の実体
      */
-    private RepositoryAccessChest[] pool;
+    private DataManagerNBT[] pool;
 
-    public RepositoriesPool() {
-        pool = new RepositoryAccessChest[16];
+    public NBTPool() {
+        pool = new DataManagerNBT[16];
     }
 
     /**
@@ -28,12 +28,12 @@ public class RepositoriesPool {
      */
     @ForgeSubscribe
     public void reloadPool(WorldEvent.Load event) {
-        instance = new RepositoriesPool();
+        instance = new NBTPool();
     }
 
-    public RepositoryAccessChest getRepository(int color) {
+    public DataManagerNBT getNBT(int color) {
         if (pool[color] == null) {
-            pool[color] = new RepositoryAccessChest(color);
+            pool[color] = new DataManagerNBT(color);
         }
         return pool[color];
     }
