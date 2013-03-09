@@ -10,7 +10,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import ato.accesschest.initializer.ProxyCommon;
 
 @Mod(
-        modid = "AccessChest",
+        modid = Properties.MOD_ID,
         name = Properties.MOD_NAME,
         version = Properties.VERSION
 )
@@ -22,7 +22,7 @@ import ato.accesschest.initializer.ProxyCommon;
 )
 public class AccessChest {
 
-    @Instance("AccessChest")
+    @Instance(Properties.MOD_ID)
     public static AccessChest instance;
     @SidedProxy(clientSide = "ato.accesschest.initializer.ProxyClient", serverSide = "ato.accesschest.initializer.ProxyCommon")
     public static ProxyCommon initalizer;
