@@ -1,5 +1,6 @@
 package ato.accesschest.ui;
 
+import ato.accesschest.AccessChest;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import java.io.*;
@@ -20,7 +21,8 @@ public class Localization {
     private void registerLocalizations() {
         for (File f : getLocalizationFiles()) {
             try {
-                LanguageRegistry.instance().addStringLocalization(loadProperty(f));
+                String lang = f.getName().substring(0, f.getName().lastIndexOf("."));
+                LanguageRegistry.instance().addStringLocalization(loadProperty(f), lang);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -31,7 +33,7 @@ public class Localization {
      * 全翻訳ファイルのリストを取得
      */
     private File[] getLocalizationFiles() {
-        return (new File("/ato/accesschest/lang")).listFiles(new FilenameFilter() {
+        return (new File(AccessChest.class.getResource("lang").getPath())).listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 return name.endsWith(".properties");
