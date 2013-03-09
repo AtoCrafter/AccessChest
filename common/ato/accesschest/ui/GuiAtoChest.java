@@ -22,25 +22,25 @@ public class GuiAtoChest extends GuiContainer {
     private ContainerAtoChest container;
     private PacketSender sender;
 //    private ContainerAccessChestSlave container;
-//    private GuiTextField filterTextField;
+    private GuiTextField filterTextField;
 //    private boolean isScrolling;
 //    private boolean wasClicking;
 //
 //    private static final Utils utils = Utils.getInstance();
-//
-//    private GuiButton renameButton;
-//    private GuiButton clearButton;
-//    private GuiButton sortButton;
-//    private GuiButton storeInvButton;
-//    private GuiButton storeEqpButton;
-//    private GuiButton ejectButton;
-//
-//    public final static int GUI_RENAME_BUTTON_ID = 1;
-//    public final static int GUI_SORT_BUTTON_ID = 2;
-//    public final static int GUI_CLEAR_BUTTON_ID = 3;
-//    public final static int GUI_STOREEQP_BUTTON_ID = 4;
-//    public final static int GUI_STOREINV_BUTTON_ID = 5;
-//    public final static int GUI_EJECT_BUTTON_ID = 6;
+
+    private GuiButton renameButton;
+    private GuiButton clearButton;
+    private GuiButton sortButton;
+    private GuiButton storeInvButton;
+    private GuiButton storeEqpButton;
+    private GuiButton ejectButton;
+
+    public final static int GUI_RENAME_BUTTON_ID = 1;
+    public final static int GUI_SORT_BUTTON_ID = 2;
+    public final static int GUI_CLEAR_BUTTON_ID = 3;
+    public final static int GUI_STOREEQP_BUTTON_ID = 4;
+    public final static int GUI_STOREINV_BUTTON_ID = 5;
+    public final static int GUI_EJECT_BUTTON_ID = 6;
 
     public GuiAtoChest(ContainerAtoChest container) {
         super(container);
@@ -59,35 +59,35 @@ public class GuiAtoChest extends GuiContainer {
 //        wasClicking = false;
 //    }
 
-//    @Override
-//    public void initGui() {
-//        super.initGui();
-//        int ox = (width - xSize) / 2;
-//        int oy = (height - ySize) / 2;
-//        controlList.clear();
-//        filterTextField = new GuiTextField(fontRenderer, 176, 9+156, 68, 16);
-//        filterTextField.setMaxStringLength(10);
-//        int left = ox + 176;
-//        int line1 = oy + 9 + 173;
-//        int line2 = line1 + 19;
-//        int line3 = line2 + 19;
-//        int butWidth = 68;
-//        int butHeight = 20;
-//        StringTranslate trans = StringTranslate.getInstance();
-//        renameButton   = 	new GuiButton(GUI_RENAME_BUTTON_ID,   left,  line1, butWidth, butHeight, trans.translateKey(ConstantValues.buttonNameRename));
-//        clearButton    = 	new GuiButton(GUI_CLEAR_BUTTON_ID,    left,  line2, butWidth, butHeight, trans.translateKey(ConstantValues.buttonNameClear));
-//        sortButton     = 	new GuiButton(GUI_SORT_BUTTON_ID,     left,  line3, butWidth, butHeight, trans.translateKey(ConstantValues.buttonNameSort));
-//        storeInvButton = 	new GuiButton(GUI_STOREINV_BUTTON_ID, left,  line1, butWidth, butHeight, trans.translateKey(ConstantValues.buttonNameStoreInv));
-//        storeEqpButton =	new GuiButton(GUI_STOREEQP_BUTTON_ID, left,  line2, butWidth, butHeight, trans.translateKey(ConstantValues.buttonNameStoreEqp));
-//        ejectButton    = 	new GuiButton(GUI_EJECT_BUTTON_ID,    left,  line3, butWidth, butHeight, trans.translateKey(ConstantValues.buttonNameEject));
-//        controlList.add(clearButton);
-//        controlList.add(renameButton);
-//        controlList.add(sortButton);
-//        controlList.add(storeInvButton);
-//        controlList.add(storeEqpButton);
-//        controlList.add(ejectButton);
-//    }
-//
+    @Override
+    public void initGui() {
+        super.initGui();
+        int ox = (width - xSize) / 2;
+        int oy = (height - ySize) / 2;
+        controlList.clear();
+        filterTextField = new GuiTextField(fontRenderer, 176, 9+156, 68, 16);
+        filterTextField.setMaxStringLength(10);
+        int left = ox + 176;
+        int line1 = oy + 9 + 173;
+        int line2 = line1 + 19;
+        int line3 = line2 + 19;
+        int butWidth = 68;
+        int butHeight = 20;
+        StringTranslate trans = StringTranslate.getInstance();
+        renameButton   = new GuiButton(GUI_RENAME_BUTTON_ID,   left, line1, butWidth, butHeight, trans.translateKey("gui.button.rename"));
+        clearButton    = new GuiButton(GUI_CLEAR_BUTTON_ID,    left, line2, butWidth, butHeight, trans.translateKey("gui.button.clear"));
+        sortButton     = new GuiButton(GUI_SORT_BUTTON_ID,     left, line3, butWidth, butHeight, trans.translateKey("gui.button.sort"));
+        storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.storeInventory"));
+        storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.storeEquipment"));
+        ejectButton    = new GuiButton(GUI_EJECT_BUTTON_ID,    left, line3, butWidth, butHeight, trans.translateKey("gui.button.eject"));
+        controlList.add(clearButton);
+        controlList.add(renameButton);
+        controlList.add(sortButton);
+        controlList.add(storeInvButton);
+        controlList.add(storeEqpButton);
+        controlList.add(ejectButton);
+    }
+
 //    @Override
 //    public void updateScreen() {
 //        super.updateScreen();
