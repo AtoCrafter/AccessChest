@@ -35,12 +35,12 @@ public class GuiAtoChest extends GuiContainer {
     private GuiButton storeEqpButton;
     private GuiButton ejectButton;
 
-    public final static int GUI_RENAME_BUTTON_ID = 1;
-    public final static int GUI_SORT_BUTTON_ID = 2;
-    public final static int GUI_CLEAR_BUTTON_ID = 3;
-    public final static int GUI_STOREEQP_BUTTON_ID = 4;
-    public final static int GUI_STOREINV_BUTTON_ID = 5;
-    public final static int GUI_EJECT_BUTTON_ID = 6;
+    private final static int GUI_RENAME_BUTTON_ID = 1;
+    private final static int GUI_SORT_BUTTON_ID = 2;
+    private final static int GUI_CLEAR_BUTTON_ID = 3;
+    private final static int GUI_STOREEQP_BUTTON_ID = 4;
+    private final static int GUI_STOREINV_BUTTON_ID = 5;
+    private final static int GUI_EJECT_BUTTON_ID = 6;
 
     public GuiAtoChest(ContainerAtoChest container) {
         super(container);
