@@ -62,17 +62,17 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     public void initGui() {
         super.initGui();
+        // 座標の計算
         int ox = (width - xSize) / 2;
         int oy = (height - ySize) / 2;
-        controlList.clear();
-        filterTextField = new GuiTextField(fontRenderer, 176, 9+156, 68, 16);
-        filterTextField.setMaxStringLength(10);
         int left = ox + 176;
+        int line0 = oy + 9 + 156;
         int line1 = oy + 9 + 173;
         int line2 = line1 + 19;
         int line3 = line2 + 19;
         int butWidth = 68;
         int butHeight = 20;
+        // ボタンの作成
         StringTranslate trans = StringTranslate.getInstance();
         renameButton   = new GuiButton(GUI_RENAME_BUTTON_ID,   left, line1, butWidth, butHeight, trans.translateKey("gui.button.rename"));
         clearButton    = new GuiButton(GUI_CLEAR_BUTTON_ID,    left, line2, butWidth, butHeight, trans.translateKey("gui.button.clear"));
@@ -80,20 +80,25 @@ public class GuiAtoChest extends GuiContainer {
         storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.storeInventory"));
         storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.storeEquipment"));
         ejectButton    = new GuiButton(GUI_EJECT_BUTTON_ID,    left, line3, butWidth, butHeight, trans.translateKey("gui.button.eject"));
+        // ボタンの登録
+        controlList.clear();
         controlList.add(clearButton);
         controlList.add(renameButton);
         controlList.add(sortButton);
         controlList.add(storeInvButton);
         controlList.add(storeEqpButton);
         controlList.add(ejectButton);
+        // テキスト入力フォームの作成
+        filterTextField = new GuiTextField(fontRenderer, left, line0, 68, 16);
+        filterTextField.setMaxStringLength(10);
     }
 
-//    @Override
-//    public void updateScreen() {
-//        super.updateScreen();
-//        filterTextField.updateCursorCounter();
-//    }
-//
+    @Override
+    public void updateScreen() {
+        super.updateScreen();
+        filterTextField.updateCursorCounter();
+    }
+
 //    @Override
 //    public void drawScreen(int mouseX, int mouseY, float par3) {
 //        boolean clicking = Mouse.isButtonDown(0);
@@ -142,6 +147,13 @@ public class GuiAtoChest extends GuiContainer {
 //        super.drawGuiContainerForegroundLayer(x, y);
 //        filterTextField.drawTextBox();
 //    }
+
+    @Override
+    public void drawScreen(int x, int y, float par3) {
+        super.drawScreen(x, y, par3);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        filterTextField.drawTextBox();
+    }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i1, int i2) {
@@ -201,13 +213,13 @@ public class GuiAtoChest extends GuiContainer {
 //            }
 //        }
 //    }
-//
-//    @Override
-//    protected void mouseClicked(int x, int y, int code) {
-//        super.mouseClicked(x, y, code);
-//        filterTextField.mouseClicked(x-guiLeft, y-guiTop, code);
-//    }
-//
+
+    @Override
+    protected void mouseClicked(int x, int y, int code) {
+        super.mouseClicked(x, y, code);
+        filterTextField.mouseClicked(x, y, code);
+    }
+
 //    @Override
 //    protected void actionPerformed(GuiButton guibutton) {
 //        try {
