@@ -10,6 +10,10 @@ import java.util.Properties;
  */
 public class Localization {
 
+    public static void register() {
+        (new Localization()).registerLocalizations();
+    }
+
     /**
      * 全ての翻訳を登録
      */
