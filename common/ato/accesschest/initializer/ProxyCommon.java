@@ -3,7 +3,7 @@ package ato.accesschest.initializer;
 import ato.accesschest.AccessChest;
 import ato.accesschest.game.BlockAccessChest;
 import ato.accesschest.game.ItemAccessChest;
-import ato.accesschest.repository.NBTPool;
+import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -28,7 +28,7 @@ public class ProxyCommon {
      * イベントフックの登録
      */
     private void registerHooks() {
-        MinecraftForge.EVENT_BUS.register(new NBTPool());
+        MinecraftForge.EVENT_BUS.register(new SaveHandler());
     }
 
     /**
