@@ -16,7 +16,7 @@ public class BlockAccessChest extends BlockAtoChest {
 
     public BlockAccessChest(int id) {
         super(id);
-        setBlockName("AccessChestBlock");
+        setBlockName("accesschest");
     }
 
     @Override

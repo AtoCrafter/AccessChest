@@ -1,12 +1,15 @@
 package ato.accesschest.initializer;
 
 import ato.accesschest.AccessChest;
+import ato.accesschest.Properties;
 import ato.accesschest.game.BlockAccessChest;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -35,7 +38,7 @@ public class ProxyCommon {
      * アイテムの登録
      */
     private void registerItems() {
-        GameRegistry.registerBlock(new BlockAccessChest(255), ItemAccessChest.class, "test");
+        GameRegistry.registerBlock(new BlockAccessChest(255), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
     }
 
     /**
