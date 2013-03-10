@@ -208,6 +208,9 @@ public class ContainerAtoChest extends Container {
      * アイテムスタックの情報にフィルタがマッチするか
      */
     private boolean isMatchFilter(ItemStack is, String filter) {
+        if (is == null) {
+            return false;
+        }
         return is.getDisplayName().contains(filter);
     }
 }
