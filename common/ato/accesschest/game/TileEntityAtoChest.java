@@ -4,6 +4,7 @@ import ato.accesschest.repository.Repository;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityEnderChest;
 
 /**
@@ -14,14 +15,27 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     /**
      * 実体
      */
-    private Repository repo;
-
-    public TileEntityAtoChest(Repository repo) {
-        this.repo = repo;
-    }
+    protected Repository repo;
 
     public Repository getRepository() {
         return this.repo;
+    }
+
+    protected abstract Repository createRepository(int color, int grade);
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        byte color = nbt.getByte("Color");
+        byte grade = nbt.getByte("Grade");
+        repo = createRepository(color, grade);
+    }
+
+    @Override
+    public void writeToNBT(NBTTagCompound nbttc) {
+        super.writeToNBT(nbttc);
+        nbttc.setByte("Color", (byte)(repo.getColor() & 0xF));
+        nbttc.setByte("Grade", (byte)(repo.getGrade() & 0xF));
     }
 
     /* IInventory を実装するため、そのまま Repository に移譲 */
