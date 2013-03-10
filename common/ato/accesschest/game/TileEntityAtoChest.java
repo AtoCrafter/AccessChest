@@ -1,11 +1,18 @@
 package ato.accesschest.game;
 
+import ato.accesschest.Properties;
 import ato.accesschest.repository.Repository;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntityEnderChest;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * TileEntity として扱うための Repository のラッパー
@@ -28,14 +35,39 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
         super.readFromNBT(nbt);
         byte color = nbt.getByte("Color");
         byte grade = nbt.getByte("Grade");
-        repo = createRepository(color, grade);
+        setColorAndGrade(color, grade);
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbttc) {
         super.writeToNBT(nbttc);
-        nbttc.setByte("Color", (byte)(repo.getColor() & 0xF));
-        nbttc.setByte("Grade", (byte)(repo.getGrade() & 0xF));
+        nbttc.setByte("Color", (byte) (repo.getColor() & 0xF));
+        nbttc.setByte("Grade", (byte) (repo.getGrade() & 0xF));
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        ByteArrayOutputStream data = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(data);
+        try {
+            out.writeInt(xCoord);
+            out.writeInt(yCoord);
+            out.writeInt(zCoord);
+            out.writeByte((byte) repo.getColor());
+            out.writeByte((byte) repo.getGrade());
+            return new Packet250CustomPayload(Properties.CHANNEL_TILEENTITY, data.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 色及び、クラスの結びつけ
+     * ブロックが置かれた時やロード時、サーバーからクライアントへのパケットなどで呼ばれる
+     */
+    public void setColorAndGrade(int color, int grade) {
+        repo = createRepository(color, grade);
     }
 
     /* IInventory を実装するため、そのまま Repository に移譲 */
