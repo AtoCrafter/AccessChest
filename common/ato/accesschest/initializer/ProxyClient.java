@@ -1,6 +1,9 @@
 package ato.accesschest.initializer;
 
+import ato.accesschest.game.TileEntityAtoChest;
+import ato.accesschest.game.TileEntityAtoChestRenderer;
 import ato.accesschest.ui.Localization;
+import cpw.mods.fml.client.registry.ClientRegistry;
 
 /**
  * 初期化処理
@@ -12,6 +15,7 @@ public class ProxyClient extends ProxyCommon {
     public void init() {
         super.init();
         registerLocalization();
+        registerRenderer();
     }
 
     /**
@@ -19,5 +23,12 @@ public class ProxyClient extends ProxyCommon {
      */
     private void registerLocalization() {
         Localization.register();
+    }
+
+    /**
+     * レンダラの登録
+     */
+    private void registerRenderer() {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtoChest.class, new TileEntityAtoChestRenderer());
     }
 }

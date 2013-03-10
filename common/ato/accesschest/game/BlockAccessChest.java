@@ -32,7 +32,7 @@ public class BlockAccessChest extends BlockAtoChest {
 
     @Override
     public TileEntity createNewTileEntity(World world) {
-        return null;
+        return new TileEntityAccessChest(0, 0);
     }
 
 //    // duplicated from BlockEnderChest

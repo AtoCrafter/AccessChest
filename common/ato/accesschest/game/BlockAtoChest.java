@@ -17,21 +17,21 @@ public abstract class BlockAtoChest extends BlockContainer {
         setCreativeTab(CreativeTabs.tabDecorations);
     }
 
-//    @Override
-//    public boolean isOpaqueCube() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean renderAsNormalBlock() {
-//        return false;
-//    }
-//
-//    @Override
-//    public int getRenderType() {
-//        return ConstantValues.renderType;
-//    }
-//
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return 22;
+    }
+
 //    @Override
 //    public void breakBlock(World world, int x, int y, int z, int id, int meta) {
 //        TileEntityAbstChest chest = (TileEntityAbstChest)world.getBlockTileEntity(x, y, z);

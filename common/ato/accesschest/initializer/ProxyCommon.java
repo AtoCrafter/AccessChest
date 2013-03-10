@@ -5,6 +5,7 @@ import ato.accesschest.Properties;
 import ato.accesschest.game.BlockAccessChest;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.game.RecipeAtoChest;
+import ato.accesschest.game.TileEntityAccessChest;
 import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -26,6 +27,7 @@ public class ProxyCommon {
     public void init() {
         registerHooks();
         registerItems();
+        registerEntities();
         registerRecipes();
         registerGuiHandler();
     }
@@ -42,6 +44,13 @@ public class ProxyCommon {
      */
     private void registerItems() {
         GameRegistry.registerBlock(new BlockAccessChest(255), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
+    }
+
+    /**
+     * エンティティの登録
+     */
+    private void registerEntities() {
+        GameRegistry.registerTileEntity(TileEntityAccessChest.class, "accesschest");
     }
 
     /**
