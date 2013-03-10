@@ -3,6 +3,7 @@ package ato.accesschest.ui;
 import ato.accesschest.Properties;
 import com.sun.xml.internal.ws.client.SenderException;
 import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -143,13 +144,13 @@ public class GuiAtoChest extends GuiContainer {
         int wheelDiff = Math.max(-1, Math.min(Mouse.getDWheel(), 1));
         if (wheelDiff != 0) {
             container.setScrollIndex(container.getScrollIndex() - wheelDiff * Properties.ROWS_ON_SCROLL);
-            sender.sendScrollIndex(mc, container.getScrollIndex());
+            sender.sendScrollIndex(container.getScrollIndex());
         }
         // ドラッグによるスクロールのチェック
         if (isScrolling && Mouse.isButtonDown(0)) {
             // y 座標の計算式は GuiScreen#handleMouseInput を参照した
             scrollbarDragged(this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1);
-            sender.sendScrollIndex(mc, container.getScrollIndex());
+            sender.sendScrollIndex(container.getScrollIndex());
         }
     }
 
@@ -205,7 +206,7 @@ public class GuiAtoChest extends GuiContainer {
             filterTextField.textboxKeyTyped(c, code);
 
             String text = filterTextField.getText();
-            sender.sendFilter(mc, text);
+            sender.sendFilter(text);
         } else {
             if (code == FMLClientHandler.instance().getClient().gameSettings.keyBindChat.keyCode
                     || code == FMLClientHandler.instance().getClient().gameSettings.keyBindCommand.keyCode) {
@@ -269,4 +270,12 @@ public class GuiAtoChest extends GuiContainer {
 //            e.printStackTrace();
 //        }
 //    }
+
+    // その他
+
+    @Override
+    public void setWorldAndResolution(Minecraft mc, int par2, int par3) {
+        super.setWorldAndResolution(mc, par2, par3);
+        sender.setMinecraft(mc);
+    }
 }
