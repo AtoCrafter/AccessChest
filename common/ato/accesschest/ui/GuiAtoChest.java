@@ -20,10 +20,19 @@ import java.io.IOException;
 public class GuiAtoChest extends GuiContainer {
 
     private ContainerAtoChest container;
+    /**
+     * サーバーに操作を知らせるパケットを送るため
+     */
     private PacketSender sender;
-//    private ContainerAccessChestSlave container;
+    //    private ContainerAccessChestSlave container;
+    /**
+     * テキスト入力フォーム
+     */
     private GuiTextField filterTextField;
-//    private boolean isScrolling;
+    /**
+     * スクロール中かどうか
+     */
+    private boolean isScrolling;
 //    private boolean wasClicking;
 //
 //    private static final Utils utils = Utils.getInstance();
@@ -59,6 +68,8 @@ public class GuiAtoChest extends GuiContainer {
 //        wasClicking = false;
 //    }
 
+    // レンダリング関連
+
     @Override
     public void initGui() {
         super.initGui();
@@ -74,12 +85,12 @@ public class GuiAtoChest extends GuiContainer {
         int butHeight = 20;
         // ボタンの作成
         StringTranslate trans = StringTranslate.getInstance();
-        renameButton   = new GuiButton(GUI_RENAME_BUTTON_ID,   left, line1, butWidth, butHeight, trans.translateKey("gui.button.rename"));
-        clearButton    = new GuiButton(GUI_CLEAR_BUTTON_ID,    left, line2, butWidth, butHeight, trans.translateKey("gui.button.clear"));
-        sortButton     = new GuiButton(GUI_SORT_BUTTON_ID,     left, line3, butWidth, butHeight, trans.translateKey("gui.button.sort"));
+        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.rename"));
+        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.clear"));
+        sortButton = new GuiButton(GUI_SORT_BUTTON_ID, left, line3, butWidth, butHeight, trans.translateKey("gui.button.sort"));
         storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.storeInventory"));
         storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.storeEquipment"));
-        ejectButton    = new GuiButton(GUI_EJECT_BUTTON_ID,    left, line3, butWidth, butHeight, trans.translateKey("gui.button.eject"));
+        ejectButton = new GuiButton(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, trans.translateKey("gui.button.eject"));
         // ボタンの登録
         controlList.clear();
         controlList.add(clearButton);
@@ -163,21 +174,56 @@ public class GuiAtoChest extends GuiContainer {
         int j = (width - xSize) / 2;
         int k = (height - ySize) / 2;
         drawTexturedModalRect(j, k + 9, 0, 0, xSize, ySize - 18);
-//        int sm = container.getScrollMax();
-//        if ( sm != 0 ) {
-//            int scroll = (int)((142-15) * (double)container.getCurrentScroll() / sm);
-//            drawTexturedModalRect(j+232, k+17+scroll, 2, 239, 12, 15);
-//        }
+        int sm = container.getScrollMax();
+        if (sm != 0) {
+            int scroll = (int) ((142 - 15) * (double) container.getScrollIndex() / sm);
+            drawTexturedModalRect(j + 232, k + 17 + scroll, 2, 239, 12, 15);
+        }
     }
+
+    // 操作関連
 
     @Override
     public void handleMouseInput() {
         super.handleMouseInput();
-        int wheelDiff = Mouse.getDWheel();
+        // ホイールによるスクロールのチェック
+        int wheelDiff = Math.max(-1, Math.min(Mouse.getDWheel(), 1));
         if (wheelDiff != 0) {
             container.setScrollIndex(container.getScrollIndex() - wheelDiff * Properties.ROWS_ON_SCROLL);
             sender.sendScrollIndex(mc, container.getScrollIndex());
         }
+        // ドラッグによるスクロールのチェック
+        if (isScrolling && Mouse.isButtonDown(0)) {
+            // y 座標の計算式は GuiScreen#handleMouseInput を参照した
+            scrollbarDragged(this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1);
+            sender.sendScrollIndex(mc, container.getScrollIndex());
+        }
+    }
+
+    @Override
+    protected void mouseClicked(int x, int y, int code) {
+        super.mouseClicked(x, y, code);
+        filterTextField.mouseClicked(x, y, code);
+        // スクロールバーをクリックしたかのチェック
+        int j = (width - xSize) / 2;
+        int k = (height - ySize) / 2;
+        if (j + 232 <= x && x < j + 232 + 12 &&
+                k + 17 <= y && y < k + 17 + 142) {
+            isScrolling = true;
+        }
+    }
+
+    /**
+     * スクロールバーがドラッグされた
+     */
+    private void scrollbarDragged(int y) {
+        if (!Mouse.isButtonDown(0)) {
+            isScrolling = false;
+            return;
+        }
+        int k = (height - ySize) / 2;
+        float p = Math.max(0.0f, Math.min((y - (k + 17) - 15 / 2) / (float) (142 - 15), 1.0f));
+        container.setScrollIndex(Math.round(container.getScrollMax() * p));
     }
 
 //    @Override
@@ -213,12 +259,6 @@ public class GuiAtoChest extends GuiContainer {
 //            }
 //        }
 //    }
-
-    @Override
-    protected void mouseClicked(int x, int y, int code) {
-        super.mouseClicked(x, y, code);
-        filterTextField.mouseClicked(x, y, code);
-    }
 
 //    @Override
 //    protected void actionPerformed(GuiButton guibutton) {
