@@ -19,14 +19,32 @@ public class PacketSender {
     private Minecraft mc;
 
     /**
+     * Minecraft オブジェクトの登録
+     */
+    public void setMinecraft(Minecraft mc) {
+        this.mc = mc;
+    }
+
+    /**
      * 現在のスクロール位置をパケットにして送信する
      */
-    public void sendScrollIndex(Minecraft mc, final int index) {
-        this.mc = mc;
+    public void sendScrollIndex(final int index) {
         sendPacket(new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
                 out.writeInt(index);
+            }
+        });
+    }
+
+    /**
+     * 検索用フィルターの送信
+     */
+    public void sendFilter(final String filter) {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeUTF(filter);
             }
         });
     }

@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 //            return new ContainerAccessChest(AccessChestManager.inventory.getInventoryAccessChest(player.username, color), grade, player.inventory);
 //        }
         if (id == Properties.GUI_ID_CHEST) { // test
-            return new ContainerAtoChest(new RepositoryAccessChest(0, 1), player.inventory);
+            return new ContainerAtoChest(new RepositoryAccessChest(0, 2), player.inventory);
         }
         return null;
     }
@@ -41,7 +41,7 @@ public class GuiHandler implements IGuiHandler {
 //            return new GuiAccessChest(con);
 //        }
         if (id == Properties.GUI_ID_CHEST) { // test
-            return new GuiAtoChest(new ContainerAtoChest(new RepositoryDammy(1), player.inventory));
+            return new GuiAtoChest(new ContainerAtoChest(new RepositoryDammy(2), player.inventory));
         }
         return null;
     }
