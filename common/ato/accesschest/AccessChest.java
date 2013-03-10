@@ -1,5 +1,6 @@
 package ato.accesschest;
 
+import ato.accesschest.ui.PacketReceiverServer;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,8 +18,10 @@ import ato.accesschest.initializer.ProxyCommon;
 @NetworkMod(
         clientSideRequired = true,
         serverSideRequired = true,
-        channels = {Properties.CHANNEL_SCROLL_INDEX, Properties.CHANNEL_FILTER},
-        packetHandler = ato.accesschest.ui.PacketReceiver.class
+        serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(
+                channels = {Properties.CHANNEL_SCROLL_INDEX, Properties.CHANNEL_FILTER},
+                packetHandler = PacketReceiverServer.class
+        )
 )
 public class AccessChest {
 

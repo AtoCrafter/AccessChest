@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * GUI の同期のためなどに用いられるカスタムパケットの送信を行う
  */
-public class PacketSender {
+public class PacketSenderClient {
 
     /**
      * パケット送信のために用いる、Minecraft オブジェクト

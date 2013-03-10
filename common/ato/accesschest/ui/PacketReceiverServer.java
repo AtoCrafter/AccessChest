@@ -15,15 +15,15 @@ import java.io.IOException;
 /**
  * GUI の同期のためなどに用いられるカスタムパケットの受信を行う
  */
-public class PacketReceiver implements IPacketHandler {
+public class PacketReceiverServer implements IPacketHandler {
 
     @Override
     public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(packet.data));
         try {
             Container con = ((EntityPlayer) player).openContainer;
-            if (con instanceof ContainerAtoChest) {
-                ContainerAtoChest ac = (ContainerAtoChest) con;
+            if (con instanceof ContainerAtoChestServer) {
+                ContainerAtoChestServer ac = (ContainerAtoChestServer) con;
                 if (Properties.CHANNEL_SCROLL_INDEX.equals(packet.channel)) {
                     receiveScrollIndex(ac, in.readInt());
                 } else if (Properties.CHANNEL_FILTER.equals(packet.channel)) {
@@ -38,14 +38,15 @@ public class PacketReceiver implements IPacketHandler {
     /**
      * 現在のスクロール位置を受信
      */
-    private void receiveScrollIndex(ContainerAtoChest container, int index) {
+    private void receiveScrollIndex(ContainerAtoChestServer container, int index) {
         container.setScrollIndex(index);
+        System.out.println(index);
     }
 
     /**
      * 新しいフィルタを受信
      */
-    private void receiveFilter(ContainerAtoChest container, String filter) {
+    private void receiveFilter(ContainerAtoChestServer container, String filter) {
         container.setFilter(filter);
     }
 }
