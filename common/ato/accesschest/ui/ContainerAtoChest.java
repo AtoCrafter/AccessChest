@@ -52,7 +52,6 @@ public abstract class ContainerAtoChest extends Container {
         while (inventoryItemStacks.size() > limit) {
             inventoryItemStacks.remove(inventoryItemStacks.size() - 1);
         }
-//        updateSlotSize();
     }
 
     protected abstract void refreshSlotChest();

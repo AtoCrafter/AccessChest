@@ -27,7 +27,6 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
     }
 
     private ArrayList<Integer> filter;
-    private String filterText;
 
     @Override
     protected void refreshSlotChest() {
@@ -136,7 +135,6 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
     // フィルタ関連
 
     public void setFilter(String str) {
-        this.filterText = str;
         filter.clear();
         if ("".equals(str)) {
             for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
