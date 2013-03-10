@@ -21,7 +21,7 @@ public class ItemAccessChest extends ItemAtoChest {
         if (!world.isRemote && !player.isSneaking()) {
             player.openGui(
                     AccessChest.instance,
-                    AccessChest.colorgrade2id(getColor(is.getItemDamage()), getGrade(is.getItemDamage())),
+                    is.getItemDamage(),
                     world, 0, 0, 0);
         }
         return is;

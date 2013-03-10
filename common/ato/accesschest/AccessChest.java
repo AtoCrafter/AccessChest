@@ -46,13 +46,15 @@ public class AccessChest {
      * Access Chest の色を GUI の ID から算出する
      */
     public static int id2color(int id) {
-        return id & 15;
+        int color = id & 0xF;
+        return color;
     }
 
     /**
      * Access Chest のクラスを GUI の ID から算出する
      */
     public static int id2grade(int id) {
-        return id >> 4;
+        int grade = (id & 0x30) >> 4;
+        return grade;
     }
 }

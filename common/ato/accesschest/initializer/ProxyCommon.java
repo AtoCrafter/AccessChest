@@ -4,12 +4,14 @@ import ato.accesschest.AccessChest;
 import ato.accesschest.Properties;
 import ato.accesschest.game.BlockAccessChest;
 import ato.accesschest.game.ItemAccessChest;
+import ato.accesschest.game.RecipeAtoChest;
 import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -24,6 +26,7 @@ public class ProxyCommon {
     public void init() {
         registerHooks();
         registerItems();
+        registerRecipes();
         registerGuiHandler();
     }
 
@@ -39,6 +42,50 @@ public class ProxyCommon {
      */
     private void registerItems() {
         GameRegistry.registerBlock(new BlockAccessChest(255), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
+    }
+
+    /**
+     * レシピの登録
+     */
+    private void registerRecipes() {
+        int blockIdAC = 255; // TODO
+        int blockIdCC = 254; // TODO
+        // Access Chest Class-0
+        GameRegistry.addShapelessRecipe(new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 0)),
+                new Object[] {Block.chest, Item.enderPearl});
+        // Access Chest Class-1
+        GameRegistry.addRecipe(new RecipeAtoChest(
+                new ItemStack(Block.blockLapis),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 0)),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 1))
+        ));
+        // Access Chest Class-2
+        GameRegistry.addRecipe(new RecipeAtoChest(
+                new ItemStack(Block.blockGold),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 1)),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 2))
+        ));
+        // Access Chest Class-3
+        GameRegistry.addRecipe(new RecipeAtoChest(
+                new ItemStack(Block.blockDiamond),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 2)),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 3))
+        ));
+//        // Compressed Chest Class-1
+//        GameRegistry.addRecipe(new RecipeAtoChest(
+//                new ItemStack(Item.diamond),
+//                new ItemStack(Block.chest),
+//                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 1))
+//        ));
+//        // Compressed Chest Class-2
+//        GameRegistry.addRecipe(new RecipeAtoChest(
+//                new ItemStack(Block.blockDiamond),
+//                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 1)),
+//                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 2))
+//        ));
+        // TODO
+        // Copy of Access Chest Class-1
+        // Copy of Access Chest Class-2
     }
 
     /**
