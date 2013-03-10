@@ -49,7 +49,7 @@ public class Localization {
     private Properties loadProperty(File file) throws IOException {
         Properties prop = new Properties();
         InputStream in = new FileInputStream(file);
-        prop.load(in);
+        prop.load(new InputStreamReader(in, "UTF-8"));
         in.close();
         return prop;
     }
