@@ -9,6 +9,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.StringTranslate;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -91,6 +92,7 @@ public class GuiAtoChest extends GuiContainer {
         storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.storeInventory"));
         storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.storeEquipment"));
         ejectButton = new GuiButton(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, trans.translateKey("gui.button.eject"));
+        updateButtonsDisplay(false);
         // ボタンの登録
         controlList.clear();
         controlList.add(clearButton);
@@ -109,55 +111,6 @@ public class GuiAtoChest extends GuiContainer {
         super.updateScreen();
         filterTextField.updateCursorCounter();
     }
-
-//    @Override
-//    public void drawScreen(int mouseX, int mouseY, float par3) {
-//        boolean clicking = Mouse.isButtonDown(0);
-//        // if click scrollbar (Not drag)
-//        int j = (width - xSize) / 2;
-//        int k = (height - ySize) / 2;
-//        if ( !wasClicking && clicking &&
-//                j+232 <= mouseX && mouseX < j+232+12 &&
-//                k+17 <= mouseY && mouseY < k+17+142 ) {
-//            isScrolling = true;
-//        }
-//        // stop scrolling
-//        if ( !clicking ) {
-//            isScrolling = false;
-//        }
-//        // store if click
-//        wasClicking = clicking;
-//        // scroll
-//        if ( isScrolling ) {
-//            float p = (mouseY - (k+17) - 15/2) / (float)(142-15);
-//            if ( p < 0 ) { p = 0.0f; }
-//            if ( p > 1 ) { p = 1.0f; }
-//            container.scrollTo(p);
-//            PacketGeneratorGui packet = new PacketGeneratorGui();
-//            packet.instruction = PacketGeneratorGui.SET_SCROLL;
-//            packet.intData = container.getCurrentScroll();
-//            try {
-//                utils.sendPacket(packet.generate());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        // Button Switch
-//        boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-//        renameButton.drawButton   = !shift;
-//        clearButton.drawButton    = !shift;
-//        sortButton.drawButton     = !shift;
-//        storeInvButton.drawButton =  shift;
-//        storeEqpButton.drawButton =  shift;
-//        ejectButton.drawButton    =  shift;
-//        super.drawScreen(mouseX, mouseY, par3);
-//    }
-//
-//    @Override
-//    protected void drawGuiContainerForegroundLayer(int x, int y) {
-//        super.drawGuiContainerForegroundLayer(x, y);
-//        filterTextField.drawTextBox();
-//    }
 
     @Override
     public void drawScreen(int x, int y, float par3) {
@@ -224,6 +177,26 @@ public class GuiAtoChest extends GuiContainer {
         int k = (height - ySize) / 2;
         float p = Math.max(0.0f, Math.min((y - (k + 17) - 15 / 2) / (float) (142 - 15), 1.0f));
         container.setScrollIndex(Math.round(container.getScrollMax() * p));
+    }
+
+    @Override
+    public void handleKeyboardInput() {
+        super.handleKeyboardInput();        // Button Switch
+        updateButtonsDisplay(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT));
+    }
+
+    /**
+     * SHIFT キー押下によるボタン群の表示、非表示を切り替える
+     *
+     * @param shift SHIFT キーが黄化されているかどうか
+     */
+    private void updateButtonsDisplay(boolean shift) {
+        renameButton.drawButton = !shift;
+        clearButton.drawButton = !shift;
+        sortButton.drawButton = !shift;
+        storeInvButton.drawButton = shift;
+        storeEqpButton.drawButton = shift;
+        ejectButton.drawButton = shift;
     }
 
 //    @Override
