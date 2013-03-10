@@ -21,7 +21,7 @@ public class DataManagerNBT extends DataManagerArray {
         try {
             loadFromNBT();
         } catch (IOException e) {
-            for (int i=0; i<getMaxSize(); ++i) {
+            for (int i = 0; i < getMaxSize(); ++i) {
                 setItem(i, null);
             }
             e.printStackTrace();
@@ -52,5 +52,35 @@ public class DataManagerNBT extends DataManagerArray {
 //        if ( nbtcomparator != null ) {
 //            comparator.readFromNBT(nbtcomparator);
 //        }
+    }
+
+    /**
+     * NBT ファイルへ保存
+     */
+    public void saveToNBT() {
+        // Compound
+        NBTTagCompound nbt = new NBTTagCompound();
+        // Items
+        NBTTagList list = new NBTTagList("Items");
+        for (int i = 0; i < getMaxSize(); ++i) {
+            ItemStack is = getItem(i);
+            if (is != null) {
+                NBTTagCompound nbtstack = new NBTTagCompound();
+                nbtstack.setInteger("Slot", i);
+                is.writeToNBT(nbtstack);
+                list.appendTag(nbtstack);
+            }
+        }
+        nbt.setTag("Items", list);
+//        // Comparator
+//        NBTTagCompound nbtcomparator = new NBTTagCompound();
+//        comparator.writeToNBT(nbtcomparator);
+//        nbt.setTag("Comparator", nbtcomparator);
+
+        try {
+            util.saveAccessChestNBT(color, nbt);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

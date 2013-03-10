@@ -22,4 +22,14 @@ public class SaveHandler {
             NBTPool.instance = new NBTPool();
         }
     }
+
+    /**
+     * ワールドセーブ時に Access Chest のリポジトリ群をセーブする
+     */
+    @ForgeSubscribe
+    public void savePool(WorldEvent.Save event) {
+        if (event.world instanceof WorldServerMulti) {
+            NBTPool.instance.save();
+        }
+    }
 }
