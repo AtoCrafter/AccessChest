@@ -14,7 +14,7 @@ public class ContainerAtoChestClient extends ContainerAtoChest {
     private int chestInventorySize;
 
     public ContainerAtoChestClient(IInventory playerInventory) {
-        super(new InventoryBasic("dammyInventoryClient", 12*8), playerInventory);
+        super(new InventoryBasic("dammyInventoryClient", 12 * 8), playerInventory);
         chestInventorySize = chestInventory.getSizeInventory();
         refreshSlot();
     }
@@ -39,5 +39,15 @@ public class ContainerAtoChestClient extends ContainerAtoChest {
     @Override
     public int getScrollMax() {
         return Math.max(0, (chestInventorySize - 1) / 12 - 7);
+    }
+
+    @Override
+    public void updateProgressBar(int type, int value) {
+        switch (type) {
+            case INFO_TYPE_INVENTORY_SIZE:
+                chestInventorySize = value;
+                refreshSlot();
+                break;
+        }
     }
 }

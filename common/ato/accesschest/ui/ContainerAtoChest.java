@@ -6,12 +6,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-
 /**
  * この MOD で追加されるチェストの GUI でプレイヤーインベントリとチェスト内を組み合わせるコンテナ
  */
 public abstract class ContainerAtoChest extends Container {
+
+    protected static final int INFO_TYPE_INVENTORY_SIZE = 1;
 
     protected IInventory chestInventory;
     protected IInventory playerInventory;

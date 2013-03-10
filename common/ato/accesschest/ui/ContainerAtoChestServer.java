@@ -2,6 +2,7 @@ package ato.accesschest.ui;
 
 import ato.accesschest.game.ItemAccessChest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -13,11 +14,14 @@ import java.util.ArrayList;
  */
 public class ContainerAtoChestServer extends ContainerAtoChest {
 
+    private int lastInventorySize;
+
     public ContainerAtoChestServer(IInventory chestInventory, IInventory playerInventory) {
         super(chestInventory, playerInventory);
         setScrollIndex(0);
         filter = new ArrayList<Integer>();
         setFilter("");
+        lastInventorySize = -1;
     }
 
     private ArrayList<Integer> filter;
@@ -154,5 +158,17 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
             return false;
         }
         return is.getDisplayName().contains(filter);
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        if (lastInventorySize != filter.size()) {
+            for (int i = 0; i < this.crafters.size(); ++i) {
+                ICrafting crafter = (ICrafting) this.crafters.get(i);
+                crafter.sendProgressBarUpdate(this, INFO_TYPE_INVENTORY_SIZE, filter.size());
+            }
+            lastInventorySize = filter.size();
+        }
     }
 }

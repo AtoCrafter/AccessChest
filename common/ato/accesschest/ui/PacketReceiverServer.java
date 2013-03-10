@@ -40,7 +40,6 @@ public class PacketReceiverServer implements IPacketHandler {
      */
     private void receiveScrollIndex(ContainerAtoChestServer container, int index) {
         container.setScrollIndex(index);
-        System.out.println(index);
     }
 
     /**
