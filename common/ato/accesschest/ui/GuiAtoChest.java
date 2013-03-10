@@ -1,31 +1,27 @@
 package ato.accesschest.ui;
 
 import ato.accesschest.Properties;
-import com.sun.xml.internal.ws.client.SenderException;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.StringTranslate;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import java.io.IOException;
-
 /**
  * この MOD で追加されるチェストを開いた時の画面
  */
 public class GuiAtoChest extends GuiContainer {
 
-    private ContainerAtoChest container;
+    private ContainerAtoChestClient container;
     /**
      * サーバーに操作を知らせるパケットを送るため
      */
-    private PacketSender sender;
+    private PacketSenderClient sender;
     //    private ContainerAccessChestSlave container;
     /**
      * テキスト入力フォーム
@@ -53,12 +49,12 @@ public class GuiAtoChest extends GuiContainer {
     private final static int GUI_STOREINV_BUTTON_ID = 5;
     private final static int GUI_EJECT_BUTTON_ID = 6;
 
-    public GuiAtoChest(ContainerAtoChest container) {
+    public GuiAtoChest(ContainerAtoChestClient container) {
         super(container);
         this.container = container;
         xSize = 256;
         ySize = 256;
-        sender = new PacketSender();
+        sender = new PacketSenderClient();
     }
 //
 //    public GuiAccessChest(ContainerAccessChestSlave container) {

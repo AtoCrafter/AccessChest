@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * GUI の同期のためなどに用いられるカスタムパケットの送信を行う
  */
-public class PacketSender {
+public class PacketSenderClient {
 
     /**
      * パケット送信のために用いる、Minecraft オブジェクト
@@ -29,7 +29,7 @@ public class PacketSender {
      * 現在のスクロール位置をパケットにして送信する
      */
     public void sendScrollIndex(final int index) {
-        sendPacket(new IDataWriter() {
+        sendPacket(Properties.CHANNEL_SCROLL_INDEX, new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
                 out.writeInt(index);
@@ -41,7 +41,7 @@ public class PacketSender {
      * 検索用フィルターの送信
      */
     public void sendFilter(final String filter) {
-        sendPacket(new IDataWriter() {
+        sendPacket(Properties.CHANNEL_FILTER, new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
                 out.writeUTF(filter);
@@ -54,7 +54,7 @@ public class PacketSender {
      *
      * @param writer パケットに何を書き込むか指定するクラス
      */
-    private void sendPacket(IDataWriter writer) {
+    private void sendPacket(String channel, IDataWriter writer) {
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(data);
         try {
@@ -62,7 +62,7 @@ public class PacketSender {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(Properties.CHANNEL_SCROLL_INDEX, data.toByteArray()));
+        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(channel, data.toByteArray()));
     }
 
     /**

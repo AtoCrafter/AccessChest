@@ -2,7 +2,6 @@ package ato.accesschest.ui;
 
 import ato.accesschest.Properties;
 import ato.accesschest.repository.RepositoryAccessChest;
-import ato.accesschest.repository.RepositoryDammy;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -29,7 +28,7 @@ public class GuiHandler implements IGuiHandler {
 //            return new ContainerAccessChest(AccessChestManager.inventory.getInventoryAccessChest(player.username, color), grade, player.inventory);
 //        }
         if (id == Properties.GUI_ID_CHEST) { // test
-            return new ContainerAtoChest(new RepositoryAccessChest(0, 2), player.inventory);
+            return new ContainerAtoChestServer(new RepositoryAccessChest(0, 2), player.inventory);
         }
         return null;
     }
@@ -41,7 +40,7 @@ public class GuiHandler implements IGuiHandler {
 //            return new GuiAccessChest(con);
 //        }
         if (id == Properties.GUI_ID_CHEST) { // test
-            return new GuiAtoChest(new ContainerAtoChest(new RepositoryDammy(2), player.inventory));
+            return new GuiAtoChest(new ContainerAtoChestClient(player.inventory));
         }
         return null;
     }
