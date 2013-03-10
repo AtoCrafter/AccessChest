@@ -26,4 +26,12 @@ public class NBTPool {
         }
         return pool[color];
     }
+
+    public void save() {
+        for (int i = 0; i < pool.length; ++i) {
+            if (pool[i] != null) {
+                pool[i].saveToNBT();
+            }
+        }
+    }
 }
