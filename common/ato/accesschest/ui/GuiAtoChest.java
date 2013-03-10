@@ -199,39 +199,22 @@ public class GuiAtoChest extends GuiContainer {
         ejectButton.drawButton = shift;
     }
 
-//    @Override
-//    protected void keyTyped(char c, int code) {
-//        if ( filterTextField.isFocused() &&
-//                code != 1 ) {
-//            filterTextField.textboxKeyTyped(c, code);
-//
-//            String text = filterTextField.getText();
-//            PacketGeneratorGui packet = new PacketGeneratorGui();
-//            if ( text.contains("mine:") ) {
-//                packet.instruction = PacketGeneratorGui.SET_OWN;
-//                packet.intData = 1;
-//            } else if ( text.contains("ours:") ) {
-//                packet.instruction = PacketGeneratorGui.SET_OWN;
-//                packet.intData = 0;
-//            } else {
-//                packet.instruction = PacketGeneratorGui.SET_FILTER;
-//                packet.textData = text;
-//            }
-//            if ( packet.isValid() ) {
-//                try {
-//                    utils.sendPacket( packet.generate() );
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } else {
-//            if ( code == FMLClientHandler.instance().getClient().gameSettings.keyBindChat.keyCode ) {
-//                filterTextField.setFocused(true);
-//            } else {
-//                super.keyTyped(c, code);
-//            }
-//        }
-//    }
+    @Override
+    protected void keyTyped(char c, int code) {
+        if (filterTextField.isFocused() && code != 1) {
+            filterTextField.textboxKeyTyped(c, code);
+
+            String text = filterTextField.getText();
+            sender.sendFilter(mc, text);
+        } else {
+            if (code == FMLClientHandler.instance().getClient().gameSettings.keyBindChat.keyCode
+                    || code == FMLClientHandler.instance().getClient().gameSettings.keyBindCommand.keyCode) {
+                filterTextField.setFocused(true);
+            } else {
+                super.keyTyped(c, code);
+            }
+        }
+    }
 
 //    @Override
 //    protected void actionPerformed(GuiButton guibutton) {

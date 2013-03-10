@@ -32,6 +32,19 @@ public class PacketSender {
     }
 
     /**
+     * 検索用フィルターの送信
+     */
+    public void sendFilter(Minecraft mc, final String filter) {
+        this.mc = mc;
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeUTF(filter);
+            }
+        });
+    }
+
+    /**
      * パケットを生成し、送信する
      *
      * @param writer パケットに何を書き込むか指定するクラス
