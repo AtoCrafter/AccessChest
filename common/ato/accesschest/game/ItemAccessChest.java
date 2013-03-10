@@ -18,8 +18,11 @@ public class ItemAccessChest extends ItemAtoChest {
 
     @Override
     public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player) {
-        if ( !world.isRemote && !player.isSneaking() ) {
-            player.openGui(AccessChest.instance, Properties.GUI_ID_CHEST, world, 0, 0, 0);
+        if (!world.isRemote && !player.isSneaking()) {
+            player.openGui(
+                    AccessChest.instance,
+                    AccessChest.colorgrade2id(getColor(is.getItemDamage()), getGrade(is.getItemDamage())),
+                    world, 0, 0, 0);
         }
         return is;
     }

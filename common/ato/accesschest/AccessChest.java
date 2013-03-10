@@ -34,4 +34,25 @@ public class AccessChest {
     public void load(FMLInitializationEvent event) {
         initalizer.init();
     }
+
+    /**
+     * Access Chest の色とクラスから GUI の ID を算出する
+     */
+    public static int colorgrade2id(int color, int grade) {
+        return (grade << 4) + color;
+    }
+
+    /**
+     * Access Chest の色を GUI の ID から算出する
+     */
+    public static int id2color(int id) {
+        return id & 15;
+    }
+
+    /**
+     * Access Chest のクラスを GUI の ID から算出する
+     */
+    public static int id2grade(int id) {
+        return id >> 4;
+    }
 }

@@ -21,8 +21,11 @@ public class BlockAccessChest extends BlockAtoChest {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int dist, float distX, float distY, float distZ) {
-        if ( !world.isRemote ) {
-            player.openGui(AccessChest.instance, Properties.GUI_ID_CHEST, world, x, y, z);
+        if (!world.isRemote) {
+            player.openGui(
+                    AccessChest.instance,
+                    AccessChest.colorgrade2id(0, 0), // TODO
+                    world, x, y, z);
         }
         return true;
     }
