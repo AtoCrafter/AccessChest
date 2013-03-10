@@ -55,20 +55,6 @@ public abstract class ItemAtoChest extends ItemBlock {
 //
 //    protected abstract void linkAbstChest(TileEntityAbstChest tileEntity, EntityPlayer player, int color, int grade, boolean isRemote);
 
-    public int getGrade(int damage) {
-        int grade = (damage & 0x30) >> 4;
-        return grade;
-    }
-
-    public int getColor(int damage) {
-        int color = damage & 0xF;
-        return color;
-    }
-
-    public int getDamage(int grade, int color) {
-        return (grade << 4) + color;
-    }
-
     @Override
     public void getSubItems(int id, CreativeTabs tab, List list) {
         list.add(new ItemStack(id, 1, 0x0F));
