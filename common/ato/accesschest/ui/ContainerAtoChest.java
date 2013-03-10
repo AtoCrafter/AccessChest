@@ -7,6 +7,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
+
 /**
  * この MOD で追加されるチェストの GUI でプレイヤーインベントリとチェスト内を組み合わせるコンテナ
  */
@@ -18,6 +20,8 @@ public class ContainerAtoChest extends Container {
      * 現在のスクロール位置
      */
     private int scrollIndex;
+    private ArrayList<Integer> filter;
+    private String filterText;
 
     /**
      * @param chestInventory  対象とするチェストのインベントリ
@@ -27,7 +31,8 @@ public class ContainerAtoChest extends Container {
         this.chestInventory = chestInventory;
         this.playerInventory = playerInventory;
         setScrollIndex(0);
-        refreshSlot();
+        filter = new ArrayList<Integer>();
+        setFilter("");
     }
 
     /**
@@ -36,12 +41,12 @@ public class ContainerAtoChest extends Container {
     private void refreshSlot() {
         inventorySlots.clear();
         // chest inventory
-        int max = chestInventory.getSizeInventory();
+        int max = filter.size();
         for (int k = 0; k < 8; k++) {
             for (int l = 0; l < 12; l++) {
                 int index = getDisplayBaseIndex() + k * 12 + l;
                 if (index < max) {
-                    addSlotToContainer(new Slot(chestInventory, index, l * 18 + 12, k * 18 + 17));
+                    addSlotToContainer(new Slot(chestInventory, filter.get(index), l * 18 + 12, k * 18 + 17));
                 }
             }
         }
@@ -177,6 +182,32 @@ public class ContainerAtoChest extends Container {
      * スクロール可能な最大値を取得
      */
     public int getScrollMax() {
-        return Math.max(0, (chestInventory.getSizeInventory() - 1) / 12 - 7);
+        return Math.max(0, (filter.size() - 1) / 12 - 7);
+    }
+
+    // フィルタ関連
+
+    public void setFilter(String str) {
+        this.filterText = str;
+        filter.clear();
+        if ("".equals(str)) {
+            for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
+                filter.add(index);
+            }
+        } else {
+            for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
+                if (isMatchFilter(chestInventory.getStackInSlot(index), str)) {
+                    filter.add(index);
+                }
+            }
+        }
+        refreshSlot();
+    }
+
+    /**
+     * アイテムスタックの情報にフィルタがマッチするか
+     */
+    private boolean isMatchFilter(ItemStack is, String filter) {
+        return is.getDisplayName().contains(filter);
     }
 }
