@@ -25,6 +25,10 @@ public class NBTIOUtil {
      * 指定した色の Access Chest の NBT ファイルを返す
      */
     private File getNBTFile(int color) {
-        return new File(MinecraftServer.getServer().worldServerForDimension(0).getChunkSaveLocation(), "AccessChest-Test.dat");
+        File dir = new File(MinecraftServer.getServer().worldServerForDimension(0).getChunkSaveLocation(), "AccessChest");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        return new File(dir, "AC" + color + ".dat");
     }
 }
