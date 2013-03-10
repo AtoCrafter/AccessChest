@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 public abstract class ContainerAtoChest extends Container {
 
     protected static final int INFO_TYPE_INVENTORY_SIZE = 1;
+    protected static final int INFO_TYPE_SCROLL_INDEX = 2;
 
     protected IInventory chestInventory;
     protected IInventory playerInventory;

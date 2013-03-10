@@ -24,7 +24,7 @@ public class ContainerAtoChestClient extends ContainerAtoChest {
         for (int k = 0; k < 8; k++) {
             for (int l = 0; l < 12; l++) {
                 int index = k * 12 + l;
-                if (index < chestInventorySize) {
+                if (index < chestInventorySize - scrollIndex * 12) {
                     addSlotToContainer(new Slot(chestInventory, index, l * 18 + 12, k * 18 + 17));
                 }
             }
@@ -47,6 +47,9 @@ public class ContainerAtoChestClient extends ContainerAtoChest {
             case INFO_TYPE_INVENTORY_SIZE:
                 chestInventorySize = value;
                 refreshSlot();
+                break;
+            case INFO_TYPE_SCROLL_INDEX:
+                scrollIndex = value;
                 break;
         }
     }

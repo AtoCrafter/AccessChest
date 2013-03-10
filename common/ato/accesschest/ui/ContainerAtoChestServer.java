@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class ContainerAtoChestServer extends ContainerAtoChest {
 
     private int lastInventorySize;
+    private int lastScrollIndex;
 
     public ContainerAtoChestServer(IInventory chestInventory, IInventory playerInventory) {
         super(chestInventory, playerInventory);
@@ -22,6 +23,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         filter = new ArrayList<Integer>();
         setFilter("");
         lastInventorySize = -1;
+        lastScrollIndex = -1;
     }
 
     private ArrayList<Integer> filter;
@@ -147,6 +149,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
                 }
             }
         }
+        setScrollIndex(0);
         refreshSlot();
     }
 
@@ -162,13 +165,17 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     @Override
     public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-        if (lastInventorySize != filter.size()) {
-            for (int i = 0; i < this.crafters.size(); ++i) {
-                ICrafting crafter = (ICrafting) this.crafters.get(i);
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting crafter = (ICrafting) this.crafters.get(i);
+            if (lastScrollIndex != scrollIndex) {
+                crafter.sendProgressBarUpdate(this, INFO_TYPE_SCROLL_INDEX, scrollIndex);
+            }
+            if (lastInventorySize != filter.size()) {
                 crafter.sendProgressBarUpdate(this, INFO_TYPE_INVENTORY_SIZE, filter.size());
             }
-            lastInventorySize = filter.size();
         }
+        lastScrollIndex = scrollIndex;
+        lastInventorySize = filter.size();
+        super.detectAndSendChanges();
     }
 }
