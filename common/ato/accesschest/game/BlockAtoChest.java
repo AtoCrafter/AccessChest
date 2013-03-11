@@ -1,10 +1,12 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
+import ato.accesschest.Properties;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-
-import java.util.Random;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 
 /**
  * この MOD で追加されるゲーム内のブロックの抽象クラス
@@ -15,6 +17,17 @@ public abstract class BlockAtoChest extends BlockContainer {
         super(id, 0, Material.rock);
         setHardness(0.8f);
         setCreativeTab(CreativeTabs.tabDecorations);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int dist, float distX, float distY, float distZ) {
+        if (!world.isRemote) {
+            player.openGui(
+                    AccessChest.instance,
+                    Properties.GUI_ID_TILEENTITY,
+                    world, x, y, z);
+        }
+        return true;
     }
 
     @Override
