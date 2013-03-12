@@ -43,7 +43,8 @@ public class ProxyCommon {
      * アイテムの登録
      */
     private void registerItems() {
-        GameRegistry.registerBlock(new BlockAccessChest(255), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
+        Properties.BLOCK_AC_ID = 255;
+        GameRegistry.registerBlock(new BlockAccessChest(Properties.BLOCK_AC_ID), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
     }
 
     /**
@@ -57,11 +58,11 @@ public class ProxyCommon {
      * レシピの登録
      */
     private void registerRecipes() {
-        int blockIdAC = 255; // TODO
+        int blockIdAC = Properties.BLOCK_AC_ID;
         int blockIdCC = 254; // TODO
         // Access Chest Class-0
         GameRegistry.addShapelessRecipe(new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 0)),
-                new Object[] {Block.chest, Item.enderPearl});
+                new Object[]{Block.chest, Item.enderPearl});
         // Access Chest Class-1
         GameRegistry.addRecipe(new RecipeAtoChest(
                 new ItemStack(Block.blockLapis),
