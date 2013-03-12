@@ -1,15 +1,21 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
+import ato.accesschest.Properties;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-
-import java.util.Random;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 
 /**
  * この MOD で追加されるゲーム内のブロックの抽象クラス
  */
 public abstract class BlockAtoChest extends BlockContainer {
+
+    public static int RENDER_ID;
 
     protected BlockAtoChest(int id) {
         super(id, 0, Material.rock);
@@ -17,21 +23,32 @@ public abstract class BlockAtoChest extends BlockContainer {
         setCreativeTab(CreativeTabs.tabDecorations);
     }
 
-//    @Override
-//    public boolean isOpaqueCube() {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean renderAsNormalBlock() {
-//        return false;
-//    }
-//
-//    @Override
-//    public int getRenderType() {
-//        return ConstantValues.renderType;
-//    }
-//
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int dist, float distX, float distY, float distZ) {
+        if (!world.isRemote) {
+            player.openGui(
+                    AccessChest.instance,
+                    Properties.GUI_ID_TILEENTITY,
+                    world, x, y, z);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return RENDER_ID;
+    }
+
 //    @Override
 //    public void breakBlock(World world, int x, int y, int z, int id, int meta) {
 //        TileEntityAbstChest chest = (TileEntityAbstChest)world.getBlockTileEntity(x, y, z);
@@ -52,13 +69,29 @@ public abstract class BlockAtoChest extends BlockContainer {
 //    public int quantityDropped(Random par1Random) {
 //        return 0;
 //    }
-//
-//    /**
-//     * ブロックが設置されたときの処理
-//     * ※ BlockEnderChest の同名処理を参考に
-//     */
-//    @Override
-//    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
-//        super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLiving);    //To change body of overridden methods use File | Settings | File Templates.
-//    }
+
+    /**
+     * ブロックが設置されたときの処理
+     *
+     * @see net.minecraft.block.BlockEnderChest#onBlockPlacedBy
+     */
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving living) {
+        byte direction = 0;
+        switch (MathHelper.floor_double((double) (living.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) {
+            case 0:
+                direction = 2;
+                break;
+            case 1:
+                direction = 5;
+                break;
+            case 2:
+                direction = 3;
+                break;
+            case 3:
+                direction = 4;
+                break;
+        }
+        world.setBlockMetadataWithNotify(x, y, z, direction);
+    }
 }

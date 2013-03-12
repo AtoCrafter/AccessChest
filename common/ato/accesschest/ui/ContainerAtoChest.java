@@ -28,6 +28,7 @@ public abstract class ContainerAtoChest extends Container {
     public ContainerAtoChest(IInventory chestInventory, IInventory playerInventory) {
         this.chestInventory = chestInventory;
         this.playerInventory = playerInventory;
+        chestInventory.openChest();
     }
 
     /**
@@ -87,4 +88,10 @@ public abstract class ContainerAtoChest extends Container {
      * スクロール可能な最大値を取得
      */
     public abstract int getScrollMax();
+
+    @Override
+    public void onCraftGuiClosed(EntityPlayer player) {
+        super.onCraftGuiClosed(player);
+        chestInventory.closeChest();
+    }
 }

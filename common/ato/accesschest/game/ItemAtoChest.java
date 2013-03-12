@@ -1,5 +1,6 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +22,17 @@ public abstract class ItemAtoChest extends ItemBlock {
         setMaxDamage(0);
     }
 
-//    @Override
+    @Override
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+        boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+        ((TileEntityAtoChest)world.getBlockTileEntity(x, y, z)).setColorAndGrade(
+                AccessChest.id2color(stack.getItemDamage()),
+                AccessChest.id2grade(stack.getItemDamage())
+        );
+        return ret;
+    }
+
+    //    @Override
 //    public boolean placeBlockAt(ItemStack itemstack, EntityPlayer player, World world,
 //                                int x, int y, int z, int side, float distX, float distY, float distZ) {
 //        if ( !player.isSneaking() ) return false;

@@ -12,11 +12,21 @@ public abstract class Repository implements IInventory {
 
     /** データ管理を行うオブジェクト */
     protected DataManager data;
+    /** チェストの色 */
+    protected int color;
     /** チェストのランク。"** Chest Class-?" と表現される */
     protected int grade;
 
     public Repository(DataManager data) {
         this.data = data;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public int getGrade() {
+        return grade;
     }
 
     @Override

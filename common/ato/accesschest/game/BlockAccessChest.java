@@ -1,13 +1,7 @@
 package ato.accesschest.game;
 
-import ato.accesschest.AccessChest;
-import ato.accesschest.Properties;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 /**
  * ゲーム内での Access Chest ブロック
@@ -20,19 +14,8 @@ public class BlockAccessChest extends BlockAtoChest {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int dist, float distX, float distY, float distZ) {
-        if (!world.isRemote) {
-            player.openGui(
-                    AccessChest.instance,
-                    AccessChest.colorgrade2id(0, 0), // TODO
-                    world, x, y, z);
-        }
-        return true;
-    }
-
-    @Override
     public TileEntity createNewTileEntity(World world) {
-        return null;
+        return new TileEntityAccessChest();
     }
 
 //    // duplicated from BlockEnderChest
