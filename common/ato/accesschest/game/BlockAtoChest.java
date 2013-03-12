@@ -15,6 +15,8 @@ import net.minecraft.world.World;
  */
 public abstract class BlockAtoChest extends BlockContainer {
 
+    public static int RENDER_ID;
+
     protected BlockAtoChest(int id) {
         super(id, 0, Material.rock);
         setHardness(0.8f);
@@ -44,7 +46,7 @@ public abstract class BlockAtoChest extends BlockContainer {
 
     @Override
     public int getRenderType() {
-        return 22;
+        return RENDER_ID;
     }
 
 //    @Override
