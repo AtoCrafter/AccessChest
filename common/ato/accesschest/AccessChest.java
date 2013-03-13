@@ -18,7 +18,7 @@ import ato.accesschest.initializer.ProxyCommon;
         clientSideRequired = true,
         serverSideRequired = true,
         serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(
-                channels = {Properties.CHANNEL_SCROLL_INDEX, Properties.CHANNEL_FILTER},
+                channels = {Properties.CHANNEL_SCROLL_INDEX, Properties.CHANNEL_FILTER, Properties.CHANNEL_SORT},
                 packetHandler = PacketHandlerServer.class
         ),
         clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(

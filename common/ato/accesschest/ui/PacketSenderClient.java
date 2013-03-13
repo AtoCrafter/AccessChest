@@ -50,6 +50,17 @@ public class PacketSenderClient {
     }
 
     /**
+     * ソートの送信
+     */
+    public void sendSort() {
+        sendPacket(Properties.CHANNEL_SORT, new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+            }
+        } );
+    }
+
+    /**
      * パケットを生成し、送信する
      *
      * @param writer パケットに何を書き込むか指定するクラス

@@ -1,6 +1,8 @@
 package ato.accesschest.ui;
 
 import ato.accesschest.game.ItemAccessChest;
+import ato.accesschest.game.TileEntityAtoChest;
+import ato.accesschest.repository.Repository;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -159,6 +161,19 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
             return false;
         }
         return is.getDisplayName().contains(filter);
+    }
+
+    // ボタン関連
+
+    public void sort() {
+        if (chestInventory instanceof Repository) {
+            ((Repository)chestInventory).sort();
+        } else if (chestInventory instanceof TileEntityAtoChest) {
+            ((TileEntityAtoChest)chestInventory).getRepository().sort();
+        } else {
+            throw new RuntimeException("unexpected IInventory object in chestInventory");
+        }
+        setFilter("");
     }
 
     @Override

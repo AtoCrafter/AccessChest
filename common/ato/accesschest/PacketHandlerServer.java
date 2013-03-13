@@ -31,6 +31,8 @@ public class PacketHandlerServer extends PacketHandler {
                 ui.receiveScrollIndex(ac, in.readInt());
             } else if (Properties.CHANNEL_FILTER.equals(channel)) {
                 ui.receiveFilter(ac, in.readUTF());
+            } else if (Properties.CHANNEL_SORT.equals(channel)) {
+                ui.receiveSort(ac);
             }
         }
     }

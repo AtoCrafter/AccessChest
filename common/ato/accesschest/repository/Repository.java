@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import java.util.Arrays;
+
 /**
  * この MOD で追加されるチェストの実体
  * リポジトリに関する機能の実装
@@ -28,6 +30,8 @@ public abstract class Repository implements IInventory {
     public int getGrade() {
         return grade;
     }
+
+    // IInventory の実装
 
     @Override
     public int getSizeInventory() {
@@ -69,4 +73,20 @@ public abstract class Repository implements IInventory {
 
     @Override
     public void closeChest() {}
+
+    // レポジトリの機能
+
+    public void sort() {
+        // java.util.Arrays を用いたソートのために、一度すべてのデータを ItemStack[] に変換
+        ItemStack[] array = new ItemStack[data.getMaxSize()];
+        for (int i=0; i<array.length; ++i) {
+            array[i] = data.getItem(i);
+        }
+        // 比較オブジェクトを用いてソートの実行
+        //Arrays.sort(array);  // TODO : Comparator
+        // ソート済み配列を元のデータに格納
+        for (int i=0; i<array.length; ++i) {
+            data.setItem(i, array[i]);
+        }
+    }
 }

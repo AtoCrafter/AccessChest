@@ -213,6 +213,15 @@ public class GuiAtoChest extends GuiContainer {
         }
     }
 
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        switch (button.id) {
+            case GUI_SORT_BUTTON_ID:
+                sender.sendSort();
+                break;
+        }
+    }
+
 //    @Override
 //    protected void actionPerformed(GuiButton guibutton) {
 //        try {

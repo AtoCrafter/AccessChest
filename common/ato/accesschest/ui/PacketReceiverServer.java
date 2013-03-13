@@ -18,4 +18,11 @@ public class PacketReceiverServer {
     public void receiveFilter(ContainerAtoChestServer container, String filter) {
         container.setFilter(filter);
     }
+
+    /**
+     * ソートの受信
+     */
+    public void receiveSort(ContainerAtoChestServer container) {
+        container.sort();
+    }
 }
