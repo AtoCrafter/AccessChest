@@ -76,6 +76,9 @@ public abstract class Repository implements IInventory {
 
     // レポジトリの機能
 
+    /**
+     * アイテムの ID, ダメージ、優先度などを用いて並び替え
+     */
     public void sort() {
         // java.util.Arrays を用いたソートのために、一度すべてのデータを ItemStack[] に変換
         ItemStack[] array = new ItemStack[data.getMaxSize()];
@@ -83,10 +86,19 @@ public abstract class Repository implements IInventory {
             array[i] = data.getItem(i);
         }
         // 比較オブジェクトを用いてソートの実行
-        //Arrays.sort(array);  // TODO : Comparator
+        Arrays.sort(array, new ComparatorAtoChest());  // TODO : Comparator
         // ソート済み配列を元のデータに格納
         for (int i=0; i<array.length; ++i) {
             data.setItem(i, array[i]);
         }
+        compact();
+    }
+
+    /**
+     * 可能な限りスタックして、アイテムスタック数が少なくなるように前に詰める
+     * 事前にソートされている必要がある
+     */
+    private void compact() {
+        // TODO
     }
 }

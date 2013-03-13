@@ -166,13 +166,15 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
     // ボタン関連
 
     public void sort() {
+        Repository repo;
         if (chestInventory instanceof Repository) {
-            ((Repository)chestInventory).sort();
+            repo = ((Repository)chestInventory);
         } else if (chestInventory instanceof TileEntityAtoChest) {
-            ((TileEntityAtoChest)chestInventory).getRepository().sort();
+            repo = ((TileEntityAtoChest)chestInventory).getRepository();
         } else {
             throw new RuntimeException("unexpected IInventory object in chestInventory");
         }
+        repo.sort();
         setFilter("");
     }
 
