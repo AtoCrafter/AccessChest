@@ -29,9 +29,10 @@ public class PacketSenderClient {
      * 現在のスクロール位置をパケットにして送信する
      */
     public void sendScrollIndex(final int index) {
-        sendPacket(Properties.CHANNEL_SCROLL_INDEX, new IDataWriter() {
+        sendPacket(new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_SCROLL_INDEX);
                 out.writeInt(index);
             }
         });
@@ -41,9 +42,10 @@ public class PacketSenderClient {
      * 検索用フィルターの送信
      */
     public void sendFilter(final String filter) {
-        sendPacket(Properties.CHANNEL_FILTER, new IDataWriter() {
+        sendPacket(new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_FILTER);
                 out.writeUTF(filter);
             }
         });
@@ -53,9 +55,10 @@ public class PacketSenderClient {
      * ソートの送信
      */
     public void sendSort() {
-        sendPacket(Properties.CHANNEL_SORT, new IDataWriter() {
+        sendPacket(new IDataWriter() {
             @Override
             public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_SORT);
             }
         } );
     }
@@ -65,7 +68,7 @@ public class PacketSenderClient {
      *
      * @param writer パケットに何を書き込むか指定するクラス
      */
-    private void sendPacket(String channel, IDataWriter writer) {
+    private void sendPacket(IDataWriter writer) {
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(data);
         try {
@@ -73,7 +76,7 @@ public class PacketSenderClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(channel, data.toByteArray()));
+        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(Properties.CHANNEL_GUI, data.toByteArray()));
     }
 
     /**
