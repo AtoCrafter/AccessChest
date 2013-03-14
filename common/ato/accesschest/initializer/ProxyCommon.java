@@ -6,6 +6,7 @@ import ato.accesschest.game.BlockAccessChest;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.game.RecipeAtoChest;
 import ato.accesschest.game.TileEntityAccessChest;
+import ato.accesschest.handler.AutoCollect;
 import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -37,6 +38,7 @@ public class ProxyCommon {
      */
     private void registerHooks() {
         MinecraftForge.EVENT_BUS.register(new SaveHandler());
+        MinecraftForge.EVENT_BUS.register(new AutoCollect());
     }
 
     /**

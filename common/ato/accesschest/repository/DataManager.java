@@ -13,12 +13,5 @@ public abstract class DataManager {
 
     public abstract int getMaxSize();
 
-    /**
-     * リポジトリ内のアイテムを引き出す
-     *
-     * @return 引き出せたアイテムのアイテムスタック
-     */
-    public abstract ItemStack bringItem(int index, int amount);
-
     public abstract ComparatorAtoChest getComparator();
 }

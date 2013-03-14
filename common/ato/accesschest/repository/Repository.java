@@ -1,5 +1,6 @@
 package ato.accesschest.repository;
 
+import ato.accesschest.game.ItemStackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -51,7 +52,17 @@ public abstract class Repository implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int index, int amount) {
-        return data.bringItem(index, amount);
+        ItemStack is = data.getItem(index);
+        if (is == null) {
+            return null;
+        } else {
+            if (is.stackSize <= amount) {
+                data.setItem(index, null);
+                return is;
+            } else {
+                return is.splitStack(amount);
+            }
+        }
     }
 
     @Override
@@ -80,6 +91,26 @@ public abstract class Repository implements IInventory {
 
     @Override
     public void closeChest() {
+    }
+
+    /**
+     * リポジトリ内にアイテムを入れる
+     * 引数の ItemStack は関数内部で収納した分だけ減らされる
+     */
+    public void storeItem(ItemStack itemStack) {
+        for (int i = 0; i < getSizeInventory(); ++i) {
+            ItemStack stored = data.getItem(i);
+            if (stored == null) {
+                data.setItem(i, itemStack.splitStack(Math.min(getInventoryStackLimit(), itemStack.stackSize)));
+            } else if (ItemStackUtil.canMerge(stored, itemStack)) {
+                int trans = Math.max(0,
+                        Math.min(Math.min(stored.getMaxStackSize(), getInventoryStackLimit()) - stored.stackSize,
+                                itemStack.stackSize));
+                stored.stackSize += trans;
+                itemStack.stackSize -= trans;
+            }
+            if (itemStack.stackSize <= 0) return;
+        }
     }
 
     // レポジトリの機能
@@ -114,7 +145,7 @@ public abstract class Repository implements IInventory {
                 if (compact[count] == null) {
                     compact[count] = array[i];
                     array[i] = null;
-                } else if (compact[count].isItemEqual(array[i])) {
+                } else if (ItemStackUtil.canMerge(compact[count], array[i])) {
                     int space = compact[count].getMaxStackSize() - compact[count].stackSize;
                     int trans = Math.min(space, array[i].stackSize);
                     compact[count].stackSize += trans;

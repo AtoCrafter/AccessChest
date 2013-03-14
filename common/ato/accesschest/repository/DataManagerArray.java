@@ -29,21 +29,6 @@ public class DataManagerArray extends DataManager {
     }
 
     @Override
-    public ItemStack bringItem(int index, int amount) {
-        ItemStack is = getItem(index);
-        if (contents[index] == null) {
-            return null;
-        } else {
-            if (is.stackSize <= amount) {
-                setItem(index, null);
-                return is;
-            } else {
-                return is.splitStack(amount);
-            }
-        }
-    }
-
-    @Override
     public ComparatorAtoChest getComparator() {
         return new ComparatorAtoChest();
     }
