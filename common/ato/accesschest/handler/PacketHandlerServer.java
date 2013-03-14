@@ -1,5 +1,6 @@
-package ato.accesschest;
+package ato.accesschest.handler;
 
+import ato.accesschest.Properties;
 import ato.accesschest.ui.ContainerAtoChestServer;
 import ato.accesschest.ui.PacketReceiverServer;
 import net.minecraft.entity.player.EntityPlayer;

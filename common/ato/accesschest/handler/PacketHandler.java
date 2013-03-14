@@ -1,4 +1,4 @@
-package ato.accesschest;
+package ato.accesschest.handler;
 
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;

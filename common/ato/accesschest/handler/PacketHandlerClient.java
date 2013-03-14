@@ -1,5 +1,6 @@
-package ato.accesschest;
+package ato.accesschest.handler;
 
+import ato.accesschest.Properties;
 import ato.accesschest.game.TileEntityAtoChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
