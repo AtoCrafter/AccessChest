@@ -42,4 +42,9 @@ public class DataManagerArray extends DataManager {
             }
         }
     }
+
+    @Override
+    public ComparatorAtoChest getComparator() {
+        return new ComparatorAtoChest();
+    }
 }

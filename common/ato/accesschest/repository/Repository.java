@@ -12,11 +12,17 @@ import java.util.Arrays;
  */
 public abstract class Repository implements IInventory {
 
-    /** データ管理を行うオブジェクト */
+    /**
+     * データ管理を行うオブジェクト
+     */
     protected DataManager data;
-    /** チェストの色 */
+    /**
+     * チェストの色
+     */
     protected int color;
-    /** チェストのランク。"** Chest Class-?" と表現される */
+    /**
+     * チェストのランク。"** Chest Class-?" と表現される
+     */
     protected int grade;
 
     public Repository(DataManager data) {
@@ -35,7 +41,7 @@ public abstract class Repository implements IInventory {
 
     @Override
     public int getSizeInventory() {
-        return (int)(27 * Math.pow(8, grade));
+        return (int) (27 * Math.pow(8, grade));
     }
 
     @Override
@@ -69,10 +75,12 @@ public abstract class Repository implements IInventory {
     }
 
     @Override
-    public void openChest() {}
+    public void openChest() {
+    }
 
     @Override
-    public void closeChest() {}
+    public void closeChest() {
+    }
 
     // レポジトリの機能
 
@@ -82,13 +90,13 @@ public abstract class Repository implements IInventory {
     public void sort() {
         // java.util.Arrays を用いたソートのために、一度すべてのデータを ItemStack[] に変換
         ItemStack[] array = new ItemStack[data.getMaxSize()];
-        for (int i=0; i<array.length; ++i) {
+        for (int i = 0; i < array.length; ++i) {
             array[i] = data.getItem(i);
         }
         // 比較オブジェクトを用いてソートの実行
-        Arrays.sort(array, new ComparatorAtoChest());  // TODO : Comparator
+        Arrays.sort(array, data.getComparator());
         // ソート済み配列を元のデータに格納
-        for (int i=0; i<array.length; ++i) {
+        for (int i = 0; i < array.length; ++i) {
             data.setItem(i, array[i]);
         }
         compact();
