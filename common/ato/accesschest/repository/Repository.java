@@ -4,17 +4,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import java.util.Arrays;
+
 /**
  * この MOD で追加されるチェストの実体
  * リポジトリに関する機能の実装
  */
 public abstract class Repository implements IInventory {
 
-    /** データ管理を行うオブジェクト */
+    /**
+     * データ管理を行うオブジェクト
+     */
     protected DataManager data;
-    /** チェストの色 */
+    /**
+     * チェストの色
+     */
     protected int color;
-    /** チェストのランク。"** Chest Class-?" と表現される */
+    /**
+     * チェストのランク。"** Chest Class-?" と表現される
+     */
     protected int grade;
 
     public Repository(DataManager data) {
@@ -29,9 +37,11 @@ public abstract class Repository implements IInventory {
         return grade;
     }
 
+    // IInventory の実装
+
     @Override
     public int getSizeInventory() {
-        return (int)(27 * Math.pow(8, grade));
+        return (int) (27 * Math.pow(8, grade));
     }
 
     @Override
@@ -65,8 +75,61 @@ public abstract class Repository implements IInventory {
     }
 
     @Override
-    public void openChest() {}
+    public void openChest() {
+    }
 
     @Override
-    public void closeChest() {}
+    public void closeChest() {
+    }
+
+    // レポジトリの機能
+
+    /**
+     * アイテムの ID, ダメージ、優先度などを用いて並び替え
+     */
+    public void sort() {
+        // java.util.Arrays を用いたソートのために、一度すべてのデータを ItemStack[] に変換
+        ItemStack[] array = new ItemStack[data.getMaxSize()];
+        for (int i = 0; i < array.length; ++i) {
+            array[i] = data.getItem(i);
+        }
+        // ソート＆コンパクトの実行
+        Arrays.sort(array, data.getComparator());
+        array = compact(array);
+        // ソート済み配列を元のデータに格納
+        for (int i = 0; i < array.length; ++i) {
+            data.setItem(i, array[i]);
+        }
+    }
+
+    /**
+     * 可能な限りスタックして、アイテムスタック数が少なくなるように前に詰める
+     * 事前にソートされている必要がある
+     */
+    private ItemStack[] compact(ItemStack[] array) {
+        int count = 0;
+        ItemStack[] compact = new ItemStack[array.length];
+        for (int i = 0; i < array.length && array[i] != null; ++i) {
+            while (array[i] != null) {
+                if (compact[count] == null) {
+                    compact[count] = array[i];
+                    array[i] = null;
+                } else if (compact[count].isItemEqual(array[i])) {
+                    int space = compact[count].getMaxStackSize() - compact[count].stackSize;
+                    int trans = Math.min(space, array[i].stackSize);
+                    compact[count].stackSize += trans;
+                    array[i].stackSize -= trans;
+                    if (array[i].stackSize == 0) {
+                        array[i] = null;
+                    }
+                    if (compact[count].stackSize == compact[count].getMaxStackSize()) {
+                        count++;
+                    }
+                } else {
+                    count++;
+                }
+            }
+        }
+        return compact;
+    }
 }

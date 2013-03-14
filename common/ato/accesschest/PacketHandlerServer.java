@@ -1,12 +1,9 @@
 package ato.accesschest;
 
-import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.ui.ContainerAtoChestServer;
 import ato.accesschest.ui.PacketReceiverServer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -27,10 +24,8 @@ public class PacketHandlerServer extends PacketHandler {
         Container con = player.openContainer;
         if (con instanceof ContainerAtoChestServer) {
             ContainerAtoChestServer ac = (ContainerAtoChestServer) con;
-            if (Properties.CHANNEL_SCROLL_INDEX.equals(channel)) {
-                ui.receiveScrollIndex(ac, in.readInt());
-            } else if (Properties.CHANNEL_FILTER.equals(channel)) {
-                ui.receiveFilter(ac, in.readUTF());
+            if (Properties.CHANNEL_GUI.equals(channel)) {
+                ui.receive(ac, in);
             }
         }
     }

@@ -12,12 +12,13 @@ import java.io.IOException;
 public class DataManagerNBT extends DataManagerArray {
 
     private static final NBTIOUtil util = new NBTIOUtil();
-
     private final int color;
+    private ComparatorAtoChest comparator;
 
     public DataManagerNBT(int color) {
         super();
         this.color = color;
+        comparator = new ComparatorAtoChest();
         try {
             loadFromNBT();
         } catch (IOException e) {
@@ -47,11 +48,11 @@ public class DataManagerNBT extends DataManagerArray {
                 setItem(j, ItemStack.loadItemStackFromNBT(nbtitem));
             }
         }
-//        // Comparator
-//        NBTTagCompound nbtcomparator = (NBTTagCompound)nbt.getTag("Comparator");
-//        if ( nbtcomparator != null ) {
-//            comparator.readFromNBT(nbtcomparator);
-//        }
+        // Comparator
+        NBTTagCompound nbtcomparator = (NBTTagCompound) nbt.getTag("Comparator");
+        if (nbtcomparator != null) {
+            comparator.readFromNBT(nbtcomparator);
+        }
     }
 
     /**
@@ -72,15 +73,20 @@ public class DataManagerNBT extends DataManagerArray {
             }
         }
         nbt.setTag("Items", list);
-//        // Comparator
-//        NBTTagCompound nbtcomparator = new NBTTagCompound();
-//        comparator.writeToNBT(nbtcomparator);
-//        nbt.setTag("Comparator", nbtcomparator);
+        // Comparator
+        NBTTagCompound nbtcomparator = new NBTTagCompound();
+        comparator.writeToNBT(nbtcomparator);
+        nbt.setTag("Comparator", nbtcomparator);
 
         try {
             util.saveAccessChestNBT(color, nbt);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ComparatorAtoChest getComparator() {
+        return comparator;
     }
 }

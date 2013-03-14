@@ -19,4 +19,6 @@ public abstract class DataManager {
      * @return 引き出せたアイテムのアイテムスタック
      */
     public abstract ItemStack bringItem(int index, int amount);
+
+    public abstract ComparatorAtoChest getComparator();
 }
