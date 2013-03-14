@@ -93,20 +93,43 @@ public abstract class Repository implements IInventory {
         for (int i = 0; i < array.length; ++i) {
             array[i] = data.getItem(i);
         }
-        // 比較オブジェクトを用いてソートの実行
+        // ソート＆コンパクトの実行
         Arrays.sort(array, data.getComparator());
+        array = compact(array);
         // ソート済み配列を元のデータに格納
         for (int i = 0; i < array.length; ++i) {
             data.setItem(i, array[i]);
         }
-        compact();
     }
 
     /**
      * 可能な限りスタックして、アイテムスタック数が少なくなるように前に詰める
      * 事前にソートされている必要がある
      */
-    private void compact() {
-        // TODO
+    private ItemStack[] compact(ItemStack[] array) {
+        int count = 0;
+        ItemStack[] compact = new ItemStack[array.length];
+        for (int i = 0; i < array.length && array[i] != null; ++i) {
+            while (array[i] != null) {
+                if (compact[count] == null) {
+                    compact[count] = array[i];
+                    array[i] = null;
+                } else if (compact[count].isItemEqual(array[i])) {
+                    int space = compact[count].getMaxStackSize() - compact[count].stackSize;
+                    int trans = Math.min(space, array[i].stackSize);
+                    compact[count].stackSize += trans;
+                    array[i].stackSize -= trans;
+                    if (array[i].stackSize == 0) {
+                        array[i] = null;
+                    }
+                    if (compact[count].stackSize == compact[count].getMaxStackSize()) {
+                        count++;
+                    }
+                } else {
+                    count++;
+                }
+            }
+        }
+        return compact;
     }
 }
