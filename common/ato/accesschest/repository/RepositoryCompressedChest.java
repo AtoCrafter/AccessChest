@@ -7,8 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class RepositoryCompressedChest extends Repository {
 
-    public RepositoryCompressedChest(int grade) {
-        super(new DataManagerNBT());
+    public RepositoryCompressedChest(int color, int grade) {
+        super(new DataManagerNBT(), color, grade);
     }
 
     @Override

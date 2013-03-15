@@ -6,14 +6,9 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityCompressedChest extends TileEntityAtoChest {
 
-    private int color;
-    private int grade;
-
     @Override
     protected Repository createRepository(int color, int grade) {
-        this.color = color;
-        this.grade = grade;
-        return new RepositoryCompressedChest(grade);
+        return new RepositoryCompressedChest(color, grade);
     }
 
     @Override
