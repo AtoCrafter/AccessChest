@@ -41,6 +41,15 @@ public class ItemAccessChest extends ItemAtoChest {
     }
 
     @Override
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+        if (player.isSneaking()) {
+            return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public String getItemDisplayName(ItemStack is) {
         String name = (new RepositoryAccessChest(
                 AccessChest.id2color(is.getItemDamage()),
