@@ -53,6 +53,7 @@ public class ProxyCommon {
      */
     private void registerEntities() {
         GameRegistry.registerTileEntity(TileEntityAccessChest.class, "accesschest");
+        GameRegistry.registerTileEntity(TileEntityCompressedChest.class, "compressedchest");
     }
 
     /**
