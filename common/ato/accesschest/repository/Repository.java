@@ -1,5 +1,6 @@
 package ato.accesschest.repository;
 
+import ato.accesschest.AccessChest;
 import ato.accesschest.game.ItemStackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -162,5 +163,23 @@ public abstract class Repository implements IInventory {
             }
         }
         return compact;
+    }
+
+    /**
+     * 一括排出
+     */
+    public ItemStack[] eject() {
+        ItemStack[] list = new ItemStack[AccessChest.config.ejectStackMaxNum];
+        int index = -1;
+        for (int i = 0; i < list.length; ++i) {
+            while (list[i] == null) {
+                list[i] = getStackInSlot(++index);
+                if (index >= getSizeInventory()) {
+                    return list;
+                }
+            }
+            setInventorySlotContents(index, null);
+        }
+        return list;
     }
 }

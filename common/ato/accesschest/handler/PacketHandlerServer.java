@@ -26,7 +26,7 @@ public class PacketHandlerServer extends PacketHandler {
         if (con instanceof ContainerAtoChestServer) {
             ContainerAtoChestServer ac = (ContainerAtoChestServer) con;
             if (Properties.CHANNEL_GUI.equals(channel)) {
-                ui.receive(ac, in);
+                ui.receive(in, ac, player);
             }
         }
     }

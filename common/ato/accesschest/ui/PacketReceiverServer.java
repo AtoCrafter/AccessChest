@@ -1,5 +1,7 @@
 package ato.accesschest.ui;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -13,7 +15,7 @@ public class PacketReceiverServer {
     /**
      * データ受信時に呼ばれる
      */
-    public void receive(ContainerAtoChestServer container, DataInputStream in) throws IOException {
+    public void receive(DataInputStream in, ContainerAtoChestServer container, EntityPlayer player) throws IOException {
         switch (in.readInt()) {
             case GUI_SCROLL_INDEX:
                 container.setScrollIndex(in.readInt());
@@ -25,7 +27,7 @@ public class PacketReceiverServer {
                 container.sort();
                 break;
             case GUI_EJECT:
-                // TODO
+                container.eject(player);
                 break;
             default:
                 throw new RuntimeException("unexpected value for GUI Packet type");

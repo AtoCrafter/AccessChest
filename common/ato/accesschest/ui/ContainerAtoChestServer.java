@@ -18,6 +18,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     private int lastInventorySize;
     private int lastScrollIndex;
+    private ArrayList<Integer> filter;
 
     public ContainerAtoChestServer(IInventory chestInventory, IInventory playerInventory) {
         super(chestInventory, playerInventory);
@@ -27,8 +28,6 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         lastInventorySize = -1;
         lastScrollIndex = -1;
     }
-
-    private ArrayList<Integer> filter;
 
     @Override
     protected void refreshSlotChest() {
@@ -166,16 +165,17 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
     // ボタン関連
 
     public void sort() {
-        Repository repo;
-        if (chestInventory instanceof Repository) {
-            repo = ((Repository)chestInventory);
-        } else if (chestInventory instanceof TileEntityAtoChest) {
-            repo = ((TileEntityAtoChest)chestInventory).getRepository();
-        } else {
-            throw new RuntimeException("unexpected IInventory object in chestInventory");
-        }
-        repo.sort();
+        getChestRepository().sort();
         setFilter("");
+    }
+
+    public void eject(EntityPlayer player) {
+        ItemStack[] list = getChestRepository().eject();
+        for (ItemStack is : list) {
+            if (is != null) {
+                player.dropPlayerItem(is);
+            }
+        }
     }
 
     @Override
@@ -192,5 +192,15 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         lastScrollIndex = scrollIndex;
         lastInventorySize = filter.size();
         super.detectAndSendChanges();
+    }
+
+    protected Repository getChestRepository() {
+        if (chestInventory instanceof Repository) {
+            return ((Repository) chestInventory);
+        } else if (chestInventory instanceof TileEntityAtoChest) {
+            return ((TileEntityAtoChest) chestInventory).getRepository();
+        } else {
+            throw new RuntimeException("unexpected IInventory object in chestInventory");
+        }
     }
 }
