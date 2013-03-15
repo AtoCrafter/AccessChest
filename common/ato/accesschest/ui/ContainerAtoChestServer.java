@@ -178,6 +178,20 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         }
     }
 
+    public void storeInventory() {
+        int max = inventorySlots.size();
+        for (int i = max - 9 * 4; i < max - 9; ++i) {
+            transferStackInSlot(null, i);
+        }
+    }
+
+    public void storeEquipment() {
+        int max = inventorySlots.size();
+        for (int i = max - 9; i < max; ++i) {
+            transferStackInSlot(null, i);
+        }
+    }
+
     @Override
     public void detectAndSendChanges() {
         for (int i = 0; i < this.crafters.size(); ++i) {

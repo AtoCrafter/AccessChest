@@ -208,6 +208,12 @@ public class GuiAtoChest extends GuiContainer {
             case GUI_EJECT_BUTTON_ID:
                 sender.sendEject();
                 break;
+            case GUI_STOREINV_BUTTON_ID:
+                sender.sendStoreInventory();
+                break;
+            case GUI_STOREEQP_BUTTON_ID:
+                sender.sendStoreEquipment();
+                break;
         }
     }
 

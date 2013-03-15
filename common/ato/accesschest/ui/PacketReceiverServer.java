@@ -29,6 +29,12 @@ public class PacketReceiverServer {
             case GUI_EJECT:
                 container.eject(player);
                 break;
+            case GUI_STORE_INVENTORY:
+                container.storeInventory();
+                break;
+            case GUI_STORE_EQUIPMENT:
+                container.storeEquipment();
+                break;
             default:
                 throw new RuntimeException("unexpected value for GUI Packet type");
         }

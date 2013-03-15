@@ -76,6 +76,30 @@ public class PacketSenderClient {
     }
 
     /**
+     * 一括収納（インベントリ）の送信
+     */
+    public void sendStoreInventory() {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_STORE_INVENTORY);
+            }
+        });
+    }
+
+    /**
+     * 一括収納（アイテム欄）の送信
+     */
+    public void sendStoreEquipment() {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_STORE_EQUIPMENT);
+            }
+        });
+    }
+
+    /**
      * パケットを生成し、送信する
      *
      * @param writer パケットに何を書き込むか指定するクラス
