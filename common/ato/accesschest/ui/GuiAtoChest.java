@@ -49,15 +49,6 @@ public class GuiAtoChest extends GuiContainer {
         ySize = 256;
         sender = new PacketSenderClient();
     }
-//
-//    public GuiAccessChest(ContainerAccessChestSlave container) {
-//        super(container);
-//        this.container = container;
-//        xSize = 256;
-//        ySize = 256;
-//        isScrolling = false;
-//        wasClicking = false;
-//    }
 
     // レンダリング関連
 
@@ -76,8 +67,8 @@ public class GuiAtoChest extends GuiContainer {
         int butHeight = 20;
         // ボタンの作成
         StringTranslate trans = StringTranslate.getInstance();
-        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.rename"));
-        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.clear"));
+        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.clear"));
+        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.rename"));
         sortButton = new GuiButton(GUI_SORT_BUTTON_ID, left, line3, butWidth, butHeight, trans.translateKey("gui.button.sort"));
         storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.storeInventory"));
         storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.storeEquipment"));
@@ -207,65 +198,50 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void actionPerformed(GuiButton button) {
         switch (button.id) {
+            case GUI_RENAME_BUTTON_ID:
+                sender.sendRename(filterTextField.getText());
+                break;
             case GUI_SORT_BUTTON_ID:
-                sender.sendSort();
+                if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
+                    sender.sendCustomSort(1);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+                    sender.sendCustomSort(2);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
+                    sender.sendCustomSort(3);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
+                    sender.sendCustomSort(4);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
+                    sender.sendCustomSort(5);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_6)) {
+                    sender.sendCustomSort(6);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_7)) {
+                    sender.sendCustomSort(7);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_8)) {
+                    sender.sendCustomSort(8);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_9)) {
+                    sender.sendCustomSort(9);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_0)) {
+                    sender.sendCustomSort(0);
+                } else {
+                    sender.sendSort();
+                    sender.sendFilter(filterTextField.getText());
+                }
+                break;
+            case GUI_CLEAR_BUTTON_ID:
+                filterTextField.setText("");
+                sender.sendFilter(filterTextField.getText());
+                break;
+            case GUI_EJECT_BUTTON_ID:
+                sender.sendEject();
+                break;
+            case GUI_STOREINV_BUTTON_ID:
+                sender.sendStoreInventory();
+                break;
+            case GUI_STOREEQP_BUTTON_ID:
+                sender.sendStoreEquipment();
                 break;
         }
     }
-
-//    @Override
-//    protected void actionPerformed(GuiButton guibutton) {
-//        try {
-//            PacketGeneratorGui packet = new PacketGeneratorGui();
-//            if ( guibutton.id == GUI_SORT_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.SET_PRIORITY;
-//                if ( Keyboard.isKeyDown(Keyboard.KEY_1) ) {
-//                    packet.intData = 1;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_2) ) {
-//                    packet.intData = 2;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_3) ) {
-//                    packet.intData = 3;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_4) ) {
-//                    packet.intData = 4;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_5) ) {
-//                    packet.intData = 5;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_6) ) {
-//                    packet.intData = 6;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_7) ) {
-//                    packet.intData = 7;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_8) ) {
-//                    packet.intData = 8;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_9) ) {
-//                    packet.intData = 9;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_0) ) {
-//                    packet.intData = 100;
-//                } else if ( Keyboard.isKeyDown(FMLClientHandler.instance().getClient().gameSettings.keyBindSneak.keyCode) ) {
-//                    int defaultPri = ComparatorAccessChest.DEFAULT_PRIORITY;
-//                    packet.intData = defaultPri;
-//                } else {
-//                    packet.instruction = PacketGeneratorGui.SORT;
-//                }
-//            } else if ( guibutton.id == GUI_RENAME_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.SET_NAME;
-//                packet.textData = filterTextField.getText();
-//            } else if ( guibutton.id == GUI_CLEAR_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.SET_FILTER;
-//                packet.textData = "";
-//                filterTextField.setText("");
-//            } else if ( guibutton.id == GUI_STOREINV_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.STORE_INV;
-//            } else if ( guibutton.id == GUI_STOREEQP_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.STORE_EQUIP;
-//            } else if ( guibutton.id == GUI_EJECT_BUTTON_ID ) {
-//                if ( Keyboard.isKeyDown(FMLClientHandler.instance().getClient().gameSettings.keyBindSneak.keyCode) ) {
-//                    packet.instruction = PacketGeneratorGui.EJECT;
-//                }
-//            }
-//            if ( packet.isValid() ) utils.sendPacket(packet.generate());
-//        } catch ( IOException e ) {
-//            e.printStackTrace();
-//        }
-//    }
 
     // その他
 

@@ -11,6 +11,7 @@ public class DataManagerArray extends DataManager {
 
     public DataManagerArray() {
         contents = new ItemStack[13824];    // 27 * 8^3
+        setName("");
     }
 
     @Override
@@ -31,5 +32,15 @@ public class DataManagerArray extends DataManager {
     @Override
     public ComparatorAtoChest getComparator() {
         return new ComparatorAtoChest();
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

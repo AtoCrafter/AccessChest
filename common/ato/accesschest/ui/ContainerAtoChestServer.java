@@ -18,6 +18,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     private int lastInventorySize;
     private int lastScrollIndex;
+    private ArrayList<Integer> filter;
 
     public ContainerAtoChestServer(IInventory chestInventory, IInventory playerInventory) {
         super(chestInventory, playerInventory);
@@ -27,8 +28,6 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         lastInventorySize = -1;
         lastScrollIndex = -1;
     }
-
-    private ArrayList<Integer> filter;
 
     @Override
     protected void refreshSlotChest() {
@@ -138,9 +137,17 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     public void setFilter(String str) {
         filter.clear();
-        if ("".equals(str)) {
+        int pri;
+        if (str == null || "".equals(str)) {
             for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
                 filter.add(index);
+            }
+        } else if ((pri = isPriotityViewCommand(str)) != -1) {
+            Repository repo = getChestRepository();
+            for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
+                if (repo.getPriority(index) == pri) {
+                    filter.add(index);
+                }
             }
         } else {
             for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
@@ -160,22 +167,61 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         if (is == null) {
             return false;
         }
-        return is.getDisplayName().contains(filter);
+        return is.getDisplayName().contains(filter); // TODO : downcase, displayName, CreativeTabs
+    }
+
+    /**
+     * Priority 検索用コマンドであれば検索する優先度を返す
+     *
+     * @return 検索用コマンドでない場合は -1, そうであれば優先度
+     */
+    private int isPriotityViewCommand(String str) {
+        if (str == null || !str.startsWith("pri:")) return -1;
+        try {
+            return Integer.valueOf(str.substring(4));
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     // ボタン関連
 
+    public void setName(String name) {
+        getChestRepository().setName(name);
+    }
+
     public void sort() {
-        Repository repo;
-        if (chestInventory instanceof Repository) {
-            repo = ((Repository)chestInventory);
-        } else if (chestInventory instanceof TileEntityAtoChest) {
-            repo = ((TileEntityAtoChest)chestInventory).getRepository();
-        } else {
-            throw new RuntimeException("unexpected IInventory object in chestInventory");
+        getChestRepository().sort();
+    }
+
+    public void eject(EntityPlayer player) {
+        ItemStack[] list = getChestRepository().eject();
+        for (ItemStack is : list) {
+            if (is != null) {
+                player.dropPlayerItem(is);
+            }
         }
-        repo.sort();
-        setFilter("");
+    }
+
+    public void storeInventory() {
+        int max = inventorySlots.size();
+        for (int i = max - 9 * 4; i < max - 9; ++i) {
+            transferStackInSlot(null, i);
+        }
+    }
+
+    public void storeEquipment() {
+        int max = inventorySlots.size();
+        for (int i = max - 9; i < max; ++i) {
+            transferStackInSlot(null, i);
+        }
+    }
+
+    public void setPriorities(int prior) {
+        Repository repo = getChestRepository();
+        for (int i : filter) {
+            repo.setPriority(i, prior);
+        }
     }
 
     @Override
@@ -192,5 +238,15 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         lastScrollIndex = scrollIndex;
         lastInventorySize = filter.size();
         super.detectAndSendChanges();
+    }
+
+    protected Repository getChestRepository() {
+        if (chestInventory instanceof Repository) {
+            return ((Repository) chestInventory);
+        } else if (chestInventory instanceof TileEntityAtoChest) {
+            return ((TileEntityAtoChest) chestInventory).getRepository();
+        } else {
+            throw new RuntimeException("unexpected IInventory object in chestInventory");
+        }
     }
 }
