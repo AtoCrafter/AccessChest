@@ -203,6 +203,7 @@ public class GuiAtoChest extends GuiContainer {
                 break;
             case GUI_SORT_BUTTON_ID:
                 sender.sendSort();
+                sender.sendFilter(filterTextField.getText());
                 break;
             case GUI_CLEAR_BUTTON_ID:
                 filterTextField.setText("");

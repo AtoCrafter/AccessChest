@@ -170,7 +170,6 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     public void sort() {
         getChestRepository().sort();
-        setFilter("");
     }
 
     public void eject(EntityPlayer player) {
