@@ -1,7 +1,6 @@
 package ato.accesschest.game;
 
 import ato.accesschest.AccessChest;
-import ato.accesschest.Properties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -36,17 +35,17 @@ public class ItemAccessChest extends ItemAtoChest {
             return false;
         }
     }
-//
-//    @Override
-//    public String getItemDisplayName(ItemStack is) {
-//        String str = super.getItemDisplayName(is);
-//        str += " Class-" + getGrade(is.getItemDamage());
+
+    @Override
+    public String getItemDisplayName(ItemStack is) {
+        String str = super.getItemDisplayName(is);
+        str += " Class-" + AccessChest.id2grade(is.getItemDamage());
 //        if ( Utils.getInstance().isSingleplay() ) {
 //            String name = AccessChestManager.name.getChestName("", getColor(is.getItemDamage()));
 //            if ( !name.equals("") ) {
 //                str += " (" + name + ")";
 //            }
 //        }
-//        return str;
-//    }
+        return str;
+    }
 }
