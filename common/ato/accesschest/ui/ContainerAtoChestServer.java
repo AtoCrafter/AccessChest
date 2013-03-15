@@ -3,6 +3,7 @@ package ato.accesschest.ui;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.repository.Repository;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -167,7 +168,24 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         if (is == null) {
             return false;
         }
-        return is.getDisplayName().contains(filter); // TODO : downcase, displayName, CreativeTabs
+
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(is.getDisplayName());
+        list.add(is.getItemName());
+        list.add(is.getItem().getItemName());
+        list.add(is.getItem().getLocalItemName(is));
+        list.add(is.getItem().getStatName());
+        for (CreativeTabs tab : is.getItem().getCreativeTabs()) {
+            list.add(tab.getTabLabel());
+            list.add(tab.getTranslatedTabLabel());
+        }
+
+        for (String str : list) {
+            if (str.toLowerCase().contains(filter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
