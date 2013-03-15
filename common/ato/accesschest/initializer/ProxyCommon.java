@@ -35,7 +35,9 @@ public class ProxyCommon {
      */
     private void registerHooks() {
         MinecraftForge.EVENT_BUS.register(new SaveHandler());
-        MinecraftForge.EVENT_BUS.register(new AutoCollect());
+        if (AccessChest.config.enableAutoCollect) {
+            MinecraftForge.EVENT_BUS.register(new AutoCollect());
+        }
     }
 
     /**

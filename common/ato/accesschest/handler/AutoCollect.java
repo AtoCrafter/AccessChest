@@ -19,7 +19,7 @@ public class AutoCollect {
      * @return 収納したか
      */
     @ForgeSubscribe
-    private void pickupItem(EntityItemPickupEvent event) {
+    public void pickupItem(EntityItemPickupEvent event) {
         EntityPlayer player = event.entityPlayer;
         ItemStack item = event.item.func_92014_d();
         if (player.inventory.addItemStackToInventory(item)) return;
@@ -32,6 +32,7 @@ public class AutoCollect {
                         AccessChest.id2color(damage),
                         AccessChest.id2grade(damage));
                 repo.storeItem(item);
+                if (item.stackSize <= 0) break;
             }
         }
     }
