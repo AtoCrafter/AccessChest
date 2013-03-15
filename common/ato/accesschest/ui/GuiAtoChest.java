@@ -140,6 +140,8 @@ public class GuiAtoChest extends GuiContainer {
             // y 座標の計算式は GuiScreen#handleMouseInput を参照した
             scrollbarDragged(this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1);
             sender.sendScrollIndex(container.getScrollIndex());
+        } else {
+            isScrolling = false;
         }
     }
 
@@ -160,10 +162,6 @@ public class GuiAtoChest extends GuiContainer {
      * スクロールバーがドラッグされた
      */
     private void scrollbarDragged(int y) {
-        if (!Mouse.isButtonDown(0)) {
-            isScrolling = false;
-            return;
-        }
         int k = (height - ySize) / 2;
         float p = Math.max(0.0f, Math.min((y - (k + 17) - 15 / 2) / (float) (142 - 15), 1.0f));
         container.setScrollIndex(Math.round(container.getScrollMax() * p));
