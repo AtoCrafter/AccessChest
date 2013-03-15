@@ -49,15 +49,6 @@ public class GuiAtoChest extends GuiContainer {
         ySize = 256;
         sender = new PacketSenderClient();
     }
-//
-//    public GuiAccessChest(ContainerAccessChestSlave container) {
-//        super(container);
-//        this.container = container;
-//        xSize = 256;
-//        ySize = 256;
-//        isScrolling = false;
-//        wasClicking = false;
-//    }
 
     // レンダリング関連
 
@@ -212,60 +203,6 @@ public class GuiAtoChest extends GuiContainer {
                 break;
         }
     }
-
-//    @Override
-//    protected void actionPerformed(GuiButton guibutton) {
-//        try {
-//            PacketGeneratorGui packet = new PacketGeneratorGui();
-//            if ( guibutton.id == GUI_SORT_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.SET_PRIORITY;
-//                if ( Keyboard.isKeyDown(Keyboard.KEY_1) ) {
-//                    packet.intData = 1;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_2) ) {
-//                    packet.intData = 2;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_3) ) {
-//                    packet.intData = 3;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_4) ) {
-//                    packet.intData = 4;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_5) ) {
-//                    packet.intData = 5;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_6) ) {
-//                    packet.intData = 6;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_7) ) {
-//                    packet.intData = 7;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_8) ) {
-//                    packet.intData = 8;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_9) ) {
-//                    packet.intData = 9;
-//                } else if ( Keyboard.isKeyDown(Keyboard.KEY_0) ) {
-//                    packet.intData = 100;
-//                } else if ( Keyboard.isKeyDown(FMLClientHandler.instance().getClient().gameSettings.keyBindSneak.keyCode) ) {
-//                    int defaultPri = ComparatorAccessChest.DEFAULT_PRIORITY;
-//                    packet.intData = defaultPri;
-//                } else {
-//                    packet.instruction = PacketGeneratorGui.SORT;
-//                }
-//            } else if ( guibutton.id == GUI_RENAME_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.SET_NAME;
-//                packet.textData = filterTextField.getText();
-//            } else if ( guibutton.id == GUI_CLEAR_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.SET_FILTER;
-//                packet.textData = "";
-//                filterTextField.setText("");
-//            } else if ( guibutton.id == GUI_STOREINV_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.STORE_INV;
-//            } else if ( guibutton.id == GUI_STOREEQP_BUTTON_ID ) {
-//                packet.instruction = PacketGeneratorGui.STORE_EQUIP;
-//            } else if ( guibutton.id == GUI_EJECT_BUTTON_ID ) {
-//                if ( Keyboard.isKeyDown(FMLClientHandler.instance().getClient().gameSettings.keyBindSneak.keyCode) ) {
-//                    packet.instruction = PacketGeneratorGui.EJECT;
-//                }
-//            }
-//            if ( packet.isValid() ) utils.sendPacket(packet.generate());
-//        } catch ( IOException e ) {
-//            e.printStackTrace();
-//        }
-//    }
 
     // その他
 
