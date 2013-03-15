@@ -38,6 +38,9 @@ public class PacketReceiverServer {
             case GUI_RENAME:
                 container.setName(in.readUTF());
                 break;
+            case GUI_CUSTOM_SORT:
+                container.setPriorities(in.readInt());
+                break;
             default:
                 throw new RuntimeException("unexpected value for GUI Packet type");
         }

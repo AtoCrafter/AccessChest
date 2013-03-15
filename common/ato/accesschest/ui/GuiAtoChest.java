@@ -202,8 +202,30 @@ public class GuiAtoChest extends GuiContainer {
                 sender.sendRename(filterTextField.getText());
                 break;
             case GUI_SORT_BUTTON_ID:
-                sender.sendSort();
-                sender.sendFilter(filterTextField.getText());
+                if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
+                    sender.sendCustomSort(1);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+                    sender.sendCustomSort(2);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
+                    sender.sendCustomSort(3);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
+                    sender.sendCustomSort(4);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
+                    sender.sendCustomSort(5);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_6)) {
+                    sender.sendCustomSort(6);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_7)) {
+                    sender.sendCustomSort(7);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_8)) {
+                    sender.sendCustomSort(8);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_9)) {
+                    sender.sendCustomSort(9);
+                } else if (Keyboard.isKeyDown(Keyboard.KEY_0)) {
+                    sender.sendCustomSort(0);
+                } else {
+                    sender.sendSort();
+                    sender.sendFilter(filterTextField.getText());
+                }
                 break;
             case GUI_CLEAR_BUTTON_ID:
                 filterTextField.setText("");

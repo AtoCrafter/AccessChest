@@ -77,6 +77,19 @@ public class PacketSenderClient {
     }
 
     /**
+     * カスタムソートの送信
+     */
+    public void sendCustomSort(final int prior) {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_CUSTOM_SORT);
+                out.writeInt(prior);
+            }
+        });
+    }
+
+    /**
      * 一括排出の送信
      */
     public void sendEject() {

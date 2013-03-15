@@ -189,4 +189,11 @@ public abstract class Repository implements IInventory {
         }
         return list;
     }
+
+    /**
+     * カスタムソートのため、優先度をつける
+     */
+    public void setPriority(int index, int prior) {
+        data.getComparator().setPriority(getStackInSlot(index), prior);
+    }
 }

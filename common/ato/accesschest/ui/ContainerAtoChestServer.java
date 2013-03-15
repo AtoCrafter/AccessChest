@@ -195,6 +195,13 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         }
     }
 
+    public void setPriorities(int prior) {
+        Repository repo = getChestRepository();
+        for (int i : filter) {
+            repo.setPriority(i, prior);
+        }
+    }
+
     @Override
     public void detectAndSendChanges() {
         for (int i = 0; i < this.crafters.size(); ++i) {
