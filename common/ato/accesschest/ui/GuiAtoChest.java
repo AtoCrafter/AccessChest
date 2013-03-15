@@ -1,13 +1,12 @@
 package ato.accesschest.ui;
 
-import ato.accesschest.Properties;
+import ato.accesschest.AccessChest;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.StringTranslate;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -17,12 +16,17 @@ import org.lwjgl.opengl.GL11;
  */
 public class GuiAtoChest extends GuiContainer {
 
+    private final static int GUI_RENAME_BUTTON_ID = 1;
+    private final static int GUI_SORT_BUTTON_ID = 2;
+    private final static int GUI_CLEAR_BUTTON_ID = 3;
+    private final static int GUI_STOREEQP_BUTTON_ID = 4;
+    private final static int GUI_STOREINV_BUTTON_ID = 5;
+    private final static int GUI_EJECT_BUTTON_ID = 6;
     private ContainerAtoChestClient container;
     /**
      * サーバーに操作を知らせるパケットを送るため
      */
     private PacketSenderClient sender;
-    //    private ContainerAccessChestSlave container;
     /**
      * テキスト入力フォーム
      */
@@ -31,23 +35,12 @@ public class GuiAtoChest extends GuiContainer {
      * スクロール中かどうか
      */
     private boolean isScrolling;
-//    private boolean wasClicking;
-//
-//    private static final Utils utils = Utils.getInstance();
-
     private GuiButton renameButton;
     private GuiButton clearButton;
     private GuiButton sortButton;
     private GuiButton storeInvButton;
     private GuiButton storeEqpButton;
     private GuiButton ejectButton;
-
-    private final static int GUI_RENAME_BUTTON_ID = 1;
-    private final static int GUI_SORT_BUTTON_ID = 2;
-    private final static int GUI_CLEAR_BUTTON_ID = 3;
-    private final static int GUI_STOREEQP_BUTTON_ID = 4;
-    private final static int GUI_STOREINV_BUTTON_ID = 5;
-    private final static int GUI_EJECT_BUTTON_ID = 6;
 
     public GuiAtoChest(ContainerAtoChestClient container) {
         super(container);
@@ -139,7 +132,7 @@ public class GuiAtoChest extends GuiContainer {
         // ホイールによるスクロールのチェック
         int wheelDiff = Math.max(-1, Math.min(Mouse.getDWheel(), 1));
         if (wheelDiff != 0) {
-            container.setScrollIndex(container.getScrollIndex() - wheelDiff * Properties.ROWS_ON_SCROLL);
+            container.setScrollIndex(container.getScrollIndex() - wheelDiff * AccessChest.config.rowOnScroll);
             sender.sendScrollIndex(container.getScrollIndex());
         }
         // ドラッグによるスクロールのチェック
