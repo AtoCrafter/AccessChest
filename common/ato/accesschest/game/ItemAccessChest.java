@@ -27,6 +27,16 @@ public class ItemAccessChest extends ItemAtoChest {
         return is;
     }
 
+    @Override
+    public boolean onItemUse(ItemStack is, EntityPlayer player, World world,
+                             int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+        if (player.isSneaking()) {
+            return super.onItemUse(is, player, world, par4, par5, par6, par7, par8, par9, par10);
+        } else {
+            return false;
+        }
+    }
+//
 //    @Override
 //    public String getItemDisplayName(ItemStack is) {
 //        String str = super.getItemDisplayName(is);
@@ -38,11 +48,5 @@ public class ItemAccessChest extends ItemAtoChest {
 //            }
 //        }
 //        return str;
-//    }
-//
-//    @Override
-//    protected void linkAbstChest(TileEntityAbstChest tileEntity, EntityPlayer player, int color,
-//                                 int grade, boolean isRemote) {
-//        ((TileEntityAccessChest)tileEntity).linkAccessChest(player, color, grade, isRemote);
 //    }
 }

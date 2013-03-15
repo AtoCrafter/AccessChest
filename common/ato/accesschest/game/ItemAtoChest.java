@@ -1,12 +1,10 @@
 package ato.accesschest.game;
 
 import ato.accesschest.AccessChest;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -23,48 +21,19 @@ public abstract class ItemAtoChest extends ItemBlock {
     }
 
     @Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-        boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
-        ((TileEntityAtoChest)world.getBlockTileEntity(x, y, z)).setColorAndGrade(
-                AccessChest.id2color(stack.getItemDamage()),
-                AccessChest.id2grade(stack.getItemDamage())
-        );
-        return ret;
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+                                float hitX, float hitY, float hitZ, int metadata) {
+        if (player.isSneaking()) {
+            boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+            ((TileEntityAtoChest) world.getBlockTileEntity(x, y, z)).setColorAndGrade(
+                    AccessChest.id2color(stack.getItemDamage()),
+                    AccessChest.id2grade(stack.getItemDamage())
+            );
+            return ret;
+        } else {
+            return false;
+        }
     }
-
-    //    @Override
-//    public boolean placeBlockAt(ItemStack itemstack, EntityPlayer player, World world,
-//                                int x, int y, int z, int side, float distX, float distY, float distZ) {
-//        if ( !player.isSneaking() ) return false;
-//
-//        int blockId = getBlockID();
-//
-//        // rotate direction
-//        byte direction = 0;
-//        int playerDirection = MathHelper.floor_double((double) ((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
-//        switch ( playerDirection ) {
-//            case 0: direction = 2; break;
-//            case 1: direction = 5; break;
-//            case 2: direction = 3; break;
-//            case 3: direction = 4; break;
-//        }
-//
-//        if ( !world.setBlockAndMetadataWithNotify(x, y, z, blockId, direction) ) return false;
-//
-//        if ( world.getBlockId(x, y, z) == blockId ) {
-//            Block.blocksList[blockId].updateBlockMetadata(world, x, y, z, side, distX, distY, distZ);
-//            Block.blocksList[blockId].onBlockPlacedBy(world, x, y, z, player);
-//        }
-//
-//        // link block with entity of AccessChest
-//        int damage = itemstack.getItemDamage();
-//        TileEntityAbstChest tileEntity = (TileEntityAbstChest)world.getBlockTileEntity(x, y, z);
-//        linkAbstChest(tileEntity, player, getColor(damage), getGrade(damage), world.isRemote);
-//
-//        return true;
-//    }
-//
-//    protected abstract void linkAbstChest(TileEntityAbstChest tileEntity, EntityPlayer player, int color, int grade, boolean isRemote);
 
     @Override
     public void getSubItems(int id, CreativeTabs tab, List list) {
