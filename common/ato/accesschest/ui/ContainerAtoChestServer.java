@@ -164,6 +164,10 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     // ボタン関連
 
+    public void setName(String name) {
+        getChestRepository().setName(name);
+    }
+
     public void sort() {
         getChestRepository().sort();
         setFilter("");

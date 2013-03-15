@@ -117,6 +117,13 @@ public abstract class Repository implements IInventory {
     // レポジトリの機能
 
     /**
+     * リポジトリに名前をつける
+     */
+    public void setName(String name) {
+        data.setName(name);
+    }
+
+    /**
      * アイテムの ID, ダメージ、優先度などを用いて並び替え
      */
     public void sort() {

@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class DataManager {
 
+    protected String name;
+
     public abstract void setItem(int index, ItemStack is);
 
     public abstract ItemStack getItem(int index);
@@ -14,4 +16,8 @@ public abstract class DataManager {
     public abstract int getMaxSize();
 
     public abstract ComparatorAtoChest getComparator();
+
+    public abstract String getName();
+
+    public abstract void setName(String name);
 }

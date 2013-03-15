@@ -39,6 +39,19 @@ public class PacketSenderClient {
     }
 
     /**
+     * 新たなチェスト名の設定
+     */
+    public void sendRename(final String name) {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_RENAME);
+                out.writeUTF(name);
+            }
+        });
+    }
+
+    /**
      * 検索用フィルターの送信
      */
     public void sendFilter(final String filter) {

@@ -198,6 +198,9 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void actionPerformed(GuiButton button) {
         switch (button.id) {
+            case GUI_RENAME_BUTTON_ID:
+                sender.sendRename(filterTextField.getText());
+                break;
             case GUI_SORT_BUTTON_ID:
                 sender.sendSort();
                 break;

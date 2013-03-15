@@ -14,6 +14,7 @@ public class Properties {
     public static final int GUI_EJECT = 4;
     public static final int GUI_STORE_INVENTORY = 5;
     public static final int GUI_STORE_EQUIPMENT = 6;
+    public static final int GUI_RENAME = 7;
     public static final String CHANNEL_TILEENTITY = "ato.AC|TileEnt";
     public static final int GUI_ID_TILEENTITY = 64;
 }
