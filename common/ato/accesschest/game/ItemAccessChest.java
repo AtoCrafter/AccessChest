@@ -1,7 +1,6 @@
 package ato.accesschest.game;
 
 import ato.accesschest.AccessChest;
-import ato.accesschest.repository.Repository;
 import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -40,15 +39,14 @@ public class ItemAccessChest extends ItemAtoChest {
 
     @Override
     public String getItemDisplayName(ItemStack is) {
-        String str = super.getItemDisplayName(is);
-        Repository repo = new RepositoryAccessChest(
+        String name = (new RepositoryAccessChest(
                 AccessChest.id2color(is.getItemDamage()),
                 AccessChest.id2grade(is.getItemDamage())
-        );
-        String name = repo.getName();
+        )).getName();
         if (name != null && !name.equals("")) {
-            str += "(" + name + ")";
+            return name;
+        } else {
+            return super.getItemDisplayName(is);
         }
-        return str;
     }
 }
