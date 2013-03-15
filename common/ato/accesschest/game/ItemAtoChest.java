@@ -42,4 +42,11 @@ public abstract class ItemAtoChest extends ItemBlock {
         list.add(new ItemStack(id, 1, 0x2F));
         list.add(new ItemStack(id, 1, 0x3F));
     }
+
+    @Override
+    public String getItemDisplayName(ItemStack is) {
+        String str = super.getItemDisplayName(is);
+        str += " Class-" + AccessChest.id2grade(is.getItemDamage());
+        return str;
+    }
 }

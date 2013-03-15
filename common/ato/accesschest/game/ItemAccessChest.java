@@ -39,7 +39,10 @@ public class ItemAccessChest extends ItemAtoChest {
     @Override
     public String getItemDisplayName(ItemStack is) {
         String str = super.getItemDisplayName(is);
-        str += " Class-" + AccessChest.id2grade(is.getItemDamage());
+//        Repository repo = new RepositoryAccessChest(
+//                AccessChest.id2color(is.getItemDamage()),
+//                AccessChest.id2grade(is.getItemDamage())
+//        );
 //        if ( Utils.getInstance().isSingleplay() ) {
 //            String name = AccessChestManager.name.getChestName("", getColor(is.getItemDamage()));
 //            if ( !name.equals("") ) {
