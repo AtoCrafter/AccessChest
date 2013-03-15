@@ -60,7 +60,19 @@ public class PacketSenderClient {
             public void writeData(DataOutputStream out) throws IOException {
                 out.writeInt(Properties.GUI_SORT);
             }
-        } );
+        });
+    }
+
+    /**
+     * 一括排出の送信
+     */
+    public void sendEject() {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_EJECT);
+            }
+        });
     }
 
     /**

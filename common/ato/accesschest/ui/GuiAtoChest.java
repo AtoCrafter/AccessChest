@@ -205,6 +205,9 @@ public class GuiAtoChest extends GuiContainer {
                 filterTextField.setText("");
                 sender.sendFilter(filterTextField.getText());
                 break;
+            case GUI_EJECT_BUTTON_ID:
+                sender.sendEject();
+                break;
         }
     }
 
