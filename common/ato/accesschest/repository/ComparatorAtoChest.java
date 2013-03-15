@@ -1,5 +1,6 @@
 package ato.accesschest.repository;
 
+import ato.accesschest.Properties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -8,8 +9,6 @@ import java.util.*;
 
 
 public class ComparatorAtoChest implements Comparator {
-
-    public static final int DEFAULT_PRIORITY = 7;
 
     protected HashMap priorityMap;
 
@@ -51,7 +50,7 @@ public class ComparatorAtoChest implements Comparator {
     public int getPriority(ItemStack is) {
         Object o = priorityMap.get(new KeyPair(is));
         if (o == null) {
-            return DEFAULT_PRIORITY;
+            return Properties.DEFAULT_PRIORITY;
         } else {
             return (Integer) o;
         }
@@ -62,7 +61,7 @@ public class ComparatorAtoChest implements Comparator {
             return;
         }
         KeyPair key = new KeyPair(is);
-        if (priority == DEFAULT_PRIORITY) {
+        if (priority == Properties.DEFAULT_PRIORITY || priority < 0) {
             priorityMap.remove(key);
         } else {
             priorityMap.put(key, priority);
@@ -78,6 +77,32 @@ public class ComparatorAtoChest implements Comparator {
         } else {
             return is1.itemID - is2.itemID;
         }
+    }
+
+    public void readFromNBT(NBTTagCompound nbttc) {
+        NBTTagList list = nbttc.getTagList("Priorities");
+        for (int i = 0; i < list.tagCount(); i++) {
+            NBTTagCompound nbtpriority = (NBTTagCompound) list.tagAt(i);
+            int id = nbtpriority.getInteger("ID");
+            int damage = nbtpriority.getInteger("Damage");
+            int priority = nbtpriority.getInteger("Priority");
+            setPriority(new ItemStack(id, 0, damage), priority);
+        }
+    }
+
+    public void writeToNBT(NBTTagCompound nbttc) {
+        NBTTagList list = new NBTTagList();
+        Set set = priorityMap.entrySet();
+        Iterator ite = set.iterator();
+        while (ite.hasNext()) {
+            Map.Entry entry = (Map.Entry) ite.next();
+            NBTTagCompound nbtpriority = new NBTTagCompound();
+            nbtpriority.setInteger("ID", ((KeyPair) entry.getKey()).id);
+            nbtpriority.setInteger("Damage", ((KeyPair) entry.getKey()).damage);
+            nbtpriority.setInteger("Priority", (Integer) entry.getValue());
+            list.appendTag(nbtpriority);
+        }
+        nbttc.setTag("Priorities", list);
     }
 
     /**
@@ -133,31 +158,5 @@ public class ComparatorAtoChest implements Comparator {
         private ComparatorAtoChest getOuterType() {
             return ComparatorAtoChest.this;
         }
-    }
-
-    public void readFromNBT(NBTTagCompound nbttc) {
-        NBTTagList list = nbttc.getTagList("Priorities");
-        for (int i = 0; i < list.tagCount(); i++) {
-            NBTTagCompound nbtpriority = (NBTTagCompound) list.tagAt(i);
-            int id = nbtpriority.getInteger("ID");
-            int damage = nbtpriority.getInteger("Damage");
-            int priority = nbtpriority.getInteger("Priority");
-            setPriority(new ItemStack(id, 0, damage), priority);
-        }
-    }
-
-    public void writeToNBT(NBTTagCompound nbttc) {
-        NBTTagList list = new NBTTagList();
-        Set set = priorityMap.entrySet();
-        Iterator ite = set.iterator();
-        while (ite.hasNext()) {
-            Map.Entry entry = (Map.Entry) ite.next();
-            NBTTagCompound nbtpriority = new NBTTagCompound();
-            nbtpriority.setInteger("ID", ((KeyPair) entry.getKey()).id);
-            nbtpriority.setInteger("Damage", ((KeyPair) entry.getKey()).damage);
-            nbtpriority.setInteger("Priority", (Integer) entry.getValue());
-            list.appendTag(nbtpriority);
-        }
-        nbttc.setTag("Priorities", list);
     }
 }

@@ -18,4 +18,5 @@ public class Properties {
     public static final int GUI_CUSTOM_SORT = 8;
     public static final String CHANNEL_TILEENTITY = "ato.AC|TileEnt";
     public static final int GUI_ID_TILEENTITY = 64;
+    public static final int DEFAULT_PRIORITY = 7;
 }
