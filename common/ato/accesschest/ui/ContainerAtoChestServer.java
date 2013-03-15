@@ -159,7 +159,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         if (is == null) {
             return false;
         }
-        return is.getDisplayName().contains(filter);
+        return is.getDisplayName().contains(filter); // TODO : downcase, displayName, CreativeTabs
     }
 
     // ボタン関連
