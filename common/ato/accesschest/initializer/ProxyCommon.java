@@ -58,58 +58,58 @@ public class ProxyCommon {
      * レシピの登録
      */
     private void registerRecipes() {
-        int blockIdAC = AccessChest.config.blockIDAC;
-        int blockIdCC = AccessChest.config.blockIDCC;
+        Item itemAC = Item.itemsList[AccessChest.config.blockIDAC];
+        Item itemCC = Item.itemsList[AccessChest.config.blockIDCC];
         // Access Chest Class-0
-        GameRegistry.addShapelessRecipe(new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 0)),
+        GameRegistry.addShapelessRecipe(new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 0)),
                 new Object[]{Block.chest, Item.enderPearl});
         // Access Chest Class-1
         GameRegistry.addRecipe(new RecipeAtoChest(
                 new ItemStack(Block.blockLapis),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 0)),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 1))
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 0)),
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 1))
         ));
         // Access Chest Class-2
         GameRegistry.addRecipe(new RecipeAtoChest(
                 new ItemStack(Block.blockGold),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 1)),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 2))
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 1)),
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 2))
         ));
         // Access Chest Class-3
         GameRegistry.addRecipe(new RecipeAtoChest(
                 new ItemStack(Block.blockDiamond),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 2)),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 3))
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 2)),
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 3))
         ));
-//        // Compressed Chest Class-1
-//        GameRegistry.addRecipe(new RecipeAtoChest(
-//                new ItemStack(Item.diamond),
-//                new ItemStack(Block.chest),
-//                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 1))
-//        ));
-//        // Compressed Chest Class-2
-//        GameRegistry.addRecipe(new RecipeAtoChest(
-//                new ItemStack(Block.blockDiamond),
-//                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 1)),
-//                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 2))
-//        ));
+        // Compressed Chest Class-1
+        GameRegistry.addRecipe(new RecipeAtoChest(
+                new ItemStack(Item.diamond),
+                new ItemStack(Block.chest),
+                new ItemStack(itemCC, 1, AccessChest.colorgrade2id(15, 1))
+        ));
+        // Compressed Chest Class-2
+        GameRegistry.addRecipe(new RecipeAtoChest(
+                new ItemStack(Block.blockDiamond),
+                new ItemStack(itemCC, 1, AccessChest.colorgrade2id(15, 1)),
+                new ItemStack(itemCC, 1, AccessChest.colorgrade2id(15, 2))
+        ));
         // Copy of Access Chest Class-1
         GameRegistry.addRecipe(new RecipeCopyAccessChest(
                 new ItemStack(Block.enderChest, 1),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 1)),
-                new ItemStack(Item.itemsList[blockIdAC], 2, AccessChest.colorgrade2id(15, 1))
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 1)),
+                new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 1))
         ));
         // Copy of Access Chest Class-2
         GameRegistry.addRecipe(new RecipeCopyAccessChest(
                 new ItemStack(Block.enderChest, 3),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 2)),
-                new ItemStack(Item.itemsList[blockIdAC], 2, AccessChest.colorgrade2id(15, 2))
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 2)),
+                new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 2))
         ));
         // Copy of Access Chest Class-3
         GameRegistry.addRecipe(new RecipeCopyAccessChest(
                 new ItemStack(Block.enderChest, 8),
-                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 3)),
-                new ItemStack(Item.itemsList[blockIdAC], 2, AccessChest.colorgrade2id(15, 3))
+                new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 3)),
+                new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 3))
         ));
     }
 
