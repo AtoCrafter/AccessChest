@@ -4,36 +4,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import java.io.IOException;
-
 /**
  * リポジトリのデータ(NBT)管理に必要な機能の実装
  */
 public class DataManagerNBT extends DataManagerArray {
 
-    private static final NBTIOUtil util = new NBTIOUtil();
-    private final int color;
     private ComparatorAtoChest comparator;
 
-    public DataManagerNBT(int color) {
+    public DataManagerNBT() {
         super();
-        this.color = color;
         comparator = new ComparatorAtoChest();
-        try {
-            loadFromNBT();
-        } catch (IOException e) {
-            for (int i = 0; i < getMaxSize(); ++i) {
-                setItem(i, null);
-            }
-            e.printStackTrace();
+        for (int i = 0; i < getMaxSize(); ++i) {
+            setItem(i, null);
         }
     }
 
     /**
      * NBT ファイルから読み込み
      */
-    private void loadFromNBT() throws IOException {
-        NBTTagCompound nbt = util.getAccessChestNBT(color);
+    public void readFromNBT(NBTTagCompound nbt) {
         // Items
         NBTTagList list = nbt.getTagList("Items");
         // clear
@@ -60,9 +49,7 @@ public class DataManagerNBT extends DataManagerArray {
     /**
      * NBT ファイルへ保存
      */
-    public void saveToNBT() {
-        // Compound
-        NBTTagCompound nbt = new NBTTagCompound();
+    public void writeToNBT(NBTTagCompound nbt) {
         // Items
         NBTTagList list = new NBTTagList("Items");
         for (int i = 0; i < getMaxSize(); ++i) {
@@ -81,12 +68,6 @@ public class DataManagerNBT extends DataManagerArray {
         nbt.setTag("Comparator", nbtcomparator);
         // Name
         nbt.setString("Name", name);
-
-        try {
-            util.saveAccessChestNBT(color, nbt);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

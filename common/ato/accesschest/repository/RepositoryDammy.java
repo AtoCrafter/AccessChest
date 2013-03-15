@@ -7,17 +7,12 @@ package ato.accesschest.repository;
 public class RepositoryDammy extends Repository {
 
     public RepositoryDammy(int grade) {
-        super(new DataManagerArray());
+        super(new DataManagerArray(), 0, grade);
         this.grade = grade;
     }
 
     @Override
     public String getInvName() {
         return "dammy";
-    }
-
-    @Override
-    public void onInventoryChanged() {
- //
     }
 }

@@ -1,16 +1,20 @@
 package ato.accesschest.repository;
 
+import net.minecraft.nbt.NBTTagCompound;
+
+import java.io.IOException;
+
 /**
  * Access Chest の NBT をキャッシュしておく
  * ファイル I/O は遅い
  */
 public class NBTPool {
 
+    private static final NBTIOUtil util = new NBTIOUtil();
     /**
      * このクラスの唯一のインスタンス
      */
     protected static NBTPool instance;
-
     /**
      * 中身の実体
      */
@@ -22,15 +26,26 @@ public class NBTPool {
 
     public DataManagerNBT getNBT(int color) {
         if (pool[color] == null) {
-            pool[color] = new DataManagerNBT(color);
+            pool[color] = new DataManagerNBT();
+            try {
+                pool[color].readFromNBT(util.getAccessChestNBT(color));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return pool[color];
     }
 
     public void save() {
-        for (int i = 0; i < pool.length; ++i) {
-            if (pool[i] != null) {
-                pool[i].saveToNBT();
+        for (int color = 0; color < pool.length; ++color) {
+            if (pool[color] != null) {
+                NBTTagCompound nbt = new NBTTagCompound();
+                pool[color].writeToNBT(nbt);
+                try {
+                    util.saveAccessChestNBT(color, nbt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

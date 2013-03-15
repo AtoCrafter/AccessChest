@@ -6,9 +6,7 @@ package ato.accesschest.repository;
 public class RepositoryAccessChest extends Repository {
 
     public RepositoryAccessChest(int color, int grade) {
-        super(NBTPool.instance.getNBT(color));
-        this.color = color;
-        this.grade = grade;
+        super(NBTPool.instance.getNBT(color), color, grade);
     }
 
     @Override
@@ -17,10 +15,5 @@ public class RepositoryAccessChest extends Repository {
 //        String name = AccessChestManager.name.getChestName(ownerName, colorNumber);
 //        if ( !name.equals("") ) str += name;
         return str;
-    }
-
-    @Override
-    public void onInventoryChanged() {
-//
     }
 }

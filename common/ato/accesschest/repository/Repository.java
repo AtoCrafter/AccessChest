@@ -27,8 +27,10 @@ public abstract class Repository implements IInventory {
      */
     protected int grade;
 
-    public Repository(DataManager data) {
+    public Repository(DataManager data, int color, int grade) {
         this.data = data;
+        this.color = color;
+        this.grade = grade;
     }
 
     public int getColor() {
@@ -92,6 +94,10 @@ public abstract class Repository implements IInventory {
 
     @Override
     public void closeChest() {
+    }
+
+    @Override
+    public void onInventoryChanged() {
     }
 
     /**
