@@ -1,5 +1,6 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,18 +22,28 @@ import org.lwjgl.opengl.GL12;
 @SideOnly(Side.CLIENT)
 public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
-    private ModelChest model = new ModelChest();
+
+    private static final int[] COLOR_CODES = new int[]{
+            0x1e1b1b, 0xb3312c, 0x3b511a, 0x51301a, 0x253192, 0x7b2fbe, 0x287697, 0x9a9a9a, 0x434343, 0xd88198,
+            0x41cd34, 0xdecf2a, 0x6689d3, 0xc354cd, 0xeb8844, 0xf0f0f0
+    };
     /**
      * インベントリ内でブロックを描画するためのダミーのタイルエンティティ
      */
     private static final TileEntityAtoChest tileEntityAtoChestDammy = new TileEntityAccessChest();
+    private ModelChest model = new ModelChest();
 
-    public void renderAtoChest(int direction, float lidAngle, float prevLidAngle, double par2, double par4, double par6, float par8) {
+    public void renderAtoChest(int direction, int colorNum, float lidAngle, float prevLidAngle, double par2, double par4, double par6, float par8) {
+
+        int colorCode = COLOR_CODES[colorNum];
+        float r = (float)(colorCode >> 16 & 0xFF) / 255F;
+        float g = (float)(colorCode >> 8 & 0xFF) / 255F;
+        float b = (float)(colorCode & 0xFF) / 255F;
 
         this.bindTextureByName("/ato/accesschest/AccessChestBlock.png");
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(r, g, b, 1.0F);
         GL11.glTranslatef((float) par2, (float) par4 + 1.0F, (float) par6 + 1.0F);
         GL11.glScalef(1.0F, -1.0F, -1.0F);
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
@@ -69,14 +80,16 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
     public void renderTileEntityAt(TileEntity tileEntityRaw, double par2, double par4, double par6, float par8) {
         TileEntityAtoChest tileEntity = (TileEntityAtoChest) tileEntityRaw;
         int direction = 0;
+        int colorNum = tileEntity.repo.getColor();
         if (tileEntity.func_70309_m()) {
             direction = tileEntity.getBlockMetadata();
         }
-        renderAtoChest(direction, tileEntity.lidAngle, tileEntity.prevLidAngle, par2, par4, par6, par8);
+        renderAtoChest(direction, colorNum, tileEntity.lidAngle, tileEntity.prevLidAngle, par2, par4, par6, par8);
     }
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+        tileEntityAtoChestDammy.setColorAndGrade(AccessChest.id2color(metadata), 0);
         TileEntityRenderer.instance.renderTileEntityAt(tileEntityAtoChestDammy, 0.0D, 0.0D, 0.0D, 0.0F);
     }
 
