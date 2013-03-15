@@ -53,6 +53,8 @@ public class DataManagerNBT extends DataManagerArray {
         if (nbtcomparator != null) {
             comparator.readFromNBT(nbtcomparator);
         }
+        // Name
+        setName(nbt.getString("Name"));
     }
 
     /**
@@ -77,6 +79,8 @@ public class DataManagerNBT extends DataManagerArray {
         NBTTagCompound nbtcomparator = new NBTTagCompound();
         comparator.writeToNBT(nbtcomparator);
         nbt.setTag("Comparator", nbtcomparator);
+        // Name
+        nbt.setString("Name", name);
 
         try {
             util.saveAccessChestNBT(color, nbt);

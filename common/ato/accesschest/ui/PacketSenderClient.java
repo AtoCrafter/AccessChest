@@ -39,6 +39,19 @@ public class PacketSenderClient {
     }
 
     /**
+     * 新たなチェスト名の設定
+     */
+    public void sendRename(final String name) {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_RENAME);
+                out.writeUTF(name);
+            }
+        });
+    }
+
+    /**
      * 検索用フィルターの送信
      */
     public void sendFilter(final String filter) {
@@ -60,7 +73,56 @@ public class PacketSenderClient {
             public void writeData(DataOutputStream out) throws IOException {
                 out.writeInt(Properties.GUI_SORT);
             }
-        } );
+        });
+    }
+
+    /**
+     * カスタムソートの送信
+     */
+    public void sendCustomSort(final int prior) {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_CUSTOM_SORT);
+                out.writeInt(prior);
+            }
+        });
+    }
+
+    /**
+     * 一括排出の送信
+     */
+    public void sendEject() {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_EJECT);
+            }
+        });
+    }
+
+    /**
+     * 一括収納（インベントリ）の送信
+     */
+    public void sendStoreInventory() {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_STORE_INVENTORY);
+            }
+        });
+    }
+
+    /**
+     * 一括収納（アイテム欄）の送信
+     */
+    public void sendStoreEquipment() {
+        sendPacket(new IDataWriter() {
+            @Override
+            public void writeData(DataOutputStream out) throws IOException {
+                out.writeInt(Properties.GUI_STORE_EQUIPMENT);
+            }
+        });
     }
 
     /**

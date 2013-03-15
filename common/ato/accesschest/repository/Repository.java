@@ -1,5 +1,6 @@
 package ato.accesschest.repository;
 
+import ato.accesschest.AccessChest;
 import ato.accesschest.game.ItemStackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -116,6 +117,13 @@ public abstract class Repository implements IInventory {
     // レポジトリの機能
 
     /**
+     * リポジトリに名前をつける
+     */
+    public void setName(String name) {
+        data.setName(name);
+    }
+
+    /**
      * アイテムの ID, ダメージ、優先度などを用いて並び替え
      */
     public void sort() {
@@ -162,5 +170,37 @@ public abstract class Repository implements IInventory {
             }
         }
         return compact;
+    }
+
+    /**
+     * 一括排出
+     */
+    public ItemStack[] eject() {
+        ItemStack[] list = new ItemStack[AccessChest.config.ejectStackMaxNum];
+        int index = -1;
+        for (int i = 0; i < list.length; ++i) {
+            while (list[i] == null) {
+                list[i] = getStackInSlot(++index);
+                if (index >= getSizeInventory()) {
+                    return list;
+                }
+            }
+            setInventorySlotContents(index, null);
+        }
+        return list;
+    }
+
+    /**
+     * カスタムソートのための優先度を取得
+     */
+    public int getPriority(int index) {
+        return data.getComparator().getPriority(getStackInSlot(index));
+    }
+
+    /**
+     * カスタムソートのため、優先度をつける
+     */
+    public void setPriority(int index, int prior) {
+        data.getComparator().setPriority(getStackInSlot(index), prior);
     }
 }
