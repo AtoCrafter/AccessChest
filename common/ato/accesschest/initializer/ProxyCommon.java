@@ -113,6 +113,25 @@ public class ProxyCommon {
                 new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 3)),
                 new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 3))
         ));
+        // Coloring
+        for (int color = 0; color < 16; ++color) {
+            for (int grade = 0; grade < 4; ++grade) {
+                GameRegistry.addRecipe(new RecipeColoringAtoChest(
+                        new ItemStack(Item.dyePowder, 1, color),
+                        new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, grade)),
+                        new ItemStack(itemAC, 1, AccessChest.colorgrade2id(color, grade))
+                ));
+            }
+        }
+        for (int color = 0; color < 16; ++color) {
+            for (int grade = 1; grade < 3; ++grade) {
+                GameRegistry.addRecipe(new RecipeColoringAtoChest(
+                        new ItemStack(Item.dyePowder, 1, color),
+                        new ItemStack(itemCC, 1, AccessChest.colorgrade2id(15, grade)),
+                        new ItemStack(itemCC, 1, AccessChest.colorgrade2id(color, grade))
+                ));
+            }
+        }
     }
 
     /**
