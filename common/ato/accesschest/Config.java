@@ -25,6 +25,10 @@ public class Config {
      * 一括排出で排出されるアイテムスタックの数の最大値
      */
     public final int ejectStackMaxNum;
+    /**
+     * 自動収納を有効にするか
+     */
+    public final boolean enableAutoCollect;
 
     public Config(File file) {
         Configuration config = new Configuration(file);
@@ -33,6 +37,7 @@ public class Config {
         blockIDCC = config.getBlock("CompressedChest", 3296).getInt();
         rowOnScroll = config.get("general", "rowsScroll", 8).getInt();
         ejectStackMaxNum = config.get("general", "ejectStackLimit", 96).getInt();
+        enableAutoCollect = config.get("general", "enableAutoCollect", true).getBoolean(true);
         config.save();
     }
 }
