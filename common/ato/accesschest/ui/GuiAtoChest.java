@@ -67,8 +67,8 @@ public class GuiAtoChest extends GuiContainer {
         int butHeight = 20;
         // ボタンの作成
         StringTranslate trans = StringTranslate.getInstance();
-        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.rename"));
-        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.clear"));
+        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.clear"));
+        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.rename"));
         sortButton = new GuiButton(GUI_SORT_BUTTON_ID, left, line3, butWidth, butHeight, trans.translateKey("gui.button.sort"));
         storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, trans.translateKey("gui.button.storeInventory"));
         storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, trans.translateKey("gui.button.storeEquipment"));
