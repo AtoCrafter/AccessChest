@@ -2,10 +2,7 @@ package ato.accesschest.initializer;
 
 import ato.accesschest.AccessChest;
 import ato.accesschest.Properties;
-import ato.accesschest.game.BlockAccessChest;
-import ato.accesschest.game.ItemAccessChest;
-import ato.accesschest.game.RecipeAtoChest;
-import ato.accesschest.game.TileEntityAccessChest;
+import ato.accesschest.game.*;
 import ato.accesschest.handler.AutoCollect;
 import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
@@ -94,9 +91,24 @@ public class ProxyCommon {
 //                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 1)),
 //                new ItemStack(Item.itemsList[blockIdCC], 1, AccessChest.colorgrade2id(15, 2))
 //        ));
-        // TODO
         // Copy of Access Chest Class-1
+        GameRegistry.addRecipe(new RecipeCopyAccessChest(
+                new ItemStack(Block.enderChest, 1),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 1)),
+                new ItemStack(Item.itemsList[blockIdAC], 2, AccessChest.colorgrade2id(15, 1))
+        ));
         // Copy of Access Chest Class-2
+        GameRegistry.addRecipe(new RecipeCopyAccessChest(
+                new ItemStack(Block.enderChest, 3),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 2)),
+                new ItemStack(Item.itemsList[blockIdAC], 2, AccessChest.colorgrade2id(15, 2))
+        ));
+        // Copy of Access Chest Class-3
+        GameRegistry.addRecipe(new RecipeCopyAccessChest(
+                new ItemStack(Block.enderChest, 8),
+                new ItemStack(Item.itemsList[blockIdAC], 1, AccessChest.colorgrade2id(15, 3)),
+                new ItemStack(Item.itemsList[blockIdAC], 2, AccessChest.colorgrade2id(15, 3))
+        ));
     }
 
     /**

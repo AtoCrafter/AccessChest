@@ -1,6 +1,5 @@
 package ato.accesschest.game;
 
-import ato.accesschest.AccessChest;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -8,6 +7,7 @@ import net.minecraft.world.World;
 
 public class RecipeAtoChest extends ShapedRecipes {
 
+    private static final RecipeUtil util = new RecipeUtil();
     private ItemStack center;
     private ItemStack round;
 
@@ -20,12 +20,13 @@ public class RecipeAtoChest extends ShapedRecipes {
      */
     public RecipeAtoChest(ItemStack center, ItemStack round, ItemStack output) {
         super(3, 3, new ItemStack[]{
-                center, center, center,
-                center, round, center,
-                center, center, center
+                round, round, round,
+                round, center, round,
+                round, round, round
         }, output);
         this.center = center;
         this.round = round;
+        util.checkIsAtoChest(round);
     }
 
     @Override
@@ -34,11 +35,11 @@ public class RecipeAtoChest extends ShapedRecipes {
         for (int i = 0; i < 9; ++i) {
             ItemStack target = inventory.getStackInSlot(i);
             if (i == 4) {
-                if (!match(center, target)) {
+                if (!center.isItemEqual(target)) {
                     return false;
                 }
             } else {
-                if (!match(round, target)) {
+                if (!util.isTheSameGrade(round, target)) {
                     return false;
                 }
             }
@@ -48,21 +49,4 @@ public class RecipeAtoChest extends ShapedRecipes {
         }
         return exist;
     }
-
-    /**
-     * レシピに使えるアイテムかどうか調べる
-     *
-     * @param is1 レシピのアイテム
-     * @param is2 チェックするアイテム
-     */
-    private boolean match(ItemStack is1, ItemStack is2) {
-        if (is2 == null) {
-            return false;
-        }
-        if (is1.itemID == is2.itemID) {
-            return AccessChest.id2grade(is1.getItemDamage()) == AccessChest.id2grade(is2.getItemDamage());
-        }
-        return false;
-    }
-
 }
