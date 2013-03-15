@@ -201,6 +201,10 @@ public class GuiAtoChest extends GuiContainer {
             case GUI_SORT_BUTTON_ID:
                 sender.sendSort();
                 break;
+            case GUI_CLEAR_BUTTON_ID:
+                filterTextField.setText("");
+                sender.sendFilter(filterTextField.getText());
+                break;
         }
     }
 
