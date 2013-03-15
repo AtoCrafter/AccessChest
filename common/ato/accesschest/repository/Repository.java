@@ -191,6 +191,13 @@ public abstract class Repository implements IInventory {
     }
 
     /**
+     * カスタムソートのための優先度を取得
+     */
+    public int getPriority(int index) {
+        return data.getComparator().getPriority(getStackInSlot(index));
+    }
+
+    /**
      * カスタムソートのため、優先度をつける
      */
     public void setPriority(int index, int prior) {

@@ -137,9 +137,17 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     public void setFilter(String str) {
         filter.clear();
-        if ("".equals(str)) {
+        int pri;
+        if (str == null || "".equals(str)) {
             for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
                 filter.add(index);
+            }
+        } else if ((pri = isPriotityViewCommand(str)) != -1) {
+            Repository repo = getChestRepository();
+            for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
+                if (repo.getPriority(index) == pri) {
+                    filter.add(index);
+                }
             }
         } else {
             for (int index = 0; index < chestInventory.getSizeInventory(); ++index) {
@@ -160,6 +168,20 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
             return false;
         }
         return is.getDisplayName().contains(filter); // TODO : downcase, displayName, CreativeTabs
+    }
+
+    /**
+     * Priority 検索用コマンドであれば検索する優先度を返す
+     *
+     * @return 検索用コマンドでない場合は -1, そうであれば優先度
+     */
+    private int isPriotityViewCommand(String str) {
+        if (str == null || !str.startsWith("pri:")) return -1;
+        try {
+            return Integer.valueOf(str.substring(4));
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     // ボタン関連
