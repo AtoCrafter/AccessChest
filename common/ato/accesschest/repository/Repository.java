@@ -117,6 +117,13 @@ public abstract class Repository implements IInventory {
     // レポジトリの機能
 
     /**
+     * リポジトリの名前を取得
+     */
+    public String getName() {
+        return data.getName();
+    }
+
+    /**
      * リポジトリに名前をつける
      */
     public void setName(String name) {
