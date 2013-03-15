@@ -2,13 +2,19 @@ package ato.accesschest.game;
 
 import ato.accesschest.AccessChest;
 import ato.accesschest.Properties;
+import ato.accesschest.repository.Repository;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 /**
  * この MOD で追加されるゲーム内のブロックの抽象クラス
@@ -49,27 +55,6 @@ public abstract class BlockAtoChest extends BlockContainer {
         return RENDER_ID;
     }
 
-//    @Override
-//    public void breakBlock(World world, int x, int y, int z, int id, int meta) {
-//        TileEntityAbstChest chest = (TileEntityAbstChest)world.getBlockTileEntity(x, y, z);
-//        ItemAbstChest item = null;
-//        if ( chest.getType() == 0 ) {
-//            item = (ItemAbstChest)Item.itemsList[ConfigValues.blockAccessChestID];
-//        } else if ( chest.getType() == 1 ) {
-//            item = (ItemAbstChest)Item.itemsList[ConfigValues.blockCompressedChestID];
-//        }
-//        ItemStack itemstack = new ItemStack(item, 1, item.getDamage(chest.getGrade(), chest.getColor()));
-//        EntityItem entity = new EntityItem(world, x+0.5D, y+0.5D, z+0.5D, itemstack);
-//        entity.delayBeforeCanPickup = 10;
-//        world.spawnEntityInWorld(entity);
-//        super.breakBlock(world, x, y, z, id, meta);
-//    }
-//
-//    @Override
-//    public int quantityDropped(Random par1Random) {
-//        return 0;
-//    }
-
     /**
      * ブロックが設置されたときの処理
      *
@@ -93,5 +78,24 @@ public abstract class BlockAtoChest extends BlockContainer {
                 break;
         }
         world.setBlockMetadataWithNotify(x, y, z, direction);
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, int id, int meta) {
+        TileEntityAtoChest tileEntity = (TileEntityAtoChest) world.getBlockTileEntity(x, y, z);
+        Repository repo = tileEntity.getRepository();
+        ItemStack item = new ItemStack(
+                Item.itemsList[id],
+                1,
+                AccessChest.colorgrade2id(repo.getColor(), repo.getGrade()));
+        EntityItem entity = new EntityItem(world, x + 0.5D, y + 0.5D, z + 0.5D, item);
+        entity.delayBeforeCanPickup = 10;
+        world.spawnEntityInWorld(entity);
+        super.breakBlock(world, x, y, z, id, meta);
+    }
+
+    @Override
+    public int quantityDropped(Random par1Random) {
+        return 0;
     }
 }
