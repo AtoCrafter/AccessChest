@@ -15,9 +15,4 @@ public class RepositoryDammy extends Repository {
     public String getInvName() {
         return "dammy";
     }
-
-    @Override
-    public void onInventoryChanged() {
- //
-    }
 }

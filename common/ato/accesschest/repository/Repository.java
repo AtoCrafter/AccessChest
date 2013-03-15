@@ -94,6 +94,10 @@ public abstract class Repository implements IInventory {
     public void closeChest() {
     }
 
+    @Override
+    public void onInventoryChanged() {
+    }
+
     /**
      * リポジトリ内にアイテムを入れる
      * 引数の ItemStack は関数内部で収納した分だけ減らされる

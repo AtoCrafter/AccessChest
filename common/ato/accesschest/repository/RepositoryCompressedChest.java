@@ -13,9 +13,4 @@ public class RepositoryCompressedChest extends Repository {
     public String getInvName() {
         return "Compressed Chest";
     }
-
-    @Override
-    public void onInventoryChanged() {
-//
-    }
 }

@@ -18,9 +18,4 @@ public class RepositoryAccessChest extends Repository {
 //        if ( !name.equals("") ) str += name;
         return str;
     }
-
-    @Override
-    public void onInventoryChanged() {
-//
-    }
 }
