@@ -52,14 +52,13 @@ public class ItemAccessChest extends ItemAtoChest {
             IInventory inv = (IInventory) tileEntity;
             // ラージチェストを考慮
             if (tileEntity instanceof TileEntityChest) {
-                for (int nx = -1; nx <= 1; ++nx) {
-                    for (int nz = -1; nz <= 1; ++nz) {
-                        if (Math.abs(nx) + Math.abs(nz) == 1) {
-                            TileEntity chest2 = world.getBlockTileEntity(x + nx, y, z + nz);
-                            if (chest2 instanceof TileEntityChest) {
-                                inv = new InventoryLargeChest("", inv, (TileEntityChest) chest2);
-                            }
-                        }
+                for (int d = 1; d <= 7; d += 2) {
+                    int nx = d / 3 - 1;
+                    int nz = d % 3 - 1;
+                    TileEntity chest2 = world.getBlockTileEntity(x + nx, y, z + nz);
+                    if (chest2 instanceof TileEntityChest) {
+                        inv = new InventoryLargeChest("", inv, (TileEntityChest) chest2);
+                        break;
                     }
                 }
             }

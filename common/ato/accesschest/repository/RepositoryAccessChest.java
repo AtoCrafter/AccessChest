@@ -48,14 +48,16 @@ public class RepositoryAccessChest extends Repository {
 
         int index = 0;
         for (int i = 0; i < inv.getSizeInventory() && i < getSizeInventory(); ++i) {
-            ItemStack is = null;
-            while (is == null) {
-                if (index >= getSizeInventory()) return;
-                is = getStackInSlot(index);
-                setInventorySlotContents(index, null);
-                ++index;
+            if (inv.getStackInSlot(i) == null) {
+                ItemStack is = null;
+                while (is == null) {
+                    if (index >= getSizeInventory()) return;
+                    is = getStackInSlot(index);
+                    setInventorySlotContents(index, null);
+                    ++index;
+                }
+                inv.setInventorySlotContents(i, is);
             }
-            inv.setInventorySlotContents(i, is);
         }
     }
 
