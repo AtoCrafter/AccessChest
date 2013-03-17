@@ -14,7 +14,7 @@ public class NBTPool {
     /**
      * このクラスの唯一のインスタンス
      */
-    protected static NBTPool instance;
+    protected static NBTPool instance = new NBTPool();
     /**
      * 中身の実体
      */
