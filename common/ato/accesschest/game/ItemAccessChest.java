@@ -5,8 +5,10 @@ import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -46,10 +48,26 @@ public class ItemAccessChest extends ItemAtoChest {
                     AccessChest.id2color(stack.getItemDamage()),
                     AccessChest.id2grade(stack.getItemDamage())
             );
+
+            IInventory inv = (IInventory) tileEntity;
+            // ラージチェストを考慮
+            if (tileEntity instanceof TileEntityChest) {
+                for (int nx = -1; nx <= 1; ++nx) {
+                    for (int nz = -1; nz <= 1; ++nz) {
+                        if (Math.abs(nx) + Math.abs(nz) == 1) {
+                            TileEntity chest2 = world.getBlockTileEntity(x + nx, y, z + nz);
+                            if (chest2 instanceof TileEntityChest) {
+                                inv = new InventoryLargeChest("", inv, (TileEntityChest) chest2);
+                            }
+                        }
+                    }
+                }
+            }
+
             if (player.isSneaking()) {
-                repo.pourInventory((IInventory) tileEntity);
+                repo.pourInventory(inv);
             } else {
-                repo.extractInventory((IInventory) tileEntity);
+                repo.extractInventory(inv);
             }
         }
         return super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
