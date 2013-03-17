@@ -4,7 +4,9 @@ import ato.accesschest.AccessChest;
 import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -31,10 +33,21 @@ public class ItemAccessChest extends ItemAtoChest {
     }
 
     @Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
+                                  int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+        if (tileEntity instanceof IInventory) {
+            return true;
+        } else {
+            return super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+        }
+    }
+
+    @Override
     public boolean onItemUse(ItemStack is, EntityPlayer player, World world,
-                             int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+                             int x, int y, int z, int side, float par8, float par9, float par10) {
         if (player.isSneaking()) {
-            return super.onItemUse(is, player, world, par4, par5, par6, par7, par8, par9, par10);
+            return super.onItemUse(is, player, world, x, y, z, side, par8, par9, par10);
         } else {
             return false;
         }
