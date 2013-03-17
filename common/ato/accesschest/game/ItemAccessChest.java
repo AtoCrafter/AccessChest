@@ -36,7 +36,16 @@ public class ItemAccessChest extends ItemAtoChest {
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
                                   int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
-        if (tileEntity instanceof IInventory) {
+        if (!world.isRemote && tileEntity instanceof IInventory) {
+            RepositoryAccessChest repo = new RepositoryAccessChest(
+                    AccessChest.id2color(stack.getItemDamage()),
+                    AccessChest.id2grade(stack.getItemDamage())
+            );
+            if (player.isSneaking()) {
+                repo.pourInventory((IInventory)tileEntity);
+            } else {
+                repo.extractInventory((IInventory)tileEntity);
+            }
             return true;
         } else {
             return super.onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
