@@ -11,46 +11,39 @@ import java.util.Properties;
  */
 public class Localization {
 
+    private static final Localization instance = new Localization();
+
     public static void register() {
-        (new Localization()).registerLocalizations();
+        instance.registerLocalizations();
     }
 
     /**
      * 全ての翻訳を登録
      */
     private void registerLocalizations() {
-        for (File f : getLocalizationFiles()) {
-            try {
-                String lang = f.getName().substring(0, f.getName().lastIndexOf("."));
-                LanguageRegistry.instance().addStringLocalization(loadProperty(f), lang);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        registerLocalization("en_US");
+        registerLocalization("ja_JP");
+    }
+
+    /**
+     * 指定した言語の翻訳を登録
+     */
+    private void registerLocalization(String lang) {
+        try {
+            LanguageRegistry.instance().addStringLocalization(loadProperty(
+                    AccessChest.class.getResourceAsStream(lang + ".properties")), lang);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     /**
-     * 全翻訳ファイルのリストを取得
-     */
-    private File[] getLocalizationFiles() {
-        return (new File(AccessChest.class.getResource("lang").getPath())).listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".properties");
-            }
-        });
-    }
-
-    /**
      * プロパティファイルの読み込み
-     *
-     * @param file プロパティファイル
      */
-    private Properties loadProperty(File file) throws IOException {
+    private Properties loadProperty(InputStream is) throws IOException {
         Properties prop = new Properties();
-        InputStream in = new FileInputStream(file);
-        prop.load(new InputStreamReader(in, "UTF-8"));
-        in.close();
+        prop.load(new InputStreamReader(is, "UTF-8"));
+        is.close();
         return prop;
     }
 }
