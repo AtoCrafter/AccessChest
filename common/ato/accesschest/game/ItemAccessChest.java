@@ -8,7 +8,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -16,6 +15,11 @@ import java.util.List;
  * ゲーム内での Access Chest アイテム
  */
 public class ItemAccessChest extends ItemAtoChest {
+
+    /**
+     * 一括転送を使用しても良いかどうか
+     */
+    public static boolean canTransfer;
 
     public ItemAccessChest(int id) {
         super(id);
@@ -37,7 +41,7 @@ public class ItemAccessChest extends ItemAtoChest {
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world,
                                   int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
-        if (!world.isRemote && tileEntity instanceof IInventory && Keyboard.isKeyDown(Keyboard.KEY_X)) {
+        if (!world.isRemote && tileEntity instanceof IInventory && canTransfer) {
             RepositoryAccessChest repo = new RepositoryAccessChest(
                     AccessChest.id2color(stack.getItemDamage()),
                     AccessChest.id2grade(stack.getItemDamage())
@@ -63,7 +67,7 @@ public class ItemAccessChest extends ItemAtoChest {
 
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-        if (player.isSneaking() && !Keyboard.isKeyDown(Keyboard.KEY_X)) {
+        if (player.isSneaking() && !canTransfer) {
             return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
         } else {
             return false;

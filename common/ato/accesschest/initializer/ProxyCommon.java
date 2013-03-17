@@ -6,6 +6,7 @@ import ato.accesschest.game.*;
 import ato.accesschest.handler.AutoCollect;
 import ato.accesschest.repository.SaveHandler;
 import ato.accesschest.ui.GuiHandler;
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;

@@ -3,8 +3,10 @@ package ato.accesschest.initializer;
 import ato.accesschest.game.BlockAtoChest;
 import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.game.TileEntityAtoChestRenderer;
+import ato.accesschest.handler.KeybindHandler;
 import ato.accesschest.ui.Localization;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 /**
@@ -18,6 +20,7 @@ public class ProxyClient extends ProxyCommon {
         super.init();
         registerLocalization();
         registerRenderer();
+        registerKeybindings();
     }
 
     /**
@@ -35,5 +38,12 @@ public class ProxyClient extends ProxyCommon {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAtoChest.class, renderer);
         BlockAtoChest.RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(BlockAtoChest.RENDER_ID, renderer);
+    }
+
+    /**
+     * 特殊キーの登録
+     */
+    private void registerKeybindings() {
+        KeyBindingRegistry.registerKeyBinding(new KeybindHandler());
     }
 }
