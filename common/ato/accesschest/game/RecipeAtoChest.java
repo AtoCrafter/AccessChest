@@ -36,7 +36,7 @@ public class RecipeAtoChest extends ShapedRecipes {
         for (int i = 0; i < 9; ++i) {
             ItemStack target = inventory.getStackInSlot(i);
             if (i == 4) {
-                if (!center.isItemEqual(target)) {
+                if (target == null || !center.isItemEqual(target)) {
                     return false;
                 }
             } else {
