@@ -183,7 +183,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         }
 
         for (String str : list) {
-            if (str.toLowerCase().contains(filter)) {
+            if (str != null && str.toLowerCase().contains(filter)) {
                 return true;
             }
         }
