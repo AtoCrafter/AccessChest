@@ -25,7 +25,10 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     protected Repository repo;
 
     public Repository getRepository() {
-        return this.repo;
+        if (repo == null) {
+            repo = createRepository(0, 0);
+        }
+        return repo;
     }
 
     protected abstract Repository createRepository(int color, int grade);

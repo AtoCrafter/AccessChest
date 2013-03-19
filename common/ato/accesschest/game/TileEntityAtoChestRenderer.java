@@ -80,7 +80,7 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
     public void renderTileEntityAt(TileEntity tileEntityRaw, double par2, double par4, double par6, float par8) {
         TileEntityAtoChest tileEntity = (TileEntityAtoChest) tileEntityRaw;
         int direction = 0;
-        int colorNum = tileEntity.repo.getColor();
+        int colorNum = tileEntity.getRepository().getColor();
         if (tileEntity.func_70309_m()) {
             direction = tileEntity.getBlockMetadata();
         }
