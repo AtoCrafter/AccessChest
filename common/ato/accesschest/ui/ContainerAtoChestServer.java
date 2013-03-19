@@ -175,12 +175,6 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         list.add(is.getItem().getItemName());
         list.add(is.getItem().getLocalItemName(is));
         list.add(is.getItem().getStatName());
-        for (CreativeTabs tab : is.getItem().getCreativeTabs()) {
-            if (tab != null) {
-                list.add(tab.getTabLabel());
-                list.add(tab.getTranslatedTabLabel());
-            }
-        }
 
         for (String str : list) {
             if (str != null && str.toLowerCase().contains(filter)) {
