@@ -1,5 +1,8 @@
 package ato.accesschest.ui;
 
+import ato.accesschest.game.TileEntityAccessChest;
+import ato.accesschest.game.TileEntityCompressedChest;
+import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -13,7 +16,6 @@ public abstract class ContainerAtoChest extends Container {
 
     protected static final int INFO_TYPE_INVENTORY_SIZE = 1;
     protected static final int INFO_TYPE_SCROLL_INDEX = 2;
-
     protected IInventory chestInventory;
     protected IInventory playerInventory;
     /**
@@ -28,7 +30,14 @@ public abstract class ContainerAtoChest extends Container {
     public ContainerAtoChest(IInventory chestInventory, IInventory playerInventory) {
         this.chestInventory = chestInventory;
         this.playerInventory = playerInventory;
-        chestInventory.openChest();
+        // 難読化後の AbstractMethodError バグ対策
+        if (chestInventory instanceof RepositoryAccessChest) {
+            ((RepositoryAccessChest) chestInventory).openChest();
+        } else if (chestInventory instanceof TileEntityAccessChest) {
+            ((TileEntityAccessChest) chestInventory).openChest();
+        } else if (chestInventory instanceof TileEntityCompressedChest) {
+            ((TileEntityCompressedChest) chestInventory).openChest();
+        }
     }
 
     /**
@@ -92,6 +101,13 @@ public abstract class ContainerAtoChest extends Container {
     @Override
     public void onCraftGuiClosed(EntityPlayer player) {
         super.onCraftGuiClosed(player);
-        chestInventory.closeChest();
+        // 難読化後の AbstractMethodError バグ対策
+        if (chestInventory instanceof RepositoryAccessChest) {
+            ((RepositoryAccessChest) chestInventory).closeChest();
+        } else if (chestInventory instanceof TileEntityAccessChest) {
+            ((TileEntityAccessChest) chestInventory).closeChest();
+        } else if (chestInventory instanceof TileEntityCompressedChest) {
+            ((TileEntityCompressedChest) chestInventory).closeChest();
+        }
     }
 }
