@@ -1,9 +1,9 @@
 package ato.accesschest.ui;
 
+import ato.accesschest.AccessChest;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.repository.Repository;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -209,11 +209,18 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
     }
 
     public void eject(EntityPlayer player) {
-        ItemStack[] list = getChestRepository().eject();
-        for (ItemStack is : list) {
-            if (is != null) {
-                player.dropPlayerItem(is);
+        Repository repo = getChestRepository();
+        int index = 0;
+        int count = 0;
+        int size = repo.getSizeInventory();
+        while (count < AccessChest.config.ejectStackMaxNum && index < size) {
+            ItemStack target = repo.getStackInSlot(index);
+            if (target != null) {
+                repo.setInventorySlotContents(index, null);
+                ++count;
+                player.dropPlayerItem(target);
             }
+            ++index;
         }
     }
 
