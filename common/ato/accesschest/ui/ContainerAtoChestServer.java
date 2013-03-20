@@ -11,6 +11,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * サーバー側のコンテナ
@@ -210,10 +211,10 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     public void eject(EntityPlayer player) {
         Repository repo = getChestRepository();
-        int index = 0;
+        Iterator ite = filter.iterator();
         int count = 0;
-        int size = repo.getSizeInventory();
-        while (count < AccessChest.config.ejectStackMaxNum && index < size) {
+        while (count < AccessChest.config.ejectStackMaxNum && ite.hasNext()) {
+            int index = (Integer) ite.next();
             ItemStack target = repo.getStackInSlot(index);
             if (target != null) {
                 repo.setInventorySlotContents(index, null);
