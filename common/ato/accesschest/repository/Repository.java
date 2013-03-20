@@ -186,24 +186,6 @@ public abstract class Repository implements IInventory {
     }
 
     /**
-     * 一括排出
-     */
-    public ItemStack[] eject() {
-        ItemStack[] list = new ItemStack[AccessChest.config.ejectStackMaxNum];
-        int index = -1;
-        for (int i = 0; i < list.length; ++i) {
-            while (list[i] == null) {
-                list[i] = getStackInSlot(++index);
-                if (index >= getSizeInventory()) {
-                    return list;
-                }
-            }
-            setInventorySlotContents(index, null);
-        }
-        return list;
-    }
-
-    /**
      * カスタムソートのための優先度を取得
      */
     public int getPriority(int index) {
