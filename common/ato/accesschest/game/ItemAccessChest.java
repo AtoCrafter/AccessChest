@@ -97,16 +97,15 @@ public class ItemAccessChest extends ItemAtoChest {
     // 表示関係
 
     @Override
-    public String getItemDisplayName(ItemStack is) {
+    public void addInformation(ItemStack is, EntityPlayer player, List info, boolean par4) {
+        super.addInformation(is, player, info, par4);
         String name = (new RepositoryAccessChest(
                 AccessChest.id2color(is.getItemDamage()),
                 AccessChest.id2grade(is.getItemDamage()),
                 AccessChest.id2isOriginal(is.getItemDamage())
         )).getName();
         if (name != null && !name.equals("")) {
-            return name;
-        } else {
-            return super.getItemDisplayName(is);
+            info.add("\u00a7e" + name);
         }
     }
 

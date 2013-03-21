@@ -6,6 +6,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 /**
  * この MOD で追加されるゲーム内のアイテムの抽象クラス
  */
@@ -30,12 +32,11 @@ public abstract class ItemAtoChest extends ItemBlock {
     }
 
     @Override
-    public String getItemDisplayName(ItemStack is) {
-        String str = super.getItemDisplayName(is);
-        str += " Class-" + AccessChest.id2grade(is.getItemDamage());
+    public void addInformation(ItemStack is, EntityPlayer player, List info, boolean par4) {
+        String str = "Class " + AccessChest.id2grade(is.getItemDamage());
         if (!AccessChest.id2isOriginal(is.getItemDamage())) {
             str += " (Copy)";
         }
-        return str;
+        info.add("\u00a77" + str);
     }
 }
