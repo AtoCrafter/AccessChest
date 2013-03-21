@@ -31,7 +31,7 @@ public class RecipeColoringAtoChest extends ShapelessRecipes {
             for (int j = 0; j < 3; ++j) {
                 ItemStack target = inventory.getStackInRowAndColumn(j, i);
                 if (target != null) {
-                    if (util.isTheSameGrade(target, chest)) {
+                    if (util.isTheSameGrade(target, chest) && util.isOriginal(target) == util.isOriginal(chest)) {
                         existChest = true;
                     } else if (dye.isItemEqual(target)) {
                         existDye = true;

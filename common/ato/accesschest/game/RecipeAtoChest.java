@@ -1,5 +1,6 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -40,7 +41,7 @@ public class RecipeAtoChest extends ShapedRecipes {
                     return false;
                 }
             } else {
-                if (target == null || !round.isItemEqual(target) && !util.isTheSameGrade(round, target)) {
+                if (target == null || !round.isItemEqual(target) && !util.isTheSameGrade(round, target) || !util.isOriginal(target)) {
                     return false;
                 }
             }
