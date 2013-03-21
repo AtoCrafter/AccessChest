@@ -89,7 +89,7 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-        tileEntityAtoChestDammy.setColorAndGrade(AccessChest.id2color(metadata), 0);
+        tileEntityAtoChestDammy.setColorAndGrade(AccessChest.id2color(metadata), 0, false);
         TileEntityRenderer.instance.renderTileEntityAt(tileEntityAtoChestDammy, 0.0D, 0.0D, 0.0D, 0.0F);
     }
 

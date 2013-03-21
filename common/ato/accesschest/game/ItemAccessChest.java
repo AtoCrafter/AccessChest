@@ -48,7 +48,8 @@ public class ItemAccessChest extends ItemAtoChest {
         if (!world.isRemote && tileEntity instanceof IInventory && canTransfer) {
             RepositoryAccessChest repo = new RepositoryAccessChest(
                     AccessChest.id2color(stack.getItemDamage()),
-                    AccessChest.id2grade(stack.getItemDamage())
+                    AccessChest.id2grade(stack.getItemDamage()),
+                    AccessChest.id2isOriginal(stack.getItemDamage())
             );
 
             IInventory inv = (IInventory) tileEntity;
@@ -99,7 +100,8 @@ public class ItemAccessChest extends ItemAtoChest {
     public String getItemDisplayName(ItemStack is) {
         String name = (new RepositoryAccessChest(
                 AccessChest.id2color(is.getItemDamage()),
-                AccessChest.id2grade(is.getItemDamage())
+                AccessChest.id2grade(is.getItemDamage()),
+                AccessChest.id2isOriginal(is.getItemDamage())
         )).getName();
         if (name != null && !name.equals("")) {
             return name;

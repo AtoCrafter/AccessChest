@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class TileEntityCompressedChest extends TileEntityAtoChest {
 
     @Override
-    protected Repository createRepository(int color, int grade) {
+    protected Repository createRepository(int color, int grade, boolean isOriginal) {
         return new RepositoryCompressedChest(color, grade);
     }
 

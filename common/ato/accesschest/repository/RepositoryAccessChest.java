@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
  */
 public class RepositoryAccessChest extends Repository {
 
-    public RepositoryAccessChest(int color, int grade) {
-        super(NBTPool.instance.getNBT(color), color, grade);
+    public RepositoryAccessChest(int color, int grade, boolean isOriginal) {
+        super(NBTPool.instance.getNBT(color), color, grade, isOriginal);
     }
 
     @Override

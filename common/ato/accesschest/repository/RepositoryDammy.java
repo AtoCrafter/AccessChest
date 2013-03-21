@@ -7,7 +7,7 @@ package ato.accesschest.repository;
 public class RepositoryDammy extends Repository {
 
     public RepositoryDammy(int grade) {
-        super(new DataManagerArray(), 0, grade);
+        super(new DataManagerArray(), 0, grade, false);
         this.grade = grade;
     }
 

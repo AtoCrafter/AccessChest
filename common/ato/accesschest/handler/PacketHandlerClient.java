@@ -22,11 +22,12 @@ public class PacketHandlerClient extends PacketHandler {
             int z = in.readInt();
             int color = in.readByte();
             int grade = in.readByte();
+            boolean isOriginal = in.readBoolean();
 
             World world = player.worldObj;
             TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
             if (tileEntity instanceof TileEntityAtoChest) {
-                ((TileEntityAtoChest) tileEntity).setColorAndGrade(color, grade);
+                ((TileEntityAtoChest) tileEntity).setColorAndGrade(color, grade, isOriginal);
             }
         }
     }

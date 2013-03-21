@@ -27,10 +27,16 @@ public abstract class Repository implements IInventory {
      */
     protected int grade;
 
-    public Repository(DataManager data, int color, int grade) {
+    /**
+     * コピーでないかどうか
+     */
+    protected boolean isOriginal;
+
+    public Repository(DataManager data, int color, int grade, boolean isOriginal) {
         this.data = data;
         this.color = color;
         this.grade = grade;
+        this.isOriginal = isOriginal;
     }
 
     public int getColor() {
@@ -39,6 +45,10 @@ public abstract class Repository implements IInventory {
 
     public int getGrade() {
         return grade;
+    }
+
+    public boolean isOriginal() {
+        return isOriginal;
     }
 
     // IInventory の実装

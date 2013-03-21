@@ -23,7 +23,8 @@ public abstract class ItemAtoChest extends ItemBlock {
         boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
         ((TileEntityAtoChest) world.getBlockTileEntity(x, y, z)).setColorAndGrade(
                 AccessChest.id2color(stack.getItemDamage()),
-                AccessChest.id2grade(stack.getItemDamage())
+                AccessChest.id2grade(stack.getItemDamage()),
+                AccessChest.id2isOriginal(stack.getItemDamage())
         );
         return ret;
     }

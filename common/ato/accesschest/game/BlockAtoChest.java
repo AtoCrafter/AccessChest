@@ -87,7 +87,7 @@ public abstract class BlockAtoChest extends BlockContainer {
         ItemStack item = new ItemStack(
                 Item.itemsList[id],
                 1,
-                AccessChest.colorgrade2id(repo.getColor(), repo.getGrade()));
+                AccessChest.colorgrade2id(repo.getColor(), repo.getGrade(), repo.isOriginal()));
         EntityItem entity = new EntityItem(world, x + 0.5D, y + 0.5D, z + 0.5D, item);
         entity.delayBeforeCanPickup = 10;
         world.spawnEntityInWorld(entity);
