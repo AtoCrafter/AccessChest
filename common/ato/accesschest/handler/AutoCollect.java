@@ -30,7 +30,8 @@ public class AutoCollect {
                 int damage = inventory[i].getItemDamage();
                 RepositoryAccessChest repo = new RepositoryAccessChest(
                         AccessChest.id2color(damage),
-                        AccessChest.id2grade(damage));
+                        AccessChest.id2grade(damage),
+                        AccessChest.id2isOriginal(damage));
                 repo.storeItem(item);
                 if (item.stackSize <= 0) break;
             }

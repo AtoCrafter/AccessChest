@@ -23,7 +23,8 @@ public abstract class ItemAtoChest extends ItemBlock {
         boolean ret = super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
         ((TileEntityAtoChest) world.getBlockTileEntity(x, y, z)).setColorAndGrade(
                 AccessChest.id2color(stack.getItemDamage()),
-                AccessChest.id2grade(stack.getItemDamage())
+                AccessChest.id2grade(stack.getItemDamage()),
+                AccessChest.id2isOriginal(stack.getItemDamage())
         );
         return ret;
     }
@@ -32,6 +33,9 @@ public abstract class ItemAtoChest extends ItemBlock {
     public String getItemDisplayName(ItemStack is) {
         String str = super.getItemDisplayName(is);
         str += " Class-" + AccessChest.id2grade(is.getItemDamage());
+        if (!AccessChest.id2isOriginal(is.getItemDamage())) {
+            str += " (Copy)";
+        }
         return str;
     }
 }

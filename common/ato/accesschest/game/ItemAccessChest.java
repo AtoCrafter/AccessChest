@@ -28,6 +28,8 @@ public class ItemAccessChest extends ItemAtoChest {
         setItemName("accesschest");
     }
 
+    // 右クリック関係
+
     @Override
     public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player) {
         if (!world.isRemote && !player.isSneaking()) {
@@ -46,7 +48,8 @@ public class ItemAccessChest extends ItemAtoChest {
         if (!world.isRemote && tileEntity instanceof IInventory && canTransfer) {
             RepositoryAccessChest repo = new RepositoryAccessChest(
                     AccessChest.id2color(stack.getItemDamage()),
-                    AccessChest.id2grade(stack.getItemDamage())
+                    AccessChest.id2grade(stack.getItemDamage()),
+                    AccessChest.id2isOriginal(stack.getItemDamage())
             );
 
             IInventory inv = (IInventory) tileEntity;
@@ -91,11 +94,14 @@ public class ItemAccessChest extends ItemAtoChest {
         }
     }
 
+    // 表示関係
+
     @Override
     public String getItemDisplayName(ItemStack is) {
         String name = (new RepositoryAccessChest(
                 AccessChest.id2color(is.getItemDamage()),
-                AccessChest.id2grade(is.getItemDamage())
+                AccessChest.id2grade(is.getItemDamage()),
+                AccessChest.id2isOriginal(is.getItemDamage())
         )).getName();
         if (name != null && !name.equals("")) {
             return name;
@@ -106,9 +112,13 @@ public class ItemAccessChest extends ItemAtoChest {
 
     @Override
     public void getSubItems(int id, CreativeTabs tab, List list) {
-        list.add(new ItemStack(id, 1, 0x0F));
-        list.add(new ItemStack(id, 1, 0x1F));
-        list.add(new ItemStack(id, 1, 0x2F));
-        list.add(new ItemStack(id, 1, 0x3F));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 0, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 1, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 0, false)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 1, false)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2, false)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3, false)));
     }
 }

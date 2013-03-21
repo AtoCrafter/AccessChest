@@ -16,9 +16,9 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        if (0 <= id && id < 16 * 4) {
+        if (0 <= id && id < 16 * 4 * 2) {
             return new ContainerAtoChestServer(new RepositoryAccessChest(
-                    AccessChest.id2color(id), AccessChest.id2grade(id)
+                    AccessChest.id2color(id), AccessChest.id2grade(id), false
             ), player.inventory);
         } else if (id == Properties.GUI_ID_TILEENTITY) {
             TileEntityAtoChest tileEntity = (TileEntityAtoChest) world.getBlockTileEntity(x, y, z);
@@ -29,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        if (0 <= id && id < 16 * 4 || id == Properties.GUI_ID_TILEENTITY) {
+        if (0 <= id && id < 16 * 4 * 2 || id == Properties.GUI_ID_TILEENTITY) {
             return new GuiAtoChest(new ContainerAtoChestClient(player.inventory));
         }
         return null;

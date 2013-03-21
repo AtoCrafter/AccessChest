@@ -30,4 +30,8 @@ public class RecipeUtil {
             throw new IllegalArgumentException("invalid recipe for AccessChest MOD");
         }
     }
+
+    public boolean isOriginal(ItemStack is) {
+        return AccessChest.id2isOriginal(is.getItemDamage());
+    }
 }

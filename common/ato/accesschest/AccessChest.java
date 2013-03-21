@@ -41,7 +41,11 @@ public class AccessChest {
      * Access Chest の色とクラスから GUI の ID を算出する
      */
     public static int colorgrade2id(int color, int grade) {
-        return (grade << 4) + color;
+        return colorgrade2id(color, grade, true);
+    }
+
+    public static int colorgrade2id(int color, int grade, boolean isOriginal) {
+        return ((isOriginal ? 0 : 1) << 6) + ((grade & 3) << 4) + (color & 0xF);
     }
 
     /**
@@ -58,6 +62,13 @@ public class AccessChest {
     public static int id2grade(int id) {
         int grade = (id & 0x30) >> 4;
         return grade;
+    }
+
+    /**
+     * Access Chest がコピーされたものか GUI の ID から算出する
+     */
+    public static boolean id2isOriginal(int id) {
+        return (id & 0x40) == 0;
     }
 
     @PreInit

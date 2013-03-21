@@ -1,5 +1,6 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -17,7 +18,7 @@ public class ItemCompressedChest extends ItemAtoChest {
 
     @Override
     public void getSubItems(int id, CreativeTabs tab, List list) {
-        list.add(new ItemStack(id, 1, 0x1F));
-        list.add(new ItemStack(id, 1, 0x2F));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 1)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2)));
     }
 }

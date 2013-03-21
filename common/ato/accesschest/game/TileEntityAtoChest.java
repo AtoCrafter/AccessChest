@@ -26,19 +26,20 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
 
     public Repository getRepository() {
         if (repo == null) {
-            repo = createRepository(0, 0);
+            repo = createRepository(0, 0, false);
         }
         return repo;
     }
 
-    protected abstract Repository createRepository(int color, int grade);
+    protected abstract Repository createRepository(int color, int grade, boolean isOriginal);
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         byte color = nbt.getByte("Color");
         byte grade = nbt.getByte("Grade");
-        setColorAndGrade(color, grade);
+        boolean isOriginal = nbt.getBoolean("Original");
+        setColorAndGrade(color, grade, isOriginal);
     }
 
     @Override
@@ -46,6 +47,7 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
         super.writeToNBT(nbttc);
         nbttc.setByte("Color", (byte) (repo.getColor() & 0xF));
         nbttc.setByte("Grade", (byte) (repo.getGrade() & 0xF));
+        nbttc.setBoolean("Original", repo.isOriginal());
     }
 
     @Override
@@ -58,6 +60,7 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
             out.writeInt(zCoord);
             out.writeByte((byte) repo.getColor());
             out.writeByte((byte) repo.getGrade());
+            out.writeBoolean(repo.isOriginal());
             return new Packet250CustomPayload(Properties.CHANNEL_TILEENTITY, data.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,8 +72,8 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
      * 色及び、クラスの結びつけ
      * ブロックが置かれた時やロード時、サーバーからクライアントへのパケットなどで呼ばれる
      */
-    public void setColorAndGrade(int color, int grade) {
-        repo = createRepository(color, grade);
+    public void setColorAndGrade(int color, int grade, boolean isOriginal) {
+        repo = createRepository(color, grade, isOriginal);
     }
 
     /* IInventory を実装するため、そのまま Repository に移譲 */
