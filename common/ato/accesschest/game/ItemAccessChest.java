@@ -110,9 +110,13 @@ public class ItemAccessChest extends ItemAtoChest {
 
     @Override
     public void getSubItems(int id, CreativeTabs tab, List list) {
-        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 0)));
-        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 1)));
-        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2)));
-        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 0, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 1, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3, true)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 0, false)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 1, false)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2, false)));
+        list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3, false)));
     }
 }
