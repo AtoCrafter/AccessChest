@@ -3,8 +3,8 @@
   "modid": "AccessChest",
   "name": "Access Chest",
   "description": "New accessible chests anywhere, with huge sizes, a sorting function, searching function and so on.",
-  "version": "3.0.0",
-  "mcversion": "1.4.7",
+  "version": "@VERSION@",
+  "mcversion": "@MCVERSION@",
   "url": "http://atocrafter.github.com/AccessChest/",
   "authors": [
     "Ato"
