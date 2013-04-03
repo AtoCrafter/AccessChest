@@ -223,8 +223,14 @@ public class GuiAtoChest extends GuiContainer {
                 } else if (Keyboard.isKeyDown(Keyboard.KEY_0)) {
                     sender.sendCustomSort(0);
                 } else {
+                    int prevScroll = container.getScrollIndex();
+
                     sender.sendSort();
                     sender.sendFilter(filterTextField.getText());
+
+                    // 以前のスクロール位置に戻す
+                    container.setScrollIndex(prevScroll);
+                    sender.sendScrollIndex(container.getScrollIndex());
                 }
                 break;
             case GUI_CLEAR_BUTTON_ID:
