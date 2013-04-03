@@ -178,7 +178,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         list.add(is.getItem().getStatName());
 
         for (String str : list) {
-            if (str != null && str.toLowerCase().contains(filter)) {
+            if (str != null && str.toLowerCase().contains(filter.toLowerCase())) {
                 return true;
             }
         }
@@ -248,15 +248,14 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     @Override
     public void detectAndSendChanges() {
-        for (int i = 0; i < this.crafters.size(); ++i) {
-            ICrafting crafter = (ICrafting) this.crafters.get(i);
-            if (lastScrollIndex != scrollIndex) {
+        if (lastScrollIndex != scrollIndex || lastInventorySize != filter.size()) {
+            for (int i = 0; i < this.crafters.size(); ++i) {
+                ICrafting crafter = (ICrafting) this.crafters.get(i);
                 crafter.sendProgressBarUpdate(this, INFO_TYPE_SCROLL_INDEX, scrollIndex);
-            }
-            if (lastInventorySize != filter.size()) {
                 crafter.sendProgressBarUpdate(this, INFO_TYPE_INVENTORY_SIZE, filter.size());
             }
         }
+
         lastScrollIndex = scrollIndex;
         lastInventorySize = filter.size();
         super.detectAndSendChanges();
