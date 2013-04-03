@@ -71,7 +71,6 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
         var11 = 1.0F - var11 * var11 * var11;
         this.model.chestLid.rotateAngleX = -(var11 * (float) Math.PI / 2.0F);
         this.model.renderAll();
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
