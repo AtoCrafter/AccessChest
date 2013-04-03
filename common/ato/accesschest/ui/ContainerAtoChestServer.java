@@ -248,15 +248,19 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
 
     @Override
     public void detectAndSendChanges() {
-        for (int i = 0; i < this.crafters.size(); ++i) {
-            ICrafting crafter = (ICrafting) this.crafters.get(i);
-            if (lastScrollIndex != scrollIndex) {
+        if (lastScrollIndex != scrollIndex) {
+            for (int i = 0; i < this.crafters.size(); ++i) {
+                ICrafting crafter = (ICrafting) this.crafters.get(i);
                 crafter.sendProgressBarUpdate(this, INFO_TYPE_SCROLL_INDEX, scrollIndex);
             }
-            if (lastInventorySize != filter.size()) {
+        }
+        if (lastInventorySize != filter.size()) {
+            for (int i = 0; i < this.crafters.size(); ++i) {
+                ICrafting crafter = (ICrafting) this.crafters.get(i);
                 crafter.sendProgressBarUpdate(this, INFO_TYPE_INVENTORY_SIZE, filter.size());
             }
         }
+
         lastScrollIndex = scrollIndex;
         lastInventorySize = filter.size();
         super.detectAndSendChanges();
