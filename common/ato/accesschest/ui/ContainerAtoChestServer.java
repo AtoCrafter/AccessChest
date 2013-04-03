@@ -178,7 +178,7 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         list.add(is.getItem().getStatName());
 
         for (String str : list) {
-            if (str != null && str.toLowerCase().contains(filter)) {
+            if (str != null && str.toLowerCase().contains(filter.toLowerCase())) {
                 return true;
             }
         }
