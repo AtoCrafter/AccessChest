@@ -11,7 +11,8 @@ import net.minecraft.world.World;
 public class RepositoryAccessChest extends Repository {
 
     public RepositoryAccessChest(World world, int color, int grade, boolean isOriginal) {
-        super(NBTPool.instance.getNBT(color), color, grade, isOriginal);
+        super((DataManagerNBT)world.loadItemData(DataManagerNBT.class, "AccessChest-" + color),
+                color, grade, isOriginal);
     }
 
     @Override
