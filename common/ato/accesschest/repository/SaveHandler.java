@@ -8,6 +8,8 @@ import net.minecraftforge.event.world.WorldEvent;
  */
 public class SaveHandler {
 
+    private static final OldSavedataConverter converter = new OldSavedataConverter();
+
     /**
      * ワールド読み込み時に Access Chest のリポジトリ群をリロードする
      */
@@ -16,7 +18,14 @@ public class SaveHandler {
         for (int i = 0; i < 16; ++i) {
             String name = "AccessChest" + i;
             if (event.world.loadItemData(DataManagerNBT.class, name) == null) {
-                event.world.setItemData(name, new DataManagerNBT(name));
+                if (converter.doesOldSavedataExists(i)) {
+                    DataManagerNBT manager = new DataManagerNBT(name);
+                    manager.readFromNBT(converter.getOldNBT(i));
+                    event.world.setItemData(name, manager);
+                } else {
+                    // セーブデータが存在しない場合は新規作成
+                    event.world.setItemData(name, new DataManagerNBT(name));
+                }
             }
         }
     }
