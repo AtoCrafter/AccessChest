@@ -3,13 +3,14 @@ package ato.accesschest.repository;
 import ato.accesschest.game.TileEntityAccessChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 /**
  * Access Chest の実体
  */
 public class RepositoryAccessChest extends Repository {
 
-    public RepositoryAccessChest(int color, int grade, boolean isOriginal) {
+    public RepositoryAccessChest(World world, int color, int grade, boolean isOriginal) {
         super(NBTPool.instance.getNBT(color), color, grade, isOriginal);
     }
 
