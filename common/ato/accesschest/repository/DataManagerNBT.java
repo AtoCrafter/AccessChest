@@ -13,8 +13,8 @@ public class DataManagerNBT extends WorldSavedData implements IDataManager {
     private DataManagerArray data;
     private ComparatorAtoChest comparator;
 
-    public DataManagerNBT(int color) {
-        super("AccessChest" + color);
+    public DataManagerNBT(String id) {
+        super(id);
         data = new DataManagerArray();
         comparator = new ComparatorAtoChest();
         for (int i = 0; i < getMaxSize(); ++i) {

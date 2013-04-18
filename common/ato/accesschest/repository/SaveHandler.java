@@ -14,7 +14,10 @@ public class SaveHandler {
     @ForgeSubscribe
     public void reloadPool(WorldEvent.Load event) {
         for (int i = 0; i < 16; ++i) {
-            event.world.setItemData("AccessChest-" + i, new DataManagerNBT(i));
+            String name = "AccessChest" + i;
+            if (event.world.loadItemData(DataManagerNBT.class, name) == null) {
+                event.world.setItemData(name, new DataManagerNBT(name));
+            }
         }
     }
 }
