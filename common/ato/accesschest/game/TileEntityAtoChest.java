@@ -2,6 +2,7 @@ package ato.accesschest.game;
 
 import ato.accesschest.Properties;
 import ato.accesschest.repository.Repository;
+import ato.accesschest.repository.RepositoryDammy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntityEnderChest;
+import net.minecraft.world.World;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -23,12 +25,16 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
      * 実体
      */
     protected Repository repo;
+    private int color;
+    private int grade;
+    private boolean isOriginal;
 
     public Repository getRepository() {
         if (repo == null) {
-            repo = createRepository(0, 0, false);
+            return new RepositoryDammy(0);
+        } else {
+            return repo;
         }
-        return repo;
     }
 
     protected abstract Repository createRepository(int color, int grade, boolean isOriginal);
@@ -36,18 +42,17 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        byte color = nbt.getByte("Color");
-        byte grade = nbt.getByte("Grade");
-        boolean isOriginal = nbt.getBoolean("Original");
-        setColorAndGrade(color, grade, isOriginal);
+        color = nbt.getByte("Color");
+        grade = nbt.getByte("Grade");
+        isOriginal = nbt.getBoolean("Original");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbttc) {
         super.writeToNBT(nbttc);
-        nbttc.setByte("Color", (byte) (repo.getColor() & 0xF));
-        nbttc.setByte("Grade", (byte) (repo.getGrade() & 0xF));
-        nbttc.setBoolean("Original", repo.isOriginal());
+        nbttc.setByte("Color", (byte) (color & 0xF));
+        nbttc.setByte("Grade", (byte) (grade & 0xF));
+        nbttc.setBoolean("Original", isOriginal);
     }
 
     @Override
@@ -58,9 +63,9 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
             out.writeInt(xCoord);
             out.writeInt(yCoord);
             out.writeInt(zCoord);
-            out.writeByte((byte) repo.getColor());
-            out.writeByte((byte) repo.getGrade());
-            out.writeBoolean(repo.isOriginal());
+            out.writeByte((byte) color);
+            out.writeByte((byte) grade);
+            out.writeBoolean(isOriginal);
             return new Packet250CustomPayload(Properties.CHANNEL_TILEENTITY, data.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,61 +78,74 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
      * ブロックが置かれた時やロード時、サーバーからクライアントへのパケットなどで呼ばれる
      */
     public void setColorAndGrade(int color, int grade, boolean isOriginal) {
+        this.color = color;
+        this.grade = grade;
+        this.isOriginal = isOriginal;
         repo = createRepository(color, grade, isOriginal);
+    }
+
+    @Override
+    public void setWorldObj(World par1World) {
+        super.setWorldObj(par1World);
+        setColorAndGrade(color, grade, isOriginal);
+    }
+
+    public int getColor() {
+        return color;
     }
 
     /* IInventory を実装するため、そのまま Repository に移譲 */
 
     @Override
     public int getSizeInventory() {
-        return repo.getSizeInventory();
+        return getRepository().getSizeInventory();
     }
 
     @Override
     public ItemStack getStackInSlot(int index) {
-        return repo.getStackInSlot(index);
+        return getRepository().getStackInSlot(index);
     }
 
     @Override
     public ItemStack decrStackSize(int var1, int var2) {
-        return repo.decrStackSize(var1, var2);
+        return getRepository().decrStackSize(var1, var2);
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int var1) {
-        return repo.getStackInSlotOnClosing(var1);
+        return getRepository().getStackInSlotOnClosing(var1);
     }
 
     @Override
     public void setInventorySlotContents(int var1, ItemStack var2) {
-        repo.setInventorySlotContents(var1, var2);
+        getRepository().setInventorySlotContents(var1, var2);
     }
 
     @Override
     public String getInvName() {
-        return repo.getInvName();
+        return getRepository().getInvName();
     }
 
     @Override
     public int getInventoryStackLimit() {
-        return repo.getInventoryStackLimit();
+        return getRepository().getInventoryStackLimit();
     }
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer var1) {
-        return repo.isUseableByPlayer(var1);
+        return getRepository().isUseableByPlayer(var1);
     }
 
     @Override
     public void openChest() {
-        repo.openChest();
+        getRepository().openChest();
         ++numUsingPlayers;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, worldObj.getBlockId(xCoord, yCoord, zCoord), 1, numUsingPlayers);
     }
 
     @Override
     public void closeChest() {
-        repo.closeChest();
+        getRepository().closeChest();
         --numUsingPlayers;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, worldObj.getBlockId(xCoord, yCoord, zCoord), 1, numUsingPlayers);
     }
