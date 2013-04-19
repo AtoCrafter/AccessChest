@@ -29,6 +29,7 @@ public class AutoCollect {
             if (inventory[i] != null && inventory[i].getItem() instanceof ItemAccessChest) {
                 int damage = inventory[i].getItemDamage();
                 RepositoryAccessChest repo = new RepositoryAccessChest(
+                        player.worldObj,
                         AccessChest.id2color(damage),
                         AccessChest.id2grade(damage),
                         AccessChest.id2isOriginal(damage));

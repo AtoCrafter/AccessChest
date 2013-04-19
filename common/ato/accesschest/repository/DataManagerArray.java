@@ -5,9 +5,10 @@ import net.minecraft.item.ItemStack;
 /**
  * リポジトリのデータ(配列)管理に必要な機能の実装
  */
-public class DataManagerArray extends DataManager {
+public class DataManagerArray implements IDataManager {
 
     private ItemStack[] contents;
+    private String name;
 
     public DataManagerArray() {
         contents = new ItemStack[13824];    // 27 * 8^3

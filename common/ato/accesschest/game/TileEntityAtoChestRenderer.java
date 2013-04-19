@@ -36,9 +36,9 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
     public void renderAtoChest(int direction, int colorNum, float lidAngle, float prevLidAngle, double par2, double par4, double par6, float par8) {
 
         int colorCode = COLOR_CODES[colorNum];
-        float r = (float)(colorCode >> 16 & 0xFF) / 255F;
-        float g = (float)(colorCode >> 8 & 0xFF) / 255F;
-        float b = (float)(colorCode & 0xFF) / 255F;
+        float r = (float) (colorCode >> 16 & 0xFF) / 255F;
+        float g = (float) (colorCode >> 8 & 0xFF) / 255F;
+        float b = (float) (colorCode & 0xFF) / 255F;
 
         this.bindTextureByName("/ato/accesschest/AccessChestBlock.png");
         GL11.glPushMatrix();
@@ -79,7 +79,7 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
     public void renderTileEntityAt(TileEntity tileEntityRaw, double par2, double par4, double par6, float par8) {
         TileEntityAtoChest tileEntity = (TileEntityAtoChest) tileEntityRaw;
         int direction = 0;
-        int colorNum = tileEntity.getRepository().getColor();
+        int colorNum = tileEntity.getColor();
         if (tileEntity.func_70309_m()) {
             direction = tileEntity.getBlockMetadata();
         }
