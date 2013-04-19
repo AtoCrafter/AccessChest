@@ -1,6 +1,5 @@
 package ato.accesschest.repository;
 
-import net.minecraft.world.WorldServerMulti;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
@@ -9,27 +8,25 @@ import net.minecraftforge.event.world.WorldEvent;
  */
 public class SaveHandler {
 
+    private static final OldSavedataConverter converter = new OldSavedataConverter();
+
     /**
      * ワールド読み込み時に Access Chest のリポジトリ群をリロードする
      */
     @ForgeSubscribe
     public void reloadPool(WorldEvent.Load event) {
-        // イベントは 3 回発生し、それぞれの event.world は
-        // WorldServer, WorldServerMulti, WorldClient
-        // となる。それぞれの役割は不明。
-        // 一度だけ実行するために以下の条件をつけた。
-        if (event.world instanceof WorldServerMulti) {
-            NBTPool.instance = new NBTPool();
-        }
-    }
-
-    /**
-     * ワールドセーブ時に Access Chest のリポジトリ群をセーブする
-     */
-    @ForgeSubscribe
-    public void savePool(WorldEvent.Save event) {
-        if (event.world instanceof WorldServerMulti) {
-            NBTPool.instance.save();
+        for (int i = 0; i < 16; ++i) {
+            String name = "AccessChest" + i;
+            if (event.world.loadItemData(DataManagerNBT.class, name) == null) {
+                if (converter.doesOldSavedataExists(i)) {
+                    DataManagerNBT manager = new DataManagerNBT(name);
+                    manager.readFromNBT(converter.getOldNBT(i));
+                    event.world.setItemData(name, manager);
+                } else {
+                    // セーブデータが存在しない場合は新規作成
+                    event.world.setItemData(name, new DataManagerNBT(name));
+                }
+            }
         }
     }
 }

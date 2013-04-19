@@ -1,6 +1,5 @@
 package ato.accesschest.repository;
 
-import ato.accesschest.AccessChest;
 import ato.accesschest.game.ItemStackUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -17,7 +16,7 @@ public abstract class Repository implements IInventory {
     /**
      * データ管理を行うオブジェクト
      */
-    protected DataManager data;
+    protected IDataManager data;
     /**
      * チェストの色
      */
@@ -32,7 +31,7 @@ public abstract class Repository implements IInventory {
      */
     protected boolean isOriginal;
 
-    public Repository(DataManager data, int color, int grade, boolean isOriginal) {
+    public Repository(IDataManager data, int color, int grade, boolean isOriginal) {
         this.data = data;
         this.color = color;
         this.grade = grade;
