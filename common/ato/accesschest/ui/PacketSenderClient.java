@@ -1,6 +1,7 @@
 package ato.accesschest.ui;
 
 import ato.accesschest.Properties;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
@@ -138,7 +139,7 @@ public class PacketSenderClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(Properties.CHANNEL_GUI, data.toByteArray()));
+        FMLClientHandler.instance().sendPacket(new Packet250CustomPayload(Properties.CHANNEL_GUI, data.toByteArray()));
     }
 
     /**

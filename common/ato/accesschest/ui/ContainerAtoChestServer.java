@@ -173,8 +173,8 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         ArrayList<String> list = new ArrayList<String>();
         list.add(is.getDisplayName());
         list.add(is.getItemName());
-        list.add(is.getItem().getItemName());
-        list.add(is.getItem().getLocalItemName(is));
+        list.add(is.getItem().getLocalizedName(is));
+        list.add(is.getItem().getUnlocalizedName());
         list.add(is.getItem().getStatName());
 
         for (String str : list) {

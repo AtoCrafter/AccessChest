@@ -12,7 +12,7 @@ public class BlockCompressedChest extends BlockAtoChest {
 
     public BlockCompressedChest(int id) {
         super(id);
-        setBlockName("compressedchest");
+        setUnlocalizedName("compressedchest");
     }
 
     @Override

@@ -149,4 +149,14 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
         --numUsingPlayers;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, worldObj.getBlockId(xCoord, yCoord, zCoord), 1, numUsingPlayers);
     }
+
+    @Override
+    public boolean isInvNameLocalized() {
+        return true;
+    }
+
+    @Override
+    public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+        return true;
+    }
 }

@@ -2,6 +2,7 @@ package ato.accesschest.game;
 
 import ato.accesschest.repository.Repository;
 import ato.accesschest.repository.RepositoryAccessChest;
+import net.minecraft.item.ItemStack;
 
 public class TileEntityAccessChest extends TileEntityAtoChest {
 

@@ -12,7 +12,7 @@ public class BlockAccessChest extends BlockAtoChest {
 
     public BlockAccessChest(int id) {
         super(id);
-        setBlockName("accesschest");
+        setUnlocalizedName("accesschest");
     }
 
     @Override

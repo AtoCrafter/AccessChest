@@ -25,7 +25,7 @@ public class ItemAccessChest extends ItemAtoChest {
 
     public ItemAccessChest(int id) {
         super(id);
-        setItemName("accesschest");
+        setUnlocalizedName("accesschest");
     }
 
     // 右クリック関係

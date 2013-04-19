@@ -24,7 +24,7 @@ public abstract class BlockAtoChest extends BlockContainer {
     public static int RENDER_ID;
 
     protected BlockAtoChest(int id) {
-        super(id, 0, Material.rock);
+        super(id, Material.rock);
         setHardness(0.8f);
         setCreativeTab(CreativeTabs.tabDecorations);
     }
@@ -61,7 +61,7 @@ public abstract class BlockAtoChest extends BlockContainer {
      * @see net.minecraft.block.BlockEnderChest#onBlockPlacedBy
      */
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving living) {
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving living, ItemStack is) {
         byte direction = 0;
         switch (MathHelper.floor_double((double) (living.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) {
             case 0:
@@ -77,7 +77,7 @@ public abstract class BlockAtoChest extends BlockContainer {
                 direction = 4;
                 break;
         }
-        world.setBlockMetadataWithNotify(x, y, z, direction);
+        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
     }
 
     @Override
