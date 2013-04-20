@@ -44,8 +44,14 @@ public class ProxyCommon {
      * アイテムの登録
      */
     private void registerItems() {
-        GameRegistry.registerBlock(new BlockAccessChest(AccessChest.config.blockIDAC), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
-        GameRegistry.registerBlock(new BlockCompressedChest(AccessChest.config.blockIDCC), ItemCompressedChest.class, "compressedchest", Properties.MOD_ID);
+        GameRegistry.registerBlock(
+                new BlockAccessChest(AccessChest.config.blockIDAC).setUnlocalizedName("accesschest"),
+                ItemAccessChest.class, "accesschest", Properties.MOD_ID
+        );
+        GameRegistry.registerBlock(
+                new BlockCompressedChest(AccessChest.config.blockIDCC).setUnlocalizedName("compressedchest"),
+                ItemCompressedChest.class, "compressedchest", Properties.MOD_ID
+        );
     }
 
     /**
