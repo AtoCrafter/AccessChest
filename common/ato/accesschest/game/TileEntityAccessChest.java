@@ -2,6 +2,7 @@ package ato.accesschest.game;
 
 import ato.accesschest.repository.Repository;
 import ato.accesschest.repository.RepositoryAccessChest;
+import net.minecraft.world.World;
 
 public class TileEntityAccessChest extends TileEntityAtoChest {
 
@@ -12,5 +13,11 @@ public class TileEntityAccessChest extends TileEntityAtoChest {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void setWorldObj(World world) {
+        super.setWorldObj(world);
+        setColorAndGrade(color, grade, isOriginal);
     }
 }

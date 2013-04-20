@@ -17,7 +17,7 @@ public class SaveHandler {
     public void reloadPool(WorldEvent.Load event) {
         for (int i = 0; i < 16; ++i) {
             String name = "AccessChest" + i;
-            if (event.world.loadItemData(DataManagerNBT.class, name) == null) {
+            if (event.world.loadItemData(DataManagerWorldSaveData.class, name) == null) {
                 if (converter.doesOldSavedataExists(i)) {
                     DataManagerWorldSaveData manager = new DataManagerWorldSaveData(name);
                     manager.readFromNBT(converter.getOldNBT(i));

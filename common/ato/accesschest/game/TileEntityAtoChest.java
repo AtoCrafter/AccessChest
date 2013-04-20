@@ -10,7 +10,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntityEnderChest;
-import net.minecraft.world.World;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -25,9 +24,9 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
      * 実体
      */
     protected Repository repo;
-    private int color;
-    private int grade;
-    private boolean isOriginal;
+    protected int color;
+    protected int grade;
+    protected boolean isOriginal;
 
     public Repository getRepository() {
         if (repo == null) {
@@ -42,9 +41,10 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        color = nbt.getByte("Color");
-        grade = nbt.getByte("Grade");
-        isOriginal = nbt.getBoolean("Original");
+        byte color = nbt.getByte("Color");
+        byte grade = nbt.getByte("Grade");
+        boolean isOriginal = nbt.getBoolean("Original");
+        setColorAndGrade(color, grade, isOriginal);
     }
 
     @Override
@@ -82,12 +82,6 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
         this.grade = grade;
         this.isOriginal = isOriginal;
         repo = createRepository(color, grade, isOriginal);
-    }
-
-    @Override
-    public void setWorldObj(World par1World) {
-        super.setWorldObj(par1World);
-        setColorAndGrade(color, grade, isOriginal);
     }
 
     public int getColor() {

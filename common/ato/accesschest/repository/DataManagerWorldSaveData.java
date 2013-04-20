@@ -9,7 +9,7 @@ import net.minecraft.world.WorldSavedData;
  */
 public class DataManagerWorldSaveData extends WorldSavedData implements IDataManager {
 
-    private DataManagerNBT data;
+    private final DataManagerNBT data;
 
     public DataManagerWorldSaveData(String id) {
         super(id);
