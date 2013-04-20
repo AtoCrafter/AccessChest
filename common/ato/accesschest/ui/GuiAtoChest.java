@@ -103,7 +103,7 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i1, int i2) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture("/ato/accesschest/AccessChestGui.png");
+        mc.renderEngine.bindTexture("/mods/accesschest/gui/atochest.png");
         int j = (width - xSize) / 2;
         int k = (height - ySize) / 2;
         drawTexturedModalRect(j, k + 9, 0, 0, xSize, ySize - 18);
