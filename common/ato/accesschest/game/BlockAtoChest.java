@@ -5,6 +5,7 @@ import ato.accesschest.Properties;
 import ato.accesschest.repository.Repository;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -53,6 +54,11 @@ public abstract class BlockAtoChest extends BlockContainer {
     @Override
     public int getRenderType() {
         return RENDER_ID;
+    }
+
+    @Override
+    public void registerIcons(IconRegister par1IconRegister) {
+        this.blockIcon = par1IconRegister.registerIcon("blockIron");
     }
 
     /**
