@@ -3,19 +3,16 @@ package ato.accesschest.repository;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.world.WorldSavedData;
 
 /**
  * リポジトリのデータ(NBT)管理に必要な機能の実装
  */
-public class DataManagerNBT extends WorldSavedData implements IDataManager {
+public class DataManagerNBT extends DataManagerArray {
 
-    private DataManagerArray data;
     private ComparatorAtoChest comparator;
 
-    public DataManagerNBT(String id) {
-        super(id);
-        data = new DataManagerArray();
+    public DataManagerNBT() {
+        super();
         comparator = new ComparatorAtoChest();
         for (int i = 0; i < getMaxSize(); ++i) {
             setItem(i, null);
@@ -25,7 +22,6 @@ public class DataManagerNBT extends WorldSavedData implements IDataManager {
     /**
      * NBT ファイルから読み込み
      */
-    @Override
     public void readFromNBT(NBTTagCompound nbt) {
         // Items
         NBTTagList list = nbt.getTagList("Items");
@@ -53,7 +49,6 @@ public class DataManagerNBT extends WorldSavedData implements IDataManager {
     /**
      * NBT ファイルへ保存
      */
-    @Override
     public void writeToNBT(NBTTagCompound nbt) {
         // Items
         NBTTagList list = new NBTTagList("Items");
@@ -76,34 +71,7 @@ public class DataManagerNBT extends WorldSavedData implements IDataManager {
     }
 
     @Override
-    public void setItem(int index, ItemStack is) {
-        data.setItem(index, is);
-        markDirty();
-    }
-
-    @Override
-    public ItemStack getItem(int index) {
-        return data.getItem(index);
-    }
-
-    @Override
-    public int getMaxSize() {
-        return data.getMaxSize();
-    }
-
-    @Override
     public ComparatorAtoChest getComparator() {
         return comparator;
-    }
-
-    @Override
-    public String getName() {
-        return data.getName();
-    }
-
-    @Override
-    public void setName(String name) {
-        data.setName(name);
-        markDirty();
     }
 }

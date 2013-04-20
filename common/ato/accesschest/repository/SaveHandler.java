@@ -17,14 +17,14 @@ public class SaveHandler {
     public void reloadPool(WorldEvent.Load event) {
         for (int i = 0; i < 16; ++i) {
             String name = "AccessChest" + i;
-            if (event.world.loadItemData(DataManagerNBT.class, name) == null) {
+            if (event.world.loadItemData(DataManagerWorldSaveData.class, name) == null) {
                 if (converter.doesOldSavedataExists(i)) {
-                    DataManagerNBT manager = new DataManagerNBT(name);
+                    DataManagerWorldSaveData manager = new DataManagerWorldSaveData(name);
                     manager.readFromNBT(converter.getOldNBT(i));
                     event.world.setItemData(name, manager);
                 } else {
                     // セーブデータが存在しない場合は新規作成
-                    event.world.setItemData(name, new DataManagerNBT(name));
+                    event.world.setItemData(name, new DataManagerWorldSaveData(name));
                 }
             }
         }
