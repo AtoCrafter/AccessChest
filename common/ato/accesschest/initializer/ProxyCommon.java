@@ -45,11 +45,11 @@ public class ProxyCommon {
      */
     private void registerItems() {
         GameRegistry.registerBlock(
-                new BlockAccessChest(AccessChest.config.blockIDAC).setUnlocalizedName("accesschest"),
+                new BlockAccessChest(AccessChest.config.blockIDAC).setUnlocalizedName("accesschest:accesschest"),
                 ItemAccessChest.class, "accesschest", Properties.MOD_ID
         );
         GameRegistry.registerBlock(
-                new BlockCompressedChest(AccessChest.config.blockIDCC).setUnlocalizedName("compressedchest"),
+                new BlockCompressedChest(AccessChest.config.blockIDCC).setUnlocalizedName("accesschest:compressedchest"),
                 ItemCompressedChest.class, "compressedchest", Properties.MOD_ID
         );
     }
