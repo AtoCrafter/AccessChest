@@ -6,6 +6,10 @@ import net.minecraft.world.World;
 
 public class TileEntityAccessChest extends TileEntityAtoChest {
 
+    private int color;
+    private int grade;
+    private boolean isOriginal;
+
     @Override
     protected Repository createRepository(int color, int grade, boolean isOriginal) {
         if (worldObj != null) {
@@ -16,8 +20,24 @@ public class TileEntityAccessChest extends TileEntityAtoChest {
     }
 
     @Override
+    public void setColorAndGrade(int color, int grade, boolean isOriginal) {
+        // ワールドロード時は readFromNBT 後に setWorldObj が呼ばれるので、色、クラス、オリジナル情報を保存しておく
+        this.color = color;
+        this.grade = grade;
+        this.isOriginal = isOriginal;
+        super.setColorAndGrade(color, grade, isOriginal);
+    }
+
+    @Override
     public void setWorldObj(World world) {
         super.setWorldObj(world);
-        setColorAndGrade(color, grade, isOriginal);
+        // ワールドに固有のレポジトリデータをひもづける
+        super.setColorAndGrade(color, grade, isOriginal);
+    }
+
+    @Override
+    public int getColor() {
+        // TileEntityAtoChestRenderer 用
+        return color;
     }
 }

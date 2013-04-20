@@ -24,9 +24,6 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
      * 実体
      */
     protected Repository repo;
-    protected int color;
-    protected int grade;
-    protected boolean isOriginal;
 
     public Repository getRepository() {
         if (repo == null) {
@@ -50,9 +47,9 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     @Override
     public void writeToNBT(NBTTagCompound nbttc) {
         super.writeToNBT(nbttc);
-        nbttc.setByte("Color", (byte) (color & 0xF));
-        nbttc.setByte("Grade", (byte) (grade & 0xF));
-        nbttc.setBoolean("Original", isOriginal);
+        nbttc.setByte("Color", (byte) (getRepository().getColor() & 0xF));
+        nbttc.setByte("Grade", (byte) (getRepository().getGrade() & 0xF));
+        nbttc.setBoolean("Original", getRepository().isOriginal());
     }
 
     @Override
@@ -63,9 +60,9 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
             out.writeInt(xCoord);
             out.writeInt(yCoord);
             out.writeInt(zCoord);
-            out.writeByte((byte) color);
-            out.writeByte((byte) grade);
-            out.writeBoolean(isOriginal);
+            out.writeByte((byte) getRepository().getColor());
+            out.writeByte((byte) getRepository().getGrade());
+            out.writeBoolean(getRepository().isOriginal());
             return new Packet250CustomPayload(Properties.CHANNEL_TILEENTITY, data.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,14 +75,11 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
      * ブロックが置かれた時やロード時、サーバーからクライアントへのパケットなどで呼ばれる
      */
     public void setColorAndGrade(int color, int grade, boolean isOriginal) {
-        this.color = color;
-        this.grade = grade;
-        this.isOriginal = isOriginal;
         repo = createRepository(color, grade, isOriginal);
     }
 
     public int getColor() {
-        return color;
+        return getRepository().getColor();
     }
 
     /* IInventory を実装するため、そのまま Repository に移譲 */
