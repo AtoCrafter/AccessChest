@@ -120,8 +120,12 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer var1) {
-        return getRepository().isUseableByPlayer(var1);
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        if (worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this) {
+            return player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64;
+        } else {
+            return false;
+        }
     }
 
     @Override
