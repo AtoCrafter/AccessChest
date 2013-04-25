@@ -132,13 +132,11 @@ public abstract class TileEntityAtoChest extends TileEntityEnderChest implements
     public void openChest() {
         getRepository().openChest();
         ++numUsingPlayers;
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, worldObj.getBlockId(xCoord, yCoord, zCoord), 1, numUsingPlayers);
     }
 
     @Override
     public void closeChest() {
         getRepository().closeChest();
         --numUsingPlayers;
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, worldObj.getBlockId(xCoord, yCoord, zCoord), 1, numUsingPlayers);
     }
 }

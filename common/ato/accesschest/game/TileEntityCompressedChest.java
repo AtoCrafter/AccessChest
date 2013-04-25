@@ -1,5 +1,6 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
 import ato.accesschest.repository.Repository;
 import ato.accesschest.repository.RepositoryCompressedChest;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,5 +22,17 @@ public class TileEntityCompressedChest extends TileEntityAtoChest {
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         ((RepositoryCompressedChest) repo).writeToNBT(nbt);
+    }
+
+    @Override
+    public void openChest() {
+        super.openChest();
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, AccessChest.config.blockIDCC, 1, numUsingPlayers);
+    }
+
+    @Override
+    public void closeChest() {
+        super.closeChest();
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, AccessChest.config.blockIDCC, 1, numUsingPlayers);
     }
 }
