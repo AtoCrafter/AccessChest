@@ -191,10 +191,13 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void keyTyped(char c, int code) {
         if (filterTextField.isFocused() && code != 1) {
+            String prev = filterTextField.getText();
             filterTextField.textboxKeyTyped(c, code);
 
             String text = filterTextField.getText();
-            sender.sendFilter(text);
+            if (text != prev) {
+                sender.sendFilter(text);
+            }
         } else {
             if (code == FMLClientHandler.instance().getClient().gameSettings.keyBindChat.keyCode
                     || code == FMLClientHandler.instance().getClient().gameSettings.keyBindCommand.keyCode) {
