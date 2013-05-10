@@ -1,5 +1,6 @@
 package ato.accesschest.game;
 
+import ato.accesschest.AccessChest;
 import ato.accesschest.repository.Repository;
 import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.world.World;
@@ -39,5 +40,17 @@ public class TileEntityAccessChest extends TileEntityAtoChest {
     public int getColor() {
         // TileEntityAtoChestRenderer 用
         return color;
+    }
+
+    @Override
+    public void openChest() {
+        super.openChest();
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, AccessChest.config.blockIDAC, 1, numUsingPlayers);
+    }
+
+    @Override
+    public void closeChest() {
+        super.closeChest();
+        worldObj.addBlockEvent(xCoord, yCoord, zCoord, AccessChest.config.blockIDAC, 1, numUsingPlayers);
     }
 }
