@@ -68,7 +68,7 @@ public abstract class ContainerAtoChest extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return true;
+        return chestInventory.isUseableByPlayer(player);
     }
 
     @Override

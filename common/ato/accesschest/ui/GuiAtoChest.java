@@ -108,10 +108,20 @@ public class GuiAtoChest extends GuiContainer {
         int j = (width - xSize) / 2;
         int k = (height - ySize) / 2;
         drawTexturedModalRect(j, k + 9, 0, 0, xSize, ySize - 18);
+
         int sm = container.getScrollMax();
         if (sm != 0) {
             int scroll = (int) ((142 - 15) * (double) container.getScrollIndex() / sm);
             drawTexturedModalRect(j + 232, k + 17 + scroll, 2, 239, 12, 15);
+        }
+
+        int opacity = 63;
+        for (int a = 12 * 8 - 1; a >= container.inventorySlots.size() - 9 * 4; --a) {
+            int x = a % 12;
+            int y = a / 12;
+            int xpos = j + 12 + x * 18;
+            int ypos = k + 9 + 8 + y * 18;
+            this.drawGradientRect(xpos, ypos, xpos + 16, ypos + 16, opacity << 24, opacity << 24);
         }
     }
 
@@ -181,10 +191,13 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void keyTyped(char c, int code) {
         if (filterTextField.isFocused() && code != 1) {
+            String prev = filterTextField.getText();
             filterTextField.textboxKeyTyped(c, code);
 
             String text = filterTextField.getText();
-            sender.sendFilter(text);
+            if (text != prev) {
+                sender.sendFilter(text);
+            }
         } else {
             if (code == FMLClientHandler.instance().getClient().gameSettings.keyBindChat.keyCode
                     || code == FMLClientHandler.instance().getClient().gameSettings.keyBindCommand.keyCode) {
