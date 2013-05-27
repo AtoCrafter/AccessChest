@@ -84,7 +84,7 @@ public class GuiAtoChest extends GuiContainer {
         controlList.add(ejectButton);
         // テキスト入力フォームの作成
         filterTextField = new GuiTextField(fontRenderer, left, line0, 68, 16);
-        filterTextField.setMaxStringLength(10);
+        filterTextField.setMaxStringLength(100);
     }
 
     @Override
