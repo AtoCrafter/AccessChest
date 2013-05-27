@@ -178,9 +178,18 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         list.add(is.getItem().getStatName());
         list.add("" + is.getItem().itemID + ":" + is.getItemDamage());
 
-        for (String str : list) {
-            if (str != null && str.toLowerCase().contains(filter.toLowerCase())) {
-                return true;
+        String exactFilter;
+        if ((exactFilter = isExactlyMatchCommand(filter)) != null) {
+            for (String str : list) {
+                if (str != null && str.equals(exactFilter)) {
+                    return true;
+                }
+            }
+        } else {
+            for (String str : list) {
+                if (str != null && str.toLowerCase().contains(filter.toLowerCase())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -198,6 +207,16 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         } catch (NumberFormatException e) {
             return -1;
         }
+    }
+
+    /**
+     * 正確検索用コマンドであれば、検索用文字列を返す
+     *
+     * @return 検索用コマンドでない場合は null, そうであれば検索用文字列
+     */
+    private String isExactlyMatchCommand(String str) {
+        if (str == null || !str.startsWith("exact:")) return null;
+        return str.substring(6);
     }
 
     // ボタン関連
