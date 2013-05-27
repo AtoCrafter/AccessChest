@@ -4,6 +4,7 @@ import ato.accesschest.AccessChest;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.repository.Repository;
+import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -65,7 +66,8 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
                 if (!mergeItemStack(slotStack, border, inventorySlots.size(), false)) {
                     return null;
                 }
-            } else if (slotStack.getItem() instanceof ItemAccessChest ||  // forbit to put AccessChest away in AccessChest automatically
+            } else if (chestInventory instanceof RepositoryAccessChest && // forbit to put AccessChest away
+                    slotStack.getItem() instanceof ItemAccessChest ||     //  in AccessChest automatically
                     !customMergeItemStack(slotStack)) {
                 return null;
             }
