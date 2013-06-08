@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -17,7 +18,8 @@ public class RecipeColoringAtoChest extends ShapelessRecipes {
     private ItemStack dye;
 
     public RecipeColoringAtoChest(ItemStack dye, ItemStack atoChest, ItemStack output) {
-        super(output, Arrays.asList(new ItemStack[]{dye, atoChest}));
+        // ArrayList を使っているのは NEI が決め打ちしているため、java.util.Arrays$ArrayList が java.util.ArrayList にキャストできない
+        super(output, new ArrayList(Arrays.asList(new ItemStack[]{dye, atoChest})));
         this.chest = atoChest;
         this.dye = dye;
         util.checkIsAtoChest(atoChest);

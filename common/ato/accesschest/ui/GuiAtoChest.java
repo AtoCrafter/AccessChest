@@ -84,7 +84,7 @@ public class GuiAtoChest extends GuiContainer {
         controlList.add(ejectButton);
         // テキスト入力フォームの作成
         filterTextField = new GuiTextField(fontRenderer, left, line0, 68, 16);
-        filterTextField.setMaxStringLength(10);
+        filterTextField.setMaxStringLength(100);
     }
 
     @Override
@@ -191,12 +191,17 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void keyTyped(char c, int code) {
         if (filterTextField.isFocused() && code != 1) {
-            String prev = filterTextField.getText();
-            filterTextField.textboxKeyTyped(c, code);
+            if (code == Keyboard.KEY_RETURN) {
+                // exactly match
+                sender.sendFilter("exact:" + filterTextField.getText());
+            } else {
+                String prev = filterTextField.getText();
+                filterTextField.textboxKeyTyped(c, code);
 
-            String text = filterTextField.getText();
-            if (text != prev) {
-                sender.sendFilter(text);
+                String text = filterTextField.getText();
+                if (text != prev) {
+                    sender.sendFilter(text);
+                }
             }
         } else {
             if (code == FMLClientHandler.instance().getClient().gameSettings.keyBindChat.keyCode

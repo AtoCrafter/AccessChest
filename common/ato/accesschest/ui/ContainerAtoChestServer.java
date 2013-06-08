@@ -4,6 +4,7 @@ import ato.accesschest.AccessChest;
 import ato.accesschest.game.ItemAccessChest;
 import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.repository.Repository;
+import ato.accesschest.repository.RepositoryAccessChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -65,7 +66,8 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
                 if (!mergeItemStack(slotStack, border, inventorySlots.size(), false)) {
                     return null;
                 }
-            } else if (slotStack.getItem() instanceof ItemAccessChest ||  // forbit to put AccessChest away in AccessChest automatically
+            } else if (chestInventory instanceof RepositoryAccessChest && // forbit to put AccessChest away
+                    slotStack.getItem() instanceof ItemAccessChest ||     //  in AccessChest automatically
                     !customMergeItemStack(slotStack)) {
                 return null;
             }
@@ -176,10 +178,20 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         list.add(is.getItem().getItemName());
         list.add(is.getItem().getLocalItemName(is));
         list.add(is.getItem().getStatName());
+        list.add("" + is.getItem().itemID + ":" + is.getItemDamage());
 
-        for (String str : list) {
-            if (str != null && str.toLowerCase().contains(filter.toLowerCase())) {
-                return true;
+        String exactFilter;
+        if ((exactFilter = isExactlyMatchCommand(filter)) != null) {
+            for (String str : list) {
+                if (str != null && str.equals(exactFilter)) {
+                    return true;
+                }
+            }
+        } else {
+            for (String str : list) {
+                if (str != null && str.toLowerCase().contains(filter.toLowerCase())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -197,6 +209,16 @@ public class ContainerAtoChestServer extends ContainerAtoChest {
         } catch (NumberFormatException e) {
             return -1;
         }
+    }
+
+    /**
+     * 正確検索用コマンドであれば、検索用文字列を返す
+     *
+     * @return 検索用コマンドでない場合は null, そうであれば検索用文字列
+     */
+    private String isExactlyMatchCommand(String str) {
+        if (str == null || !str.startsWith("exact:")) return null;
+        return str.substring(6);
     }
 
     // ボタン関連
