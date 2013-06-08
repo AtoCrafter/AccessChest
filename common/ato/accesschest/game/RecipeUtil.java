@@ -3,6 +3,8 @@ package ato.accesschest.game;
 import ato.accesschest.AccessChest;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
+
 /**
  * レシピで用いるメソッド群
  */
@@ -33,5 +35,22 @@ public class RecipeUtil {
 
     public boolean isOriginal(ItemStack is) {
         return AccessChest.id2isOriginal(is.getItemDamage());
+    }
+
+    /**
+     * コピーレシピで用いられるレシピを NEI などで正しく表示するために ArrayList を生成する
+     */
+    public ArrayList<ItemStack> recipeList(ItemStack original, ItemStack sub) {
+        ArrayList<ItemStack> list = new ArrayList();
+
+        list.add(original);
+
+        ItemStack sub1 = sub.copy();
+        sub1.stackSize = 1;
+        for (int i=0; i<sub.stackSize; ++i) {
+            list.add(sub1);
+        }
+
+        return list;
     }
 }

@@ -5,8 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
-
 /**
  * Access Chest のコピーレシピ
  */
@@ -17,7 +15,7 @@ public class RecipeCopyAccessChest extends ShapelessRecipes {
     private ItemStack sub;
 
     public RecipeCopyAccessChest(ItemStack sub, ItemStack original, ItemStack output) {
-        super(output, Arrays.asList(new ItemStack[]{original, sub}));
+        super(output, util.recipeList(original, sub));
         this.original = original;
         this.sub = sub;
         util.checkIsAtoChest(original);
