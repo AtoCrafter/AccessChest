@@ -14,7 +14,7 @@ public class ContainerAtoChestClient extends ContainerAtoChest {
     private int chestInventorySize;
 
     public ContainerAtoChestClient(IInventory playerInventory) {
-        super(new InventoryBasic("dammyInventoryClient", 12 * 8), playerInventory);
+        super(new InventoryBasic("dammyInventoryClient", false, 12 * 8), playerInventory);
         chestInventorySize = chestInventory.getSizeInventory();
         refreshSlot();
     }

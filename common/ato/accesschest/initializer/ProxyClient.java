@@ -4,10 +4,10 @@ import ato.accesschest.game.BlockAtoChest;
 import ato.accesschest.game.TileEntityAtoChest;
 import ato.accesschest.game.TileEntityAtoChestRenderer;
 import ato.accesschest.handler.KeybindHandler;
-import ato.accesschest.ui.Localization;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
  * 初期化処理
@@ -18,7 +18,7 @@ public class ProxyClient extends ProxyCommon {
     @Override
     public void init() {
         super.init();
-        registerLocalization();
+        registerLocalizations();
         registerRenderer();
         registerKeybindings();
     }
@@ -26,8 +26,16 @@ public class ProxyClient extends ProxyCommon {
     /**
      * 言語ファイルの登録
      */
-    private void registerLocalization() {
-        Localization.register();
+    private void registerLocalizations() {
+        registerLocalization("en_US");
+        registerLocalization("ja_JP");
+    }
+
+    /**
+     * 言語ファイルの登録
+     */
+    private void registerLocalization(String lang) {
+        LanguageRegistry.instance().loadLocalization("/mods/accesschest/lang/" + lang + ".properties", lang, false);
     }
 
     /**

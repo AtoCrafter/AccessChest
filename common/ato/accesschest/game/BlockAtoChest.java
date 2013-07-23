@@ -5,6 +5,7 @@ import ato.accesschest.Properties;
 import ato.accesschest.repository.Repository;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -24,7 +25,7 @@ public abstract class BlockAtoChest extends BlockContainer {
     public static int RENDER_ID;
 
     protected BlockAtoChest(int id) {
-        super(id, 0, Material.rock);
+        super(id, Material.rock);
         setHardness(0.8f);
         setCreativeTab(CreativeTabs.tabDecorations);
     }
@@ -55,13 +56,18 @@ public abstract class BlockAtoChest extends BlockContainer {
         return RENDER_ID;
     }
 
+    @Override
+    public void registerIcons(IconRegister par1IconRegister) {
+        this.blockIcon = par1IconRegister.registerIcon("blockIron");
+    }
+
     /**
      * ブロックが設置されたときの処理
      *
      * @see net.minecraft.block.BlockEnderChest#onBlockPlacedBy
      */
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving living) {
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving living, ItemStack is) {
         byte direction = 0;
         switch (MathHelper.floor_double((double) (living.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) {
             case 0:
@@ -77,7 +83,7 @@ public abstract class BlockAtoChest extends BlockContainer {
                 direction = 4;
                 break;
         }
-        world.setBlockMetadataWithNotify(x, y, z, direction);
+        world.setBlockMetadataWithNotify(x, y, z, direction, 2);
     }
 
     @Override

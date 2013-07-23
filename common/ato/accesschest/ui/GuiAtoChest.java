@@ -75,13 +75,13 @@ public class GuiAtoChest extends GuiContainer {
         ejectButton = new GuiButton(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, trans.translateKey("gui.button.eject"));
         updateButtonsDisplay(false);
         // ボタンの登録
-        controlList.clear();
-        controlList.add(clearButton);
-        controlList.add(renameButton);
-        controlList.add(sortButton);
-        controlList.add(storeInvButton);
-        controlList.add(storeEqpButton);
-        controlList.add(ejectButton);
+        buttonList.clear();
+        buttonList.add(clearButton);
+        buttonList.add(renameButton);
+        buttonList.add(sortButton);
+        buttonList.add(storeInvButton);
+        buttonList.add(storeEqpButton);
+        buttonList.add(ejectButton);
         // テキスト入力フォームの作成
         filterTextField = new GuiTextField(fontRenderer, left, line0, 68, 16);
         filterTextField.setMaxStringLength(100);
@@ -102,9 +102,8 @@ public class GuiAtoChest extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i1, int i2) {
-        int i = mc.renderEngine.getTexture("/ato/accesschest/AccessChestGui.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture(i);
+        mc.renderEngine.bindTexture("/mods/accesschest/gui/atochest.png");
         int j = (width - xSize) / 2;
         int k = (height - ySize) / 2;
         drawTexturedModalRect(j, k + 9, 0, 0, xSize, ySize - 18);

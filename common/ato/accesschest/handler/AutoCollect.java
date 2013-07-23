@@ -21,7 +21,7 @@ public class AutoCollect {
     @ForgeSubscribe
     public void pickupItem(EntityItemPickupEvent event) {
         EntityPlayer player = event.entityPlayer;
-        ItemStack item = event.item.func_92014_d();
+        ItemStack item = event.item.getEntityItem();
         if (player.inventory.addItemStackToInventory(item)) return;
 
         ItemStack[] inventory = player.inventory.mainInventory;
