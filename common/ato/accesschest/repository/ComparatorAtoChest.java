@@ -26,6 +26,9 @@ public class ComparatorAtoChest implements Comparator {
             c = compareWithPriority(is1, is2);
             if (c == 0) {
                 c = compareWithIdAndDamage(is1, is2);
+                if (c == 0) {
+                    c = compareWithNBTId(is1, is2);
+                }
             }
         }
         return c;
@@ -76,6 +79,19 @@ public class ComparatorAtoChest implements Comparator {
             return is1.getItemDamage() - is2.getItemDamage();
         } else {
             return is1.itemID - is2.itemID;
+        }
+    }
+
+    /**
+     * アイテムの NBT データの内容による比較の定義
+     */
+    protected int compareWithNBTId(ItemStack is1, ItemStack is2) {
+        if (is1.stackTagCompound == null && is2.stackTagCompound == null) {
+            return 0;
+        } else if (is1.stackTagCompound == null) {
+            return -1;
+        } else {
+            return is1.stackTagCompound.getId() - is2.stackTagCompound.getId();
         }
     }
 
