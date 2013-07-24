@@ -13,7 +13,6 @@ public class ItemCompressedChest extends ItemAtoChest {
 
     public ItemCompressedChest(int id) {
         super(id);
-        setItemName("compressedchest");
     }
 
     @Override

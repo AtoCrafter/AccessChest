@@ -44,8 +44,14 @@ public class ProxyCommon {
      * アイテムの登録
      */
     private void registerItems() {
-        GameRegistry.registerBlock(new BlockAccessChest(AccessChest.config.blockIDAC), ItemAccessChest.class, "accesschest", Properties.MOD_ID);
-        GameRegistry.registerBlock(new BlockCompressedChest(AccessChest.config.blockIDCC), ItemCompressedChest.class, "compressedchest", Properties.MOD_ID);
+        GameRegistry.registerBlock(
+                new BlockAccessChest(AccessChest.config.blockIDAC).setUnlocalizedName("accesschest:accesschest"),
+                ItemAccessChest.class, "accesschest", Properties.MOD_ID
+        );
+        GameRegistry.registerBlock(
+                new BlockCompressedChest(AccessChest.config.blockIDCC).setUnlocalizedName("accesschest:compressedchest"),
+                ItemCompressedChest.class, "compressedchest", Properties.MOD_ID
+        );
     }
 
     /**
@@ -67,9 +73,9 @@ public class ProxyCommon {
         ItemStack ac1 = new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 1));
         ItemStack ac2 = new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 2));
         ItemStack ac3 = new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 3));
-        ItemStack ac1c = new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 1, false));
-        ItemStack ac2c = new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 2, false));
-        ItemStack ac3c = new ItemStack(itemAC, 2, AccessChest.colorgrade2id(15, 3, false));
+        ItemStack ac1c = new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 1, false));
+        ItemStack ac2c = new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 2, false));
+        ItemStack ac3c = new ItemStack(itemAC, 1, AccessChest.colorgrade2id(15, 3, false));
         // Access Chest Class-0
         GameRegistry.addShapelessRecipe(ac0, new Object[]{Block.chest, Item.enderPearl});
         // Access Chest Class-1
@@ -92,6 +98,8 @@ public class ProxyCommon {
                 new ItemStack(itemCC, 1, AccessChest.colorgrade2id(15, 2))
         ));
 
+        // Copy Handler
+        GameRegistry.registerCraftingHandler((ItemAccessChest)itemAC);
         // Copy of Access Chest Class-1
         GameRegistry.addRecipe(new RecipeCopyAccessChest(new ItemStack(Block.enderChest, 1), ac1, ac1c));
         // Copy of Access Chest Class-2

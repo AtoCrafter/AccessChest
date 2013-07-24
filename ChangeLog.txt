@@ -242,3 +242,18 @@ Minecraft 1.4.7 対応。
 #### バグフィックス
 
 - Not Enough Items でレシピが正しく表示されないバグを修正
+
+
+### 2.3.0
+
+Minecraft 1.5.2 対応。
+reobfuscate_srg を使用するように。これにより Minecraft 本体のマイナーバージョンの変更の差を吸収できるようになった。
+
+#### 新機能
+
+- InventoryTweaks に対応
+
+#### 機能変更
+
+- Access Chest のコピーレシピにて、今までオリジナルが Copied 2つに変わっていたのが、オリジナルと Copied 一つになるように
+- アイテム ID, Damage が一致するときは NBT の ID でソートするように

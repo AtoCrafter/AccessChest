@@ -159,6 +159,16 @@ public abstract class TileEntityAtoChest extends TileEntity implements IInventor
         --numUsingPlayers;
     }
 
+    @Override
+    public boolean isInvNameLocalized() {
+        return true;
+    }
+
+    @Override
+    public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+        return true;
+    }
+
     /**
      * @see net.minecraft.tileentity.TileEntityEnderChest#updateEntity()
      */
@@ -205,10 +215,16 @@ public abstract class TileEntityAtoChest extends TileEntity implements IInventor
         }
     }
 
+    /**
+     * @see net.minecraft.tileentity.TileEntityEnderChest#receiveClientEvent(int, int)
+     */
     @Override
-    public void receiveClientEvent(int par1, int par2) {
+    public boolean receiveClientEvent(int par1, int par2) {
         if (par1 == 1) {
             this.numUsingPlayers = par2;
+            return true;
+        } else {
+            return super.receiveClientEvent(par1, par2);
         }
     }
 

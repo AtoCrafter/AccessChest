@@ -109,6 +109,16 @@ public abstract class Repository implements IInventory {
     public void onInventoryChanged() {
     }
 
+    @Override
+    public boolean isInvNameLocalized() {
+        return true;
+    }
+
+    @Override
+    public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+        return true;
+    }
+
     /**
      * リポジトリ内にアイテムを入れる
      * 引数の ItemStack は関数内部で収納した分だけ減らされる
