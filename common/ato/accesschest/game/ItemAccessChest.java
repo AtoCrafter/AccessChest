@@ -121,4 +121,21 @@ public class ItemAccessChest extends ItemAtoChest {
         list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 2, false)));
         list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3, false)));
     }
+
+    @Override
+    public boolean hasContainerItem() {
+        return true;
+    }
+
+    @Override
+    public ItemStack getContainerItemStack(ItemStack itemStack) {
+        ItemStack original = itemStack.copy();
+        original.stackSize = 1;
+        return original;
+    }
+
+    @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack par1ItemStack) {
+        return false;
+    }
 }
