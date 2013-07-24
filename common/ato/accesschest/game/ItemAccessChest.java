@@ -2,6 +2,8 @@ package ato.accesschest.game;
 
 import ato.accesschest.AccessChest;
 import ato.accesschest.repository.RepositoryAccessChest;
+import cpw.mods.fml.common.ICraftingHandler;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -16,12 +18,17 @@ import java.util.List;
 /**
  * ゲーム内での Access Chest アイテム
  */
-public class ItemAccessChest extends ItemAtoChest {
+public class ItemAccessChest extends ItemAtoChest implements ICraftingHandler {
 
     /**
      * 一括転送を使用しても良いかどうか
      */
     public static boolean canTransfer;
+    /**
+     * クラフト時に元のアイテムを消費しないか
+     * コピーレシピの時に true, 染色レシピなどのその他のレシピで false
+     */
+    private boolean coping;
 
     public ItemAccessChest(int id) {
         super(id);
@@ -122,9 +129,28 @@ public class ItemAccessChest extends ItemAtoChest {
         list.add(new ItemStack(id, 1, AccessChest.colorgrade2id(15, 3, false)));
     }
 
+    // コピーレシピ関連
+
+    @Override
+    public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
+        // コピーレシピかどうか判定
+        boolean enderchest = false;
+        for (int i = 0; i < craftMatrix.getSizeInventory(); ++i) {
+            ItemStack is = craftMatrix.getStackInSlot(i);
+            if (is != null && is.isItemEqual(new ItemStack(Block.enderChest))) {
+                enderchest = true;
+            }
+        }
+        coping = enderchest;
+    }
+
+    @Override
+    public void onSmelting(EntityPlayer player, ItemStack item) {
+    }
+
     @Override
     public boolean hasContainerItem() {
-        return true;
+        return coping;
     }
 
     @Override

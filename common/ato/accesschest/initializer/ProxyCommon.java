@@ -98,6 +98,8 @@ public class ProxyCommon {
                 new ItemStack(itemCC, 1, AccessChest.colorgrade2id(15, 2))
         ));
 
+        // Copy Handler
+        GameRegistry.registerCraftingHandler((ItemAccessChest)itemAC);
         // Copy of Access Chest Class-1
         GameRegistry.addRecipe(new RecipeCopyAccessChest(new ItemStack(Block.enderChest, 1), ac1, ac1c));
         // Copy of Access Chest Class-2
