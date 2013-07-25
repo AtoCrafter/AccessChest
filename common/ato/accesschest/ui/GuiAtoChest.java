@@ -2,8 +2,9 @@ package ato.accesschest.ui;
 
 import ato.accesschest.AccessChest;
 import cpw.mods.fml.client.FMLClientHandler;
-import invtweaks.api.ContainerGUI;
-import invtweaks.api.ContainerSection;
+import invtweaks.api.container.ChestContainer;
+import invtweaks.api.container.ContainerSection;
+import invtweaks.api.container.ContainerSectionCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -21,7 +22,7 @@ import java.util.Map;
 /**
  * この MOD で追加されるチェストを開いた時の画面
  */
-@ContainerGUI(
+@ChestContainer(
         rowSize = 12
 )
 public class GuiAtoChest extends GuiContainer {
@@ -288,7 +289,7 @@ public class GuiAtoChest extends GuiContainer {
      * 各スロットの種類を指定
      * InventoryTweaks への対応
      */
-    @ContainerGUI.ContainerSectionCallback
+    @ContainerSectionCallback
     public Map<ContainerSection, List<Slot>> getSlotTypes() {
         HashMap<ContainerSection, List<Slot>> map = new HashMap<ContainerSection, List<Slot>>();
         List<Slot> slots = container.inventorySlots;
