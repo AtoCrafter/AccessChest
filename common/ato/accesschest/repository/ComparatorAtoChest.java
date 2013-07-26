@@ -90,6 +90,8 @@ public class ComparatorAtoChest implements Comparator {
             return 0;
         } else if (is1.stackTagCompound == null) {
             return -1;
+        } else if (is2.stackTagCompound == null) {
+            return 1;
         } else {
             return is1.stackTagCompound.getId() - is2.stackTagCompound.getId();
         }
