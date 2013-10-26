@@ -12,7 +12,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringTranslate;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -79,12 +78,12 @@ public class GuiAtoChest extends GuiContainer {
         int butWidth = 68;
         int butHeight = 20;
         // ボタンの作成
-        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line1, butWidth, butHeight, I18n.func_135053_a("gui.button.clear"));
-        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line2, butWidth, butHeight, I18n.func_135053_a("gui.button.rename"));
-        sortButton = new GuiButton(GUI_SORT_BUTTON_ID, left, line3, butWidth, butHeight, I18n.func_135053_a("gui.button.sort"));
-        storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, I18n.func_135053_a("gui.button.storeInventory"));
-        storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, I18n.func_135053_a("gui.button.storeEquipment"));
-        ejectButton = new GuiButton(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, I18n.func_135053_a("gui.button.eject"));
+        clearButton = new GuiButton(GUI_CLEAR_BUTTON_ID, left, line1, butWidth, butHeight, I18n.getString("gui.button.clear"));
+        renameButton = new GuiButton(GUI_RENAME_BUTTON_ID, left, line2, butWidth, butHeight, I18n.getString("gui.button.rename"));
+        sortButton = new GuiButton(GUI_SORT_BUTTON_ID, left, line3, butWidth, butHeight, I18n.getString("gui.button.sort"));
+        storeInvButton = new GuiButton(GUI_STOREINV_BUTTON_ID, left, line1, butWidth, butHeight, I18n.getString("gui.button.storeInventory"));
+        storeEqpButton = new GuiButton(GUI_STOREEQP_BUTTON_ID, left, line2, butWidth, butHeight, I18n.getString("gui.button.storeEquipment"));
+        ejectButton = new GuiButton(GUI_EJECT_BUTTON_ID, left, line3, butWidth, butHeight, I18n.getString("gui.button.eject"));
         updateButtonsDisplay(false);
         // ボタンの登録
         buttonList.clear();
@@ -115,7 +114,7 @@ public class GuiAtoChest extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i1, int i2) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.func_110434_K().func_110577_a(new ResourceLocation("accesschest", "/gui/atochest.png"));
+        mc.getTextureManager().bindTexture(new ResourceLocation("accesschest", "/gui/atochest.png"));
         int j = (width - xSize) / 2;
         int k = (height - ySize) / 2;
         drawTexturedModalRect(j, k + 9, 0, 0, xSize, ySize - 18);
