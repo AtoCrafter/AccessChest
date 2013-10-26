@@ -35,7 +35,7 @@ public class ProxyClient extends ProxyCommon {
      * 言語ファイルの登録
      */
     private void registerLocalization(String lang) {
-        LanguageRegistry.instance().loadLocalization("/mods/accesschest/lang/" + lang + ".properties", lang, false);
+        LanguageRegistry.instance().loadLocalization("/assets/accesschest/lang/" + lang + ".properties", lang, false);
     }
 
     /**

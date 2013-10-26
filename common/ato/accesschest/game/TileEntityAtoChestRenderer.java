@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -40,7 +41,7 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
         float g = (float) (colorCode >> 8 & 0xFF) / 255F;
         float b = (float) (colorCode & 0xFF) / 255F;
 
-        this.bindTextureByName("/mods/accesschest/item/atochest.png");
+        this.func_110628_a(new ResourceLocation("accesschest", "/item/atochest.png"));
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glColor4f(r, g, b, 1.0F);
@@ -80,7 +81,7 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
         TileEntityAtoChest tileEntity = (TileEntityAtoChest) tileEntityRaw;
         int direction = 0;
         int colorNum = tileEntity.getColor();
-        if (tileEntity.func_70309_m()) {
+        if (tileEntity.hasWorldObj()) {
             direction = tileEntity.getBlockMetadata();
         }
         renderAtoChest(direction, colorNum, tileEntity.lidAngle, tileEntity.prevLidAngle, par2, par4, par6, par8);
