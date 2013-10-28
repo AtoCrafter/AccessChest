@@ -41,7 +41,7 @@ public class TileEntityAtoChestRenderer extends TileEntitySpecialRenderer implem
         float g = (float) (colorCode >> 8 & 0xFF) / 255F;
         float b = (float) (colorCode & 0xFF) / 255F;
 
-        this.func_110628_a(new ResourceLocation("accesschest", "/item/atochest.png"));
+        this.bindTexture(new ResourceLocation("accesschest", "textures/items/atochest.png"));
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glColor4f(r, g, b, 1.0F);
