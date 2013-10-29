@@ -1,0 +1,91 @@
+<project name="AccessChest" default="build">
+
+    <property file="./build.properties" />
+
+    <target name="build">
+        <antcall target="clean" />
+        <antcall target="merge" />
+        <antcall target="recompile" />
+        <antcall target="reobfuscate" />
+        <antcall target="deploy-resources" />
+        <antcall target="make-archive" />
+    </target>
+
+    <target name="build-setup">
+        <property file="build.properties" />
+        <condition property="python" value="${mcp.dir}/runtime/bin/python/python_mcp" else="python">
+            <os family="Windows" />
+        </condition>
+        <property name="mcp.dir" location="${forge.dirname}/mcp" />
+        <property name="src.dir" location="${src.dirname}" />
+        <property name="resources.dir" location="${resources.dirname}" />
+    </target>
+
+    <target name="clean" depends="build-setup,clean-archives">
+        <delete verbose="true">
+            <fileset dir="${mcp.dir}/src/minecraft">
+                <present present="both" targetdir="${src.dir}" />
+            </fileset>
+        </delete>
+        <exec executable="${python}" dir="${mcp.dir}">
+            <arg value="${mcp.dir}/runtime/updatemd5.py" />
+            <arg value="-f" />
+        </exec>
+    </target>
+
+    <target name="clean-archives" description="既存の成果物を削除">
+        <delete verbose="true">
+            <fileset dir="." includes="*.zip" />
+        </delete>
+    </target>
+
+    <target name="merge" description="MOD のソースコードをコピー" depends="build-setup">
+        <copy todir="${mcp.dir}/src/minecraft" overwrite="true" encoding="UTF-8">
+            <fileset dir="${src.dir}" />
+            <filterset>
+                <filter token="VERSION" value="${version}" />
+                <filter token="MCVERSION" value="${mc.version}" />
+                <filter token="MODID" value="${mod.id}" />
+                <filter token="MODNAME" value="${mod.name}" />
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="recompile" description="リコンパイル" depends="build-setup">
+        <exec executable="${python}" dir="${mcp.dir}" failonerror="true">
+            <arg value="${mcp.dir}/runtime/recompile.py" />
+        </exec>
+    </target>
+
+    <target name="reobfuscate" description="難読化" depends="build-setup">
+        <delete>
+            <fileset dir="${mcp.dir}/reobf" />
+        </delete>
+        <exec executable="${python}" dir="${mcp.dir}">
+            <arg value="${mcp.dir}/runtime/reobfuscate.py" />
+            <arg value="--srgnames"/>
+        </exec>
+    </target>
+
+    <target name="deploy-resources" description="リソースの配置" depends="build-setup">
+        <mkdir dir="${resources.dir}" />
+        <copy todir="${mcp.dir}/reobf/minecraft">
+            <fileset dir="${resources.dir}" />
+        </copy>
+        <copy file="${resources.dir}/mcmod.info" tofile="${mcp.dir}/reobf/minecraft/mcmod.info" encoding="UTF-8" overwrite="yes">
+            <filterset>
+                <filter token="VERSION" value="${version}" />
+                <filter token="MCVERSION" value="${mc.version}" />
+                <filter token="MODID" value="${mod.id}" />
+                <filter token="MODNAME" value="${mod.name}" />
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="make-archive" description="ZIP 化" depends="build-setup">
+        <zip destfile="${archive.name}.${version}.Universal.forMC${mc.version}.zip">
+            <fileset dir="${mcp.dir}/reobf/minecraft" />
+        </zip>
+    </target>
+
+</project>

@@ -20,12 +20,11 @@
  * THE SOFTWARE.
  */
 
-package invtweaks.api;
+package invtweaks.api.container;
 
 /**
- * Names for specific parts of containers.
- * For unknown container types (such as mod containers),
- * only INVENTORY and CHEST sections are available.
+ * Names for specific parts of containers. For unknown container types (such as mod containers), only INVENTORY and
+ * CHEST sections are available.
  */
 public enum ContainerSection {
     /**
@@ -41,8 +40,7 @@ public enum ContainerSection {
      */
     INVENTORY_NOT_HOTBAR,
     /**
-     * The chest or dispenser contents.
-     * Also used for unknown container contents.
+     * The chest or dispenser contents. Also used for unknown container contents.
      */
     CHEST,
     /**
