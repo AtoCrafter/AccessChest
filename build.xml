@@ -21,7 +21,7 @@
         <property name="resources.dir" location="${resources.dirname}" />
     </target>
 
-    <target name="clean" depends="build-setup">
+    <target name="clean" depends="build-setup,clean-archives">
         <delete verbose="true">
             <fileset dir="${mcp.dir}/src/minecraft">
                 <present present="both" targetdir="${src.dir}" />
@@ -31,6 +31,12 @@
             <arg value="${mcp.dir}/runtime/updatemd5.py" />
             <arg value="-f" />
         </exec>
+    </target>
+
+    <target name="clean-archives" description="既存の成果物を削除">
+        <delete verbose="true">
+            <fileset dir="." includes="*.zip" />
+        </delete>
     </target>
 
     <target name="merge" description="MOD のソースコードをコピー" depends="build-setup">
