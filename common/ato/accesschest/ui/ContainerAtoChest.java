@@ -1,5 +1,12 @@
 package ato.accesschest.ui;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import invtweaks.api.container.ChestContainer;
+import invtweaks.api.container.ContainerSection;
+import invtweaks.api.container.ContainerSectionCallback;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -9,6 +16,9 @@ import net.minecraft.item.ItemStack;
 /**
  * この MOD で追加されるチェストの GUI でプレイヤーインベントリとチェスト内を組み合わせるコンテナ
  */
+@ChestContainer(
+        rowSize = 12
+)
 public abstract class ContainerAtoChest extends Container {
 
     protected static final int INFO_TYPE_INVENTORY_SIZE = 1;
@@ -92,5 +102,25 @@ public abstract class ContainerAtoChest extends Container {
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
         chestInventory.closeChest();
+    }
+
+    /**
+     * 各スロットの種類を指定
+     * InventoryTweaks への対応
+     */
+    @ContainerSectionCallback
+    public Map<ContainerSection, List<Slot>> getSlotTypes() {
+        HashMap<ContainerSection, List<Slot>> map =
+                new HashMap<ContainerSection, List<Slot>>();
+        List<Slot> slots = inventorySlots;
+        int size = slots.size();
+
+        map.put(ContainerSection.INVENTORY_HOTBAR,
+                slots.subList(size - 9, size));
+        map.put(ContainerSection.INVENTORY_NOT_HOTBAR,
+                slots.subList(size - 36, size - 9));
+        map.put(ContainerSection.CHEST, slots.subList(0, size - 36));
+
+        return map;
     }
 }
