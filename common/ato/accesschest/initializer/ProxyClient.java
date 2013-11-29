@@ -18,24 +18,8 @@ public class ProxyClient extends ProxyCommon {
     @Override
     public void init() {
         super.init();
-        registerLocalizations();
         registerRenderer();
         registerKeybindings();
-    }
-
-    /**
-     * 言語ファイルの登録
-     */
-    private void registerLocalizations() {
-        registerLocalization("en_US");
-        registerLocalization("ja_JP");
-    }
-
-    /**
-     * 言語ファイルの登録
-     */
-    private void registerLocalization(String lang) {
-        LanguageRegistry.instance().loadLocalization("/assets/accesschest/lang/" + lang + ".lang", lang, false);
     }
 
     /**
