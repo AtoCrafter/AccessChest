@@ -1,5 +1,5 @@
-tile.accesschest\:accesschest.name=アクセスチェスト
-tile.accesschest\:compressedchest.name=圧縮チェスト
+tile.accesschest:accesschest.name=アクセスチェスト
+tile.accesschest:compressedchest.name=圧縮チェスト
 gui.button.rename=名前変更
 gui.button.clear=クリア
 gui.button.sort=整理
