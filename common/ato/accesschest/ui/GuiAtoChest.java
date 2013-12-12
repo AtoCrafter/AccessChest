@@ -1,6 +1,7 @@
 package ato.accesschest.ui;
 
 import ato.accesschest.AccessChest;
+import ato.accesschest.Properties;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -13,10 +14,12 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import yalter.mousetweaks.api.IMTModGuiContainer;
+
 /**
  * この MOD で追加されるチェストを開いた時の画面
  */
-public class GuiAtoChest extends GuiContainer {
+public class GuiAtoChest extends GuiContainer implements IMTModGuiContainer {
 
     private final static int GUI_RENAME_BUTTON_ID = 1;
     private final static int GUI_SORT_BUTTON_ID = 2;
@@ -273,5 +276,71 @@ public class GuiAtoChest extends GuiContainer {
     public void setWorldAndResolution(Minecraft mc, int par2, int par3) {
         super.setWorldAndResolution(mc, par2, par3);
         sender.setMinecraft(mc);
+    }
+
+    // Mouse Tweaks API 用
+
+    @Override
+    public String getModName() {
+        return Properties.MOD_NAME;
+    }
+
+    @Override
+    public boolean isMouseTweaksDisabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isWheelTweakDisabled() {
+        return true;
+    }
+
+    @Override
+    public boolean isCraftingOutputSlot(Object modContainer, Object slot) {
+        return false;
+    }
+
+    @Override
+    public Object getModContainer() {
+        return container;
+    }
+
+    @Override
+    public int getModSlotCount(Object modContainer) {
+        return container.inventorySlots.size();
+    }
+
+    @Override
+    public Object getModSlot(Object modContainer, int slotNumber) {
+        return container.inventorySlots.get(slotNumber);
+    }
+
+    @Override
+    public Object getModSelectedSlot(Object modContainer, int slotCount) {
+        int i = Mouse.getX() * this.width / this.mc.displayWidth;
+        int j = this.height - Mouse.getY() * this.height / this.mc.displayHeight - 1;
+        for (int k = 0; k < this.inventorySlots.inventorySlots.size(); ++k)
+        {
+            Slot slot = (Slot)this.inventorySlots.inventorySlots.get(k);
+
+            if (this.isPointInRegion(slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, i, j))
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void clickModSlot(Object modContainer, Object slot, int mouseButton,
+            boolean shiftPressed) {
+        mc.playerController.windowClick(
+            container.windowId, ((Slot)slot).slotNumber, mouseButton,
+            shiftPressed? 1 : 0, mc.thePlayer);
+    }
+
+    @Override
+    public void disableRMBDragIfRequired(Object modContainer, Object firstSlot,
+            boolean shouldClick) {
     }
 }
